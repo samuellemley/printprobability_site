@@ -36,7 +36,7 @@
       <div class="wrapper">
         <div class="home"><p><img src="assets/images/logo.png" alt="project logo" width="70" display="block" margin-left="auto" margin-right="auto" /></p>
 
-<p><em>Print &amp; Probability</em> is an interdisciplinary, NEH- and NSF-funded project at the intersection of book history, computer vision, and machine learning that seeks to discover letterpress printers whose identities have eluded scholars for several hundred years.</p>
+<p><em>Print &amp; Probability</em> is an interdisciplinary, NEH- and NSF-funded project at the intersection of book history, computer vision, and machine learning. We develop tools and methods for discovering letterpress printers whose identities have eluded scholars for several hundred years.</p>
 
 <h3 id="what-we-do">What we do</h3>
 
@@ -49,48 +49,66 @@
 
 <h3 id="our-team">Our team</h3>
 
-<p>Print &amp; Probability is a collaboration among researchers from Carnegie Mellon University and the University of California, San Diego. The team is led by <a href="https://cseweb.ucsd.edu/~tberg/">Taylor Berg-Kirkpatrick</a> (UCSD Computer Science), <a href="http://www.stat.cmu.edu/people/faculty/mgsell">Max G’Sell</a>, and <a href="https://www.cmu.edu/dietrich/history/people/courtesy/warren.html">Christopher Warren</a> (CMU English and History) and also includes <a href="https://matthewlincoln.net/">Matthew Lincoln</a> (JSTOR Labs), <a href="https://www.ttic.edu/faculty/goyal/">Kartik Goyal</a> (Georgia Tech), <a href="https://nvog.github.io/">Nikolai Vogler</a> (UCSD CS PhD Student), <a href="https://www.library.cmu.edu/about/people/samuel-lemley">Sam Lemley</a> (CMU Libraries), Elizaveta Pertseva (UCSD undergrad), <a href="https://www.cmu.edu/dietrich/history/people/graduate-students/thomas.html">Kari Thomas</a> (CMU History PhD Student), <a href="https://www.linkedin.com/in/dj-schuldt-05045171">D.J. Schuldt</a> (Simmons MLIS student), <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/elizabeth-dieterich.html">Elizabeth Dieterich</a> (CMU English PhD Student), <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/laura-deluca.html">Laura DeLuca</a> (CMU English PhD Student), <a href="https://www.washjeff.edu/person/john-ladd/">John Ladd</a> (Washington &amp; Jefferson Computing and Information Studies), and <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/baron-glanvill.html">Baron Glanvill</a> (CMU English PhD Student).</p>
+<p>Print &amp; Probability is a collaboration among researchers from Carnegie Mellon University and the University of California, San Diego. The team is led by <a href="https://cseweb.ucsd.edu/~tberg/">Taylor Berg-Kirkpatrick</a> (UCSD Computer Science), <a href="http://www.stat.cmu.edu/people/faculty/mgsell">Max G’Sell</a>, and <a href="https://www.cmu.edu/dietrich/history/people/courtesy/warren.html">Christopher Warren</a> (CMU English and History) and also includes <a href="https://www.ttic.edu/faculty/goyal/">Kartik Goyal</a> (Georgia Tech), <a href="https://nvog.github.io/">Nikolai Vogler</a> (UCSD CS PhD Student), <a href="https://www.library.cmu.edu/about/people/samuel-lemley">Sam Lemley</a> (CMU Libraries), Elizaveta Pertseva (UCSD undergrad), <a href="https://www.cmu.edu/dietrich/history/people/graduate-students/thomas.html">Kari Thomas</a> (CMU History PhD Student), <a href="https://www.linkedin.com/in/dj-schuldt-05045171">D.J. Schuldt</a> (Hamilton College Special Collections Librarian), <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/laura-deluca.html">Laura DeLuca</a> (CMU English PhD Student), <a href="https://www.washjeff.edu/person/john-ladd/">John Ladd</a> (Washington &amp; Jefferson Computing and Information Studies), <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/baron-glanvill.html">Baron Glanvill</a> (CMU English PhD Student), and <a href="">Ashwin Muralidharan</a> (UCSD Computer Science Student)</p>
 
-<h3 id="tools">Tools</h3>
+<h3 id="tools--projects">Tools &amp; Projects</h3>
 
-<p>Our beta <a href="https://coloringbook.nfshost.com/">Coloring Book Paper Analysis Tool</a> works using remote IIIF images from repositories such as the British Library, Internet Archive, the Harry Ransom Center, and the Folger Shakespeare Library. Users can generate and study LUV or RBG color profiles for each page (leaf) in a digitized book, permitting the fine-grained investigation of alterations, interruptions, and continuities in paper-stocks and the sequencing of printing.
+<ul>
+  <li>
+    <p>Following the <a href="https://en.wikipedia.org/wiki/British_Library_cyberattack">cyberattack</a> that affected the British Library and its systems, we built a <a href="https://estc.printprobability.org">stopgap English Short-Title Catalogue (ESTC)</a> that is fully searchable and comprises the entire ESTC corpus —— more than 480,000 records.</p>
+  </li>
+  <li>
+    <p>The <a href="https://github.com/cmu-lib/printprob-db">Print &amp; Probability Workbench</a> is a Django-powered <a href="https://printprobdb.psc.edu/api/docs/">REST API for powering P&amp;P’s data transformation and tagging pipeline</a>. To classify characters, we use <a href="https://github.com/tberg12/ocular">Ocular</a>, a state-of-the-art historical OCR system developed in part by team co-lead Taylor Berg-Kirkpatrick.</p>
+  </li>
+  <li>
+    <p>Our beta <a href="https://coloringbook.nfshost.com/">Coloring Book Paper Analysis Tool</a> works using remote IIIF images from repositories such as the British Library, Internet Archive, the Harry Ransom Center, and the Folger Shakespeare Library. Users can generate and study LUV or RBG color profiles for each page (leaf) in a digitized book, permitting the fine-grained investigation of alterations, interruptions, and continuities in paper-stocks and the sequencing of printing.
 Print &amp; Probability team member Laura DeLuca was awarded a grant from the Bibliographical Society of America to produce an instructional video on the Coloring Book tool. View the video here:</p>
+  </li>
+</ul>
 
 <iframe width="100%" height="360" src="https://www.youtube.com/embed/OOJCXt-MNMw" title="Hue’s Clues: Understanding Book History through Paper Color Analysis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
 
 <p><img src="assets/images/demo.gif" alt="demo" /></p>
 
-<p>The <a href="https://github.com/cmu-lib/printprob-db">Print &amp; Probability Workbench</a> is a Django-powered <a href="https://printprobdb.psc.edu/api/docs/">REST API for powering P&amp;P’s data transformation and tagging pipeline</a>. To classify characters, we use <a href="https://github.com/tberg12/ocular">Ocular</a>, a state-of-the-art historical OCR system developed in part by team co-lead Taylor Berg-Kirkpatrick.</p>
-
 <h3 id="publications">Publications</h3>
 
 <ul>
   <li>
-    <p><a href="https://www.psupress.org/books/titles/978-0-271-09732-9.html">Samuel V. Lemley, Nikolai Vogler, Christopher N. Warren, D.J. Schuldt, Laura S. DeLuca, Kari Thomas, Taylor Berg-Kirkpatrick, Elizabeth Dieterich, Kartik Goyal, Max G’Sell. “Everything There is to be Learned about Seventeenth-Century Types: Computational Bibliography &amp; The Printers of Shakespeare’s Fourth Folio,”  in Samuel V. Lemley, ed., The Four Shakespeare Folios, 1623-2023 (Penn State University Press, 2024)</a></p>
+    <p>“Modeling Expertise at the Crossroads of Machine Learning and the Humanities.” John R. Ladd, Christopher N. Warren, Laura S. DeLuca, Jonathan Armoza, Taylor Berg-Kirkpatrick, Kartik Goyal, and Nikolai Vogler, in Cultures of Scale: Disciplines, Data, and Labor (Series: Debates in Digital Humanities) (University of Minnesota Press, forthcoming).</p>
   </li>
   <li>
-    <p><a href="https://doi.org/10.1093/sq/quad021">Warren, Christopher N, Samuel V Lemley, D J Schuldt, Elizabeth Dieterich, Laura S DeLuca, Max G’Sell, Taylor Berg-Kirkpatrick, Kari Thomas, Kartik Goyal, and Nikolai Vogler. “Who Rpinted Shakespeare’s Fourth Folio?” Shakespeare Quarterly 74, no. 2 (June 9, 2023): 139–46.</a></p>
+    <p><a href="https://doi.org/10.1007/978-3-031-70543-4_22">“Clustering running titles to understand the printing of early modern books.” Nikolai Vogler, Kartik Goyal, Samuel V Lemley, DJ Schuldt, Christopher N Warren, Max G’Sell, and Taylor Berg-Kirkpatrick, in International Conference on Document Analysis and Recognition [ICDAR] - Proceedings, Part III (Springer-Verlag 2024): 374-390.</a></p>
   </li>
   <li>
-    <p><a href="https://arxiv.org/abs/2306.07998">Vogler, Nikolai, Kartik Goyal, Kishore PV Reddy, Elizaveta Pertzeva, Samuel V. Lemley, Christopher N. Warren, Max G’Sell, and Taylor Berg-Kirkpatrick. “Contrastive Attention Networks for Attribution of Early Modern Print.” In Association for the Advancement of Artificial Intelligence (AAAI), 2023.</a></p>
+    <p><a href="https://www.psupress.org/books/titles/978-0-271-09732-9.html">“Everything There is to be Learned about Seventeenth-Century Types: Computational Bibliography &amp; The Printers of Shakespeare’s Fourth Folio.” Samuel V. Lemley, Nikolai Vogler, Christopher N. Warren, D.J. Schuldt, Laura S. DeLuca, Kari Thomas, Taylor Berg-Kirkpatrick, Elizabeth Dieterich, Kartik Goyal, Max G’Sell, in Samuel V. Lemley, ed., The Four Shakespeare Folios, 1623-2023 (Penn State University Press, 2024)</a></p>
   </li>
   <li>
-    <p><a href="https://muse-jhu-edu.us1.proxy.openathens.net/article/748968">Warren, Christopher, Pierce Williams, Shruti Rijhwani, and Max G’Sell. “Damaged Type and Areopagitica’s Clandestine Printers.” Milton Studies 62, no. 1 (Spring 2020).</a></p>
+    <p><a href="https://doi.org/10.1093/sq/quad021">“Who Rpinted Shakespeare’s Fourth Folio?,” Warren, Christopher N, Samuel V Lemley, D J Schuldt, Elizabeth Dieterich, Laura S DeLuca, Max G’Sell, Taylor Berg-Kirkpatrick, Kari Thomas, Kartik Goyal, and Nikolai Vogler, Shakespeare Quarterly 74, no. 2 (June 9, 2023): 139–46.</a></p>
   </li>
   <li>
-    <p><a href="http://arxiv.org/abs/2005.01646">Goyal, Kartik, Chris Dyer, Christopher Warren, Max G’Sell, and Taylor Berg-Kirkpatrick. “A Probabilistic Generative Model for Typographical Analysis of Early Modern Printing.” ArXiv:2005.01646 [Cs], May 4, 2020. http://arxiv.org/abs/2005.01646</a></p>
+    <p><a href="https://arxiv.org/abs/2306.07998">“Contrastive Attention Networks for Attribution of Early Modern Print.” Vogler, Nikolai, Kartik Goyal, Kishore PV Reddy, Elizaveta Pertzeva, Samuel V. Lemley, Christopher N. Warren, Max G’Sell, and Taylor Berg-Kirkpatrick, in Association for the Advancement of Artificial Intelligence (AAAI), 2023.</a></p>
   </li>
   <li>
-    <p><a href="https://doi.org/10.1353/ecs.2021.0094">Warren, Christopher N., Avery Wiscomb, Pierce Williams, Samuel V. Lemley, and Max G’Sell. “Canst Thou Draw Out Leviathan with Computational Bibliography? New Angles on Printing Thomas Hobbes’ ‘Ornaments’ Edition.” Eighteenth-Century Studies 54, no. 4 (2021): 827–59. https://doi.org/10.1353/ecs.2021.0094</a></p>
+    <p><a href="https://doi.org/10.1353/ecs.2021.0094">“Canst Thou Draw Out Leviathan with Computational Bibliography? New Angles on Printing Thomas Hobbes’ ‘Ornaments’ Edition.” Warren, Christopher N., Avery Wiscomb, Pierce Williams, Samuel V. Lemley, and Max G’Sell, Eighteenth-Century Studies 54, no. 4 (2021): 827–59. https://doi.org/10.1353/ecs.2021.0094</a></p>
+  </li>
+  <li>
+    <p><a href="https://muse-jhu-edu.us1.proxy.openathens.net/article/748968">“Damaged Type and Areopagitica’s Clandestine Printers.” Warren, Christopher, Pierce Williams, Shruti Rijhwani, and Max G’Sell, Milton Studies 62, no. 1 (Spring 2020).</a></p>
+  </li>
+  <li>
+    <p><a href="http://arxiv.org/abs/2005.01646">“A Probabilistic Generative Model for Typographical Analysis of Early Modern Printing.” Goyal, Kartik, Chris Dyer, Christopher Warren, Max G’Sell, and Taylor Berg-Kirkpatrick, ArXiv:2005.01646 [CS], May 4, 2020. http://arxiv.org/abs/2005.01646</a></p>
   </li>
 </ul>
 
 <h3 id="recent--upcoming-presentations">Recent &amp; Upcoming Presentations</h3>
-
 <ul>
-  <li>“Whig Data: Milton’s Printers in the Restoration,” International Milton Society (2023)</li>
-  <li>“Mincing Words: Computational Bibliography as Cookery,” Renaissance Society of America (2023)</li>
-  <li>“The Early Modern Book of Numbers,” Shakespeare Association of America (2023)</li>
+  <li>Christopher Warren, Sol. M. And Mary Ann O’Brian Malkin Lecture, Rare Books School, Charlottesville, VA, 2025, July 30, 2025</li>
+  <li>Christopher Warren, “Who Printed Spinoza’s Theological-Political Treatise (1689)?”, Renaissance Society of America, “New Technologies in Renaissance Studies: Uses of AI and Machine Learning in Computational Bibliography” March 2025</li>
+  <li>Christopher Warren, “Who Printed Spinoza’s Theological-Political Treatise (1689)?,” Carnegie Mellon Institute for Complex Social Dynamics, 2025</li>
+  <li>Christopher Warren, “Font of Enlightenment: Letterpress Type as Social Media,” Modern Language Association, New Orleans, 2025</li>
+  <li>Christopher Warren, “Freedom and the Press before Freedom of the Press: Tools, Data, and Methods for Researching Secret Printing,” LTI Colloquium, Carnegie Mellon Language Technologies Institute, School of Computer Science, Carnegie Mellon University, 2024</li>
+  <li>Christopher Warren, “Whig Data: Milton’s Printers in the Restoration,” International Milton Society (2023)</li>
+  <li>Christopher Warren, “Mincing Words: Computational Bibliography as Cookery,” Renaissance Society of America (2023)</li>
+  <li>Christopher Warren, “The Early Modern Book of Numbers,” Shakespeare Association of America (2023)</li>
   <li>“Contrastive Attention Networks for Attribution of Early Modern Print,” Association for the Advancement of Artificial Intelligence (AAAI) (2023)</li>
   <li>“Freedom and the Press before Freedom of the Press,” The Grolier Club Bibliography Week Lecture (2023)</li>
   <li>“Shakespeare, Print Networks, and the History of Clandestine Printing,” Networks 2021</li>
@@ -120,7 +138,7 @@ Print &amp; Probability team member Laura DeLuca was awarded a grant from the Bi
 
 <h3 id="project-alumni">Project Alumni</h3>
 
-<p><a href="https://shrutirij.github.io/">Shruti Rijhwani</a>, <a href="http://danieljevans.net/">Dan Evans</a>, <a href="https://averywiscomb.net/">Avery Wiscomb</a>, <a href="http://piercew.net/">Pierce Williams</a>, <a href="https://www.glenville.edu/directory/craig-stamm">Craig Stamm</a>, <a href="https://github.com/FrailWords">Sriram Viswanathan</a>, <a href="https://jonathanarmoza.com">Jonathan Armoza</a>.</p>
+<p><a href="https://shrutirij.github.io/">Shruti Rijhwani</a>, <a href="http://danieljevans.net/">Dan Evans</a>, <a href="https://averywiscomb.net/">Avery Wiscomb</a>, <a href="http://piercew.net/">Pierce Williams</a>, <a href="https://www.glenville.edu/directory/craig-stamm">Craig Stamm</a>, <a href="https://github.com/FrailWords">Sriram Viswanathan</a>, <a href="https://matthewlincoln.net/">Matthew Lincoln</a> (JSTOR Labs), <a href="https://www.cmu.edu/dietrich/english/about-us/phds/bios/elizabeth-dieterich.html">Elizabeth Dieterich</a> (CMU English PhD Student), and <a href="https://jonathanarmoza.com">Jonathan Armoza</a>.</p>
 
 <h3 id="project-support">Project Support</h3>
 
