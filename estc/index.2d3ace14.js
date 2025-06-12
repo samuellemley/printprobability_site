@@ -1009,14 +1009,14 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactDom = require("react-dom");
-var _reactDomDefault = parcelHelpers.interopDefault(_reactDom);
+var _client = require("react-dom/client");
+var _clientDefault = parcelHelpers.interopDefault(_client);
 var _reactRouterDom = require("react-router-dom");
 var _app = require("./App");
 var _itemDetails = require("./ItemDetails");
 var _itemDetailsDefault = parcelHelpers.interopDefault(_itemDetails);
 const rootElement = document.getElementById('root');
-_reactDomDefault.default.createRoot(rootElement).render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.BrowserRouter, {
+_clientDefault.default.createRoot(rootElement).render(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.BrowserRouter, {
     children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Routes, {
         children: [
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Route, {
@@ -1024,7 +1024,7 @@ _reactDomDefault.default.createRoot(rootElement).render(/*#__PURE__*/ _jsxDevRun
                 element: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_app.App, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/index.tsx",
-                lineNumber: 12,
+                lineNumber: 13,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactRouterDom.Route, {
@@ -1032,18 +1032,18 @@ _reactDomDefault.default.createRoot(rootElement).render(/*#__PURE__*/ _jsxDevRun
                 element: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_itemDetailsDefault.default, {}, void 0, false, void 0, void 0)
             }, void 0, false, {
                 fileName: "src/index.tsx",
-                lineNumber: 13,
+                lineNumber: 14,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/index.tsx",
-        lineNumber: 11,
+        lineNumber: 12,
         columnNumber: 5
     }, undefined)
 }, void 0, false, {
     fileName: "src/index.tsx",
-    lineNumber: 10,
+    lineNumber: 11,
     columnNumber: 3
 }, undefined));
 
@@ -1052,7 +1052,7 @@ _reactDomDefault.default.createRoot(rootElement).render(/*#__PURE__*/ _jsxDevRun
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","./App":"7F5Te","react-dom":"j6uA9","./ItemDetails":"i4Qz8"}],"iTorj":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","./App":"7F5Te","./ItemDetails":"i4Qz8","react-dom/client":"lOjBx"}],"iTorj":[function(require,module,exports) {
 'use strict';
 module.exports = require('./cjs/react-jsx-dev-runtime.development.js');
 
@@ -10442,6 +10442,9 @@ $parcel$ReactRefreshHelpers$0342.prelude(module);
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+// const routing = {
+//   router: history(),
+// };
 parcelHelpers.export(exports, "App", ()=>App
 );
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
@@ -10451,19 +10454,44 @@ var _lite = require("algoliasearch/lite");
 var _liteDefault = parcelHelpers.interopDefault(_lite);
 var _reactInstantsearch = require("react-instantsearch");
 var _reactRouterDom = require("react-router-dom");
-var _panel = require("./Panel");
+var _facetDropdown = require("./components/FacetDropdown");
+var _qs = require("qs");
+var _qsDefault = parcelHelpers.interopDefault(_qs);
 var _appCss = require("./App.css");
-var _s = $RefreshSig$(), _s1 = $RefreshSig$();
+var _s = $RefreshSig$();
+const DEBOUNCE_TIME = 400;
 const searchClient = _liteDefault.default('MEUZ4222NX', 'c65210b692a8704af80299c06595d55e');
+const closeOnChange = ()=>window.innerWidth > 375
+;
 const future = {
     preserveSharedStateOnUnmount: true
 };
+const createURL = (state)=>`?${_qsDefault.default.stringify(state)}`
+;
+const searchStateToUrl = (searchState)=>searchState ? createURL(searchState) : ''
+;
+const urlToSearchState = ({ search  })=>_qsDefault.default.parse(search.slice(1))
+;
 function App() {
-    _s();
-    const [showAcknowledgment, setShowAcknowledgment] = _react.useState(true);
-    const handleDismiss = ()=>{
-        setShowAcknowledgment(false);
-    };
+    // export function App({ location, history}) {
+    // console.log(location);
+    // const [searchState, setSearchState] = useState(urlToSearchState(location));
+    // const debouncedSetStateRef = useRef(null);
+    // function onSearchStateChange(updatedSearchState) {
+    //   clearTimeout(debouncedSetStateRef.current);
+    //   debouncedSetStateRef.current = setTimeout(() => {
+    //     history.push(searchStateToUrl(updatedSearchState));
+    //   }, DEBOUNCE_TIME);
+    //   setSearchState(updatedSearchState);
+    // }
+    // useEffect(() => {
+    //   setSearchState(urlToSearchState(location));
+    // }, [location]);
+    // ///////////////////////////////////////////////////////////
+    // const [showAcknowledgment, setShowAcknowledgment] = useState(true);
+    // const handleDismiss = () => {
+    //   setShowAcknowledgment(false);
+    // };
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
         children: [
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("header", {
@@ -10476,12 +10504,12 @@ function App() {
                             children: "print & probability"
                         }, void 0, false, {
                             fileName: "src/App.tsx",
-                            lineNumber: 40,
+                            lineNumber: 83,
                             columnNumber: 9
                         }, this)
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 39,
+                        lineNumber: 82,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10489,7 +10517,7 @@ function App() {
                         children: "English Short Title Catalogue (ESTC) Search"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 42,
+                        lineNumber: 85,
                         columnNumber: 7
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("img", {
@@ -10498,13 +10526,13 @@ function App() {
                         className: "header-image"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 45,
+                        lineNumber: 88,
                         columnNumber: 7
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 38,
+                lineNumber: 81,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10516,7 +10544,7 @@ function App() {
                         children: "English Short Title Catalogue"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 49,
+                        lineNumber: 92,
                         columnNumber: 62
                     }, this),
                     " ordinarily hosted by The British Library (",
@@ -10525,13 +10553,13 @@ function App() {
                         children: "usage license"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 49,
+                        lineNumber: 92,
                         columnNumber: 166
                     }, this),
                     ").",
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {}, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 50,
+                        lineNumber: 93,
                         columnNumber: 11
                     }, this),
                     "Created by ",
@@ -10540,7 +10568,7 @@ function App() {
                         children: "Nikolai Vogler"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 51,
+                        lineNumber: 94,
                         columnNumber: 22
                     }, this),
                     " for ",
@@ -10549,22 +10577,22 @@ function App() {
                         children: "Print & Probability"
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 51,
+                        lineNumber: 94,
                         columnNumber: 78
                     }, this),
                     ", an NEH- and NSF-funded project at UCSD and CMU.",
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {}, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 52,
+                        lineNumber: 95,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 48,
+                lineNumber: 91,
                 columnNumber: 7
             }, this),
-            showAcknowledgment && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
                 className: "acknowledgment-box",
                 children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                     className: "header-acknowledgment",
@@ -10573,44 +10601,36 @@ function App() {
                             children: "About the data"
                         }, void 0, false, {
                             fileName: "src/App.tsx",
-                            lineNumber: 57,
-                            columnNumber: 13
-                        }, this),
-                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
-                            className: "dismiss-button",
-                            onClick: handleDismiss,
-                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("i", {
-                                className: "fas fa-times"
-                            }, void 0, false, {
-                                fileName: "src/App.tsx",
-                                lineNumber: 59,
-                                columnNumber: 15
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "src/App.tsx",
-                            lineNumber: 58,
+                            lineNumber: 100,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                             children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("em", {
-                                children: [
-                                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("strong", {
-                                        children: "Update (Jan 11, 2023):"
-                                    }, void 0, false, {
-                                        fileName: "src/App.tsx",
-                                        lineNumber: 62,
-                                        columnNumber: 19
-                                    }, this),
-                                    " We are now hosting the entire ESTC (not just pre-1700s!). Post-1700s records contain only core info for now, hopefully more to be added later!"
-                                ]
-                            }, void 0, true, {
+                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("strong", {
+                                    children: [
+                                        "Update (May 2025): The new ESTC search site can be found at ",
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
+                                            href: "https://datb.cerl.org/estc/",
+                                            children: "https://datb.cerl.org/estc/"
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 105,
+                                            columnNumber: 87
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "src/App.tsx",
+                                    lineNumber: 105,
+                                    columnNumber: 19
+                                }, this)
+                            }, void 0, false, {
                                 fileName: "src/App.tsx",
-                                lineNumber: 62,
+                                lineNumber: 105,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "src/App.tsx",
-                            lineNumber: 61,
+                            lineNumber: 104,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10621,25 +10641,25 @@ function App() {
                                     children: "cyberattack"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 65,
+                                    lineNumber: 108,
                                     columnNumber: 365
                                 }, this),
                                 " on the British Library."
                             ]
                         }, void 0, true, {
                             fileName: "src/App.tsx",
-                            lineNumber: 64,
+                            lineNumber: 107,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                             children: [
-                                "The unofficial ",
+                                "We note that some of the unofficial ",
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("em", {
-                                    children: "pre-1700s metadata"
+                                    children: "pre-1700 metadata"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 30
+                                    lineNumber: 111,
+                                    columnNumber: 51
                                 }, this),
                                 ' served here may differ slightly from the metadata served by the British Library.  This pre-1700 metadata is based primarily on a snapshot of the ESTC taken circa 2014, when the snapshot of 136,735 records was shared with participants in the Folger Shakespeare Library\'s "Early Modern Digital Agendas" Summer Seminar.  As part of the ',
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
@@ -10647,17 +10667,26 @@ function App() {
                                     children: "Print & Probability"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 391
+                                    lineNumber: 111,
+                                    columnNumber: 411
                                 }, this),
-                                " project, Chris Warren and his research assistants at Carnegie Mellon made small modifications and transformations in the metadata for the purposes of asking and answering global questions about the number of anonymously-printed books and pamphlets. Additionally, most of the ESTC records have also been further enriched with ",
+                                " project, Chris Warren and his research assistants at Carnegie Mellon made small modifications and transformations in the metadata for the purposes of asking and answering global questions about the number of anonymously-printed books and pamphlets. Additionally, most of the ESTC records have also been further enriched with both ",
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
+                                    href: "https://earlyprint.org/",
+                                    children: "EarlyPrint"
+                                }, void 0, false, {
+                                    fileName: "src/App.tsx",
+                                    lineNumber: 111,
+                                    columnNumber: 803
+                                }, this),
+                                " metadata and ",
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
                                     href: "https://github.com/Early-Modern-OCR/ImprintDB",
                                     children: "metadata"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 778
+                                    lineNumber: 111,
+                                    columnNumber: 865
                                 }, this),
                                 " derived from the ",
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
@@ -10665,8 +10694,8 @@ function App() {
                                     children: "Early Modern OCR Project (EMOP)"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 864
+                                    lineNumber: 111,
+                                    columnNumber: 951
                                 }, this),
                                 " at Texas A&M and ",
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
@@ -10674,8 +10703,8 @@ function App() {
                                     children: "Early English Books Online (EEBO)"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 68,
-                                    columnNumber: 961
+                                    lineNumber: 111,
+                                    columnNumber: 1048
                                 }, this),
                                 ". The EMOP and EEBO datasets included 115,777 and 146,194 records respectively.  Since it has not always been possible to reconcile all of these datasets, the number of records included here is slightly larger, roughly 150,000 records. We also acknowledge UC Riverside's ",
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
@@ -10683,7 +10712,7 @@ function App() {
                                     children: "CBSR"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 112,
                                     columnNumber: 50
                                 }, this),
                                 " along with ",
@@ -10692,7 +10721,7 @@ function App() {
                                     children: "EMOP"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 112,
                                     columnNumber: 110
                                 }, this),
                                 " and ",
@@ -10701,14 +10730,14 @@ function App() {
                                     children: "EEBO"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 112,
                                     columnNumber: 167
                                 }, this),
                                 " as contributors."
                             ]
                         }, void 0, true, {
                             fileName: "src/App.tsx",
-                            lineNumber: 67,
+                            lineNumber: 110,
                             columnNumber: 13
                         }, this),
                         "Please note that your mileage may vary. We recommend you confirm any metadata found here with the BL's official ESTC when it comes online. Contact the ESTC with any questions/comments at ",
@@ -10717,203 +10746,291 @@ function App() {
                             children: "estc@bl.uk"
                         }, void 0, false, {
                             fileName: "src/App.tsx",
-                            lineNumber: 71,
+                            lineNumber: 114,
                             columnNumber: 202
                         }, this),
                         "."
                     ]
                 }, void 0, true, {
                     fileName: "src/App.tsx",
-                    lineNumber: 56,
+                    lineNumber: 99,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "src/App.tsx",
-                lineNumber: 55,
+                lineNumber: 98,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
                 className: "container",
                 children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.InstantSearch, {
                     searchClient: searchClient,
-                    indexName: "master_biblio_join_filter_clean_full",
+                    indexName: "prod",
                     future: future,
                     insights: true,
+                    // searchState={searchState}
+                    // onSearchStateChange={onSearchStateChange}
+                    // createURL={createURL}
+                    // routing={routing}
+                    routing: true,
                     children: [
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Configure, {
                             hitsPerPage: 8
                         }, void 0, false, {
                             fileName: "src/App.tsx",
-                            lineNumber: 83,
+                            lineNumber: 133,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
                             className: "search-panel",
                             children: [
-                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                                    className: "search-panel__filters",
-                                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.DynamicWidgets, {
-                                        fallback: _reactInstantsearch.RefinementList,
-                                        children: [
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "Year",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RangeInput, {
-                                                    attribute: "yearAutoExtracted"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 88,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 87,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "City",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
-                                                    attribute: "city"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 91,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 90,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "Genre",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
-                                                    attribute: "genre"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 94,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 93,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "Topical Term",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
-                                                    attribute: "topicalTerm"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 97,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 96,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "Specific Topical Term",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
-                                                    attribute: "specificTopicalTerm"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 100,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 99,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
-                                                header: "Format",
-                                                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
-                                                    attribute: "format"
-                                                }, void 0, false, {
-                                                    fileName: "src/App.tsx",
-                                                    lineNumber: 103,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "src/App.tsx",
-                                                lineNumber: 102,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "src/App.tsx",
-                                        lineNumber: 86,
-                                        columnNumber: 15
-                                    }, this)
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.SearchBox, {
+                                    placeholder: "Search over 480,000 ESTC records...",
+                                    className: "searchbox"
                                 }, void 0, false, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 136,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                                    className: "search-panel__results",
+                                    className: "search-panel__filters",
                                     children: [
-                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.SearchBox, {
-                                            placeholder: "Search over 480,000 ESTC records... try 'Paradise Lost Milton' or '1674'",
-                                            className: "searchbox"
-                                        }, void 0, false, {
-                                            fileName: "src/App.tsx",
-                                            lineNumber: 109,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Hits, {
-                                            hitComponent: Hit
-                                        }, void 0, false, {
-                                            fileName: "src/App.tsx",
-                                            lineNumber: 110,
-                                            columnNumber: 15
-                                        }, this),
-                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                                            className: "pagination",
-                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Pagination, {}, void 0, false, {
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            closeOnChange: closeOnChange,
+                                            buttonText: ({ refinements  })=>{
+                                                const [start, end] = refinements;
+                                                return start || end ? `Year (${(start || end).label}${end ? ' - ' + end.label : ''})` : `Year`;
+                                            },
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RangeInput, {
+                                                attribute: "yearAutoExtracted"
+                                            }, void 0, false, {
                                                 fileName: "src/App.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 149,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 138,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Printer"
+                                            buttonText: ({ refinements  })=>{
+                                                console.log(refinements);
+                                                // console.log(typeof refinements);
+                                                const names = refinements;
+                                                // console.log(typeof names, names);
+                                                // console.log(Object.values(names))
+                                                // names is type CurrentRefinementsConnectorParamsRefinement
+                                                return names.length > 0 ? `Printer (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Printer`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            classNames: {
+                                                root: 'my-SearchableDropdown'
+                                            },
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "printedByAutoExtracted",
+                                                searchable: true,
+                                                searchablePlaceholder: "Search for printers (auto-extracted)..."
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 167,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "src/App.tsx",
-                                            lineNumber: 112,
+                                            lineNumber: 152,
                                             columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Publisher"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `Publisher (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Publisher`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            classNames: {
+                                                root: 'my-SearchableDropdown'
+                                            },
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "printedForAutoExtracted",
+                                                searchable: true,
+                                                searchablePlaceholder: "Search for publishers (auto-extracted)..."
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 183,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 174,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="City"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `City (${names.map((name)=>name.label
+                                                ).join(', ')})` : `City`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "city"
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 197,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 190,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Genre"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `Genre (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Genre`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "genre"
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 207,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 200,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Topical Term"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `Topical Term (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Topical Term`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "topicalTerm"
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 217,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 210,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Specific Topical Term"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `Specific Topical Term (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Specific Topical Term`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "specificTopicalTerm"
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 227,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 220,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_facetDropdown.FacetDropdown, {
+                                            // buttonText="Format"
+                                            buttonText: ({ refinements  })=>{
+                                                const names = refinements;
+                                                return names.length > 0 ? `Format (${names.map((name)=>name.label
+                                                ).join(', ')})` : `Format`;
+                                            },
+                                            closeOnChange: closeOnChange,
+                                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.RefinementList, {
+                                                attribute: "format"
+                                            }, void 0, false, {
+                                                fileName: "src/App.tsx",
+                                                lineNumber: 237,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 230,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.ClearRefinements, {
+                                            translations: {
+                                                resetButtonText: 'Clear filters'
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "src/App.tsx",
+                                            lineNumber: 241,
+                                            columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "src/App.tsx",
-                                    lineNumber: 108,
+                                    lineNumber: 137,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                                    className: "search-panel__results",
+                                    children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Hits, {
+                                        hitComponent: Hit
+                                    }, void 0, false, {
+                                        fileName: "src/App.tsx",
+                                        lineNumber: 252,
+                                        columnNumber: 15
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "src/App.tsx",
+                                    lineNumber: 251,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Pagination, {
+                                    className: "search-panel__pagination"
+                                }, void 0, false, {
+                                    fileName: "src/App.tsx",
+                                    lineNumber: 255,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "src/App.tsx",
-                            lineNumber: 84,
+                            lineNumber: 135,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "src/App.tsx",
-                    lineNumber: 77,
+                    lineNumber: 122,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/App.tsx",
-                lineNumber: 76,
-                columnNumber: 7
+                lineNumber: 121,
+                columnNumber: 1
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/App.tsx",
-        lineNumber: 37,
+        lineNumber: 80,
         columnNumber: 5
     }, this);
 }
-_s(App, "QEabP399Fkk5NYyVNeVgX5goh6E=");
 _c = App;
 function Hit({ hit  }) {
-    _s1();
+    _s();
     const navigate = _reactRouterDom.useNavigate();
     const handleClick = ()=>{
         // console.log(hit.objectID);
@@ -10922,6 +11039,7 @@ function Hit({ hit  }) {
                 hit
             }
         });
+    // window.open(`/record/${hit.objectID}`,'_blank', 'rel=noopener noreferrer');
     // window.open(`/record/${hit.objectID}`, "_blank", 'noopener,noreferrer');
     };
     hit.date = String(hit.date);
@@ -10935,12 +11053,12 @@ function Hit({ hit  }) {
                     hit: hit
                 }, void 0, false, {
                     fileName: "src/App.tsx",
-                    lineNumber: 145,
+                    lineNumber: 361,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "src/App.tsx",
-                lineNumber: 144,
+                lineNumber: 360,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10949,7 +11067,7 @@ function Hit({ hit  }) {
                         children: "Author: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 148,
+                        lineNumber: 364,
                         columnNumber: 50
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -10957,13 +11075,13 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 149,
+                        lineNumber: 365,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 147,
+                lineNumber: 363,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10972,7 +11090,7 @@ function Hit({ hit  }) {
                         children: "Imprint: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 152,
+                        lineNumber: 368,
                         columnNumber: 59
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -10980,13 +11098,13 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 153,
+                        lineNumber: 369,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 151,
+                lineNumber: 367,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -10995,7 +11113,7 @@ function Hit({ hit  }) {
                         children: "Printer: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 156,
+                        lineNumber: 372,
                         columnNumber: 64
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -11003,13 +11121,13 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 157,
+                        lineNumber: 373,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 155,
+                lineNumber: 371,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -11018,7 +11136,7 @@ function Hit({ hit  }) {
                         children: "General Note: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 160,
+                        lineNumber: 376,
                         columnNumber: 56
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -11026,13 +11144,13 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 161,
+                        lineNumber: 377,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 159,
+                lineNumber: 375,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -11041,7 +11159,7 @@ function Hit({ hit  }) {
                         children: "ESTC No: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 164,
+                        lineNumber: 380,
                         columnNumber: 50
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -11049,37 +11167,62 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 165,
+                        lineNumber: 381,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 163,
+                lineNumber: 379,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                 children: [
                     hit.eeboURL.trim().length === 0 ? `` : /*#__PURE__*/ _jsxDevRuntime.jsxDEV("strong", {
-                        children: "EEBO URL: "
+                        children: "EEBO: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 168,
+                        lineNumber: 384,
                         columnNumber: 51
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
                         href: hit.eeboURL,
+                        target: "_blank",
                         children: hit.eeboURL
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 169,
+                        lineNumber: 385,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 167,
+                lineNumber: 383,
                 columnNumber: 7
+            }, this),
+            hit.archiveURL.trim().length === 0 ? null : /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("strong", {
+                        children: "Internet Archive: "
+                    }, void 0, false, {
+                        fileName: "src/App.tsx",
+                        lineNumber: 389,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
+                        href: hit.archiveURL,
+                        target: "_blank",
+                        children: "View on Internet Archive"
+                    }, void 0, false, {
+                        fileName: "src/App.tsx",
+                        lineNumber: 390,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/App.tsx",
+                lineNumber: 388,
+                columnNumber: 9
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                 children: [
@@ -11087,7 +11230,7 @@ function Hit({ hit  }) {
                         children: "Year: "
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 172,
+                        lineNumber: 394,
                         columnNumber: 72
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactInstantsearch.Highlight, {
@@ -11095,13 +11238,13 @@ function Hit({ hit  }) {
                         hit: hit
                     }, void 0, false, {
                         fileName: "src/App.tsx",
-                        lineNumber: 173,
+                        lineNumber: 395,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/App.tsx",
-                lineNumber: 171,
+                lineNumber: 393,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
@@ -11109,17 +11252,17 @@ function Hit({ hit  }) {
                 children: "View Record"
             }, void 0, false, {
                 fileName: "src/App.tsx",
-                lineNumber: 175,
+                lineNumber: 397,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/App.tsx",
-        lineNumber: 143,
+        lineNumber: 359,
         columnNumber: 5
     }, this);
 }
-_s1(Hit, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
+_s(Hit, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
     return [
         _reactRouterDom.useNavigate
     ];
@@ -11134,760 +11277,158 @@ $RefreshReg$(_c1, "Hit");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","algoliasearch/lite":"ehDkI","react-instantsearch":"8zqIR","./Panel":"fMhgG","./App.css":"6n0o6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe"}],"ehDkI":[function(require,module,exports) {
-/*! algoliasearch-lite.umd.js | 4.20.0 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */ !function(e, t) {
-    module.exports = t();
-}(this, function() {
-    "use strict";
-    function e1(e, t, r) {
-        return t in e ? Object.defineProperty(e, t, {
-            value: r,
-            enumerable: !0,
-            configurable: !0,
-            writable: !0
-        }) : e[t] = r, e;
-    }
-    function t1(e, t2) {
-        var r = Object.keys(e);
-        if (Object.getOwnPropertySymbols) {
-            var n = Object.getOwnPropertySymbols(e);
-            t2 && (n = n.filter(function(t) {
-                return Object.getOwnPropertyDescriptor(e, t).enumerable;
-            })), r.push.apply(r, n);
-        }
-        return r;
-    }
-    function r1(r) {
-        for(var n = 1; n < arguments.length; n++){
-            var o = null != arguments[n] ? arguments[n] : {};
-            n % 2 ? t1(Object(o), !0).forEach(function(t) {
-                e1(r, t, o[t]);
-            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(o)) : t1(Object(o)).forEach(function(e) {
-                Object.defineProperty(r, e, Object.getOwnPropertyDescriptor(o, e));
-            });
-        }
-        return r;
-    }
-    function n1(e2, t3) {
-        if (null == e2) return {};
-        var r2, n2, o2 = function(e, t) {
-            if (null == e) return {};
-            var r, n, o = {}, a = Object.keys(e);
-            for(n = 0; n < a.length; n++)r = a[n], t.indexOf(r) >= 0 || (o[r] = e[r]);
-            return o;
-        }(e2, t3);
-        if (Object.getOwnPropertySymbols) {
-            var a2 = Object.getOwnPropertySymbols(e2);
-            for(n2 = 0; n2 < a2.length; n2++)r2 = a2[n2], t3.indexOf(r2) >= 0 || Object.prototype.propertyIsEnumerable.call(e2, r2) && (o2[r2] = e2[r2]);
-        }
-        return o2;
-    }
-    function o1(e3, t4) {
-        return function(e) {
-            if (Array.isArray(e)) return e;
-        }(e3) || function(e, t) {
-            if (!(Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e))) return;
-            var r = [], n = !0, o = !1, a = void 0;
-            try {
-                for(var u, i = e[Symbol.iterator](); !(n = (u = i.next()).done) && (r.push(u.value), !t || r.length !== t); n = !0);
-            } catch (e4) {
-                o = !0, a = e4;
-            } finally{
-                try {
-                    n || null == i.return || i.return();
-                } finally{
-                    if (o) throw a;
-                }
-            }
-            return r;
-        }(e3, t4) || function() {
-            throw new TypeError("Invalid attempt to destructure non-iterable instance");
-        }();
-    }
-    function a1(e5) {
-        return function(e) {
-            if (Array.isArray(e)) {
-                for(var t = 0, r = new Array(e.length); t < e.length; t++)r[t] = e[t];
-                return r;
-            }
-        }(e5) || function(e) {
-            if (Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e)) return Array.from(e);
-        }(e5) || function() {
-            throw new TypeError("Invalid attempt to spread non-iterable instance");
-        }();
-    }
-    function u1(e6) {
-        var t5, r3 = "algoliasearch-client-js-".concat(e6.key), n3 = function() {
-            return void 0 === t5 && (t5 = e6.localStorage || window.localStorage), t5;
-        }, a3 = function() {
-            return JSON.parse(n3().getItem(r3) || "{}");
-        }, u = function(e) {
-            n3().setItem(r3, JSON.stringify(e));
-        }, i2 = function() {
-            var t = e6.timeToLive ? 1e3 * e6.timeToLive : null, r4 = a3(), n4 = Object.fromEntries(Object.entries(r4).filter(function(e) {
-                return void 0 !== o1(e, 2)[1].timestamp;
-            }));
-            if (u(n4), t) {
-                var i = Object.fromEntries(Object.entries(n4).filter(function(e) {
-                    var r = o1(e, 2)[1], n = (new Date).getTime();
-                    return !(r.timestamp + t < n);
-                }));
-                u(i);
-            }
-        };
-        return {
-            get: function(e7, t6) {
-                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                };
-                return Promise.resolve().then(function() {
-                    i2();
-                    var t = JSON.stringify(e7);
-                    return a3()[t];
-                }).then(function(e) {
-                    return Promise.all([
-                        e ? e.value : t6(),
-                        void 0 !== e
-                    ]);
-                }).then(function(e) {
-                    var t = o1(e, 2), n = t[0], a = t[1];
-                    return Promise.all([
-                        n,
-                        a || r.miss(n)
-                    ]);
-                }).then(function(e) {
-                    return o1(e, 1)[0];
-                });
-            },
-            set: function(e, t) {
-                return Promise.resolve().then(function() {
-                    var o = a3();
-                    return o[JSON.stringify(e)] = {
-                        timestamp: (new Date).getTime(),
-                        value: t
-                    }, n3().setItem(r3, JSON.stringify(o)), t;
-                });
-            },
-            delete: function(e) {
-                return Promise.resolve().then(function() {
-                    var t = a3();
-                    delete t[JSON.stringify(e)], n3().setItem(r3, JSON.stringify(t));
-                });
-            },
-            clear: function() {
-                return Promise.resolve().then(function() {
-                    n3().removeItem(r3);
-                });
-            }
-        };
-    }
-    function i1(e8) {
-        var t7 = a1(e8.caches), r5 = t7.shift();
-        return void 0 === r5 ? {
-            get: function(e9, t) {
-                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                }, n = t();
-                return n.then(function(e) {
-                    return Promise.all([
-                        e,
-                        r.miss(e)
-                    ]);
-                }).then(function(e) {
-                    return o1(e, 1)[0];
-                });
-            },
-            set: function(e, t) {
-                return Promise.resolve(t);
-            },
-            delete: function(e) {
-                return Promise.resolve();
-            },
-            clear: function() {
-                return Promise.resolve();
-            }
-        } : {
-            get: function(e, n) {
-                var o = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                };
-                return r5.get(e, n, o).catch(function() {
-                    return i1({
-                        caches: t7
-                    }).get(e, n, o);
-                });
-            },
-            set: function(e, n) {
-                return r5.set(e, n).catch(function() {
-                    return i1({
-                        caches: t7
-                    }).set(e, n);
-                });
-            },
-            delete: function(e) {
-                return r5.delete(e).catch(function() {
-                    return i1({
-                        caches: t7
-                    }).delete(e);
-                });
-            },
-            clear: function() {
-                return r5.clear().catch(function() {
-                    return i1({
-                        caches: t7
-                    }).clear();
-                });
-            }
-        };
-    }
-    function s1() {
-        var e10 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
-            serializable: !0
-        }, t = {};
-        return {
-            get: function(r, n) {
-                var o = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                }, a = JSON.stringify(r);
-                if (a in t) return Promise.resolve(e10.serializable ? JSON.parse(t[a]) : t[a]);
-                var u = n(), i = o && o.miss || function() {
-                    return Promise.resolve();
-                };
-                return u.then(function(e) {
-                    return i(e);
-                }).then(function() {
-                    return u;
-                });
-            },
-            set: function(r, n) {
-                return t[JSON.stringify(r)] = e10.serializable ? JSON.stringify(n) : n, Promise.resolve(n);
-            },
-            delete: function(e) {
-                return delete t[JSON.stringify(e)], Promise.resolve();
-            },
-            clear: function() {
-                return t = {}, Promise.resolve();
-            }
-        };
-    }
-    function c1(e) {
-        for(var t = e.length - 1; t > 0; t--){
-            var r = Math.floor(Math.random() * (t + 1)), n = e[t];
-            e[t] = e[r], e[r] = n;
-        }
-        return e;
-    }
-    function l1(e, t) {
-        return t ? (Object.keys(t).forEach(function(r) {
-            e[r] = t[r](e);
-        }), e) : e;
-    }
-    function f1(e) {
-        for(var t = arguments.length, r = new Array(t > 1 ? t - 1 : 0), n = 1; n < t; n++)r[n - 1] = arguments[n];
-        var o = 0;
-        return e.replace(/%s/g, function() {
-            return encodeURIComponent(r[o++]);
-        });
-    }
-    var m1 = {
-        WithinQueryParameters: 0,
-        WithinHeaders: 1
-    };
-    function h1(e11, t) {
-        var r = e11 || {}, n = r.data || {};
-        return Object.keys(r).forEach(function(e) {
-            -1 === [
-                "timeout",
-                "headers",
-                "queryParameters",
-                "data",
-                "cacheable"
-            ].indexOf(e) && (n[e] = r[e]);
-        }), {
-            data: Object.entries(n).length > 0 ? n : void 0,
-            timeout: r.timeout || t,
-            headers: r.headers || {},
-            queryParameters: r.queryParameters || {},
-            cacheable: r.cacheable
-        };
-    }
-    var d1 = {
-        Read: 1,
-        Write: 2,
-        Any: 3
-    }, p1 = 1, v = 2, g = 3;
-    function y(e) {
-        var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : p1;
-        return r1(r1({}, e), {}, {
-            status: t,
-            lastUpdate: Date.now()
-        });
-    }
-    function b(e) {
-        return "string" == typeof e ? {
-            protocol: "https",
-            url: e,
-            accept: d1.Any
-        } : {
-            protocol: e.protocol || "https",
-            url: e.url,
-            accept: e.accept || d1.Any
-        };
-    }
-    var O = "GET", P = "POST";
-    function q(e12, t8) {
-        return Promise.all(t8.map(function(t) {
-            return e12.get(t, function() {
-                return Promise.resolve(y(t));
-            });
-        })).then(function(e13) {
-            var r = e13.filter(function(e14) {
-                return function(e) {
-                    return e.status === p1 || Date.now() - e.lastUpdate > 12e4;
-                }(e14);
-            }), n = e13.filter(function(e15) {
-                return function(e) {
-                    return e.status === g && Date.now() - e.lastUpdate <= 12e4;
-                }(e15);
-            }), o = [].concat(a1(r), a1(n));
-            return {
-                getTimeout: function(e, t) {
-                    return (0 === n.length && 0 === e ? 1 : n.length + 3 + e) * t;
-                },
-                statelessHosts: o.length > 0 ? o.map(function(e) {
-                    return b(e);
-                }) : t8
-            };
-        });
-    }
-    function j(e16, t9, n5, o3) {
-        var u = [], i = function(e, t) {
-            if (e.method === O || void 0 === e.data && void 0 === t.data) return;
-            var n = Array.isArray(e.data) ? e.data : r1(r1({}, e.data), t.data);
-            return JSON.stringify(n);
-        }(n5, o3), s = function(e17, t10) {
-            var n = r1(r1({}, e17.headers), t10.headers), o = {};
-            return Object.keys(n).forEach(function(e) {
-                var t = n[e];
-                o[e.toLowerCase()] = t;
-            }), o;
-        }(e16, o3), c = n5.method, l2 = n5.method !== O ? {} : r1(r1({}, n5.data), o3.data), f = r1(r1(r1({
-            "x-algolia-agent": e16.userAgent.value
-        }, e16.queryParameters), l2), o3.queryParameters), m = 0, h2 = function t11(r6, a) {
-            var l = r6.pop();
-            if (void 0 === l) throw {
-                name: "RetryError",
-                message: "Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.",
-                transporterStackTrace: A(u)
-            };
-            var h = {
-                data: i,
-                headers: s,
-                method: c,
-                url: S(l, n5.path, f),
-                connectTimeout: a(m, e16.timeouts.connect),
-                responseTimeout: a(m, o3.timeout)
-            }, d = function(e) {
-                var t = {
-                    request: h,
-                    response: e,
-                    host: l,
-                    triesLeft: r6.length
-                };
-                return u.push(t), t;
-            }, p = {
-                onSuccess: function(e18) {
-                    return function(e19) {
-                        try {
-                            return JSON.parse(e19.content);
-                        } catch (t12) {
-                            throw function(e, t) {
-                                return {
-                                    name: "DeserializationError",
-                                    message: e,
-                                    response: t
-                                };
-                            }(t12.message, e19);
-                        }
-                    }(e18);
-                },
-                onRetry: function(n) {
-                    var o = d(n);
-                    return n.isTimedOut && m++, Promise.all([
-                        e16.logger.info("Retryable failure", N(o)),
-                        e16.hostsCache.set(l, y(l, n.isTimedOut ? g : v))
-                    ]).then(function() {
-                        return t11(r6, a);
-                    });
-                },
-                onFail: function(e20) {
-                    throw d(e20), function(e22, t13) {
-                        var r7 = e22.content, n = e22.status, o = r7;
-                        try {
-                            o = JSON.parse(r7).message;
-                        } catch (e21) {}
-                        return function(e, t, r) {
-                            return {
-                                name: "ApiError",
-                                message: e,
-                                status: t,
-                                transporterStackTrace: r
-                            };
-                        }(o, n, t13);
-                    }(e20, A(u));
-                }
-            };
-            return e16.requester.send(h).then(function(e23) {
-                return function(e24, t14) {
-                    return function(e25) {
-                        var t15 = e25.status;
-                        return e25.isTimedOut || function(e) {
-                            var t = e.isTimedOut, r = e.status;
-                            return !t && 0 == ~~r;
-                        }(e25) || 2 != ~~(t15 / 100) && 4 != ~~(t15 / 100);
-                    }(e24) ? t14.onRetry(e24) : 2 == ~~(e24.status / 100) ? t14.onSuccess(e24) : t14.onFail(e24);
-                }(e23, p);
-            });
-        };
-        return q(e16.hostsCache, t9).then(function(e) {
-            return h2(a1(e.statelessHosts).reverse(), e.getTimeout);
-        });
-    }
-    function w(e26) {
-        var t = {
-            value: "Algolia for JavaScript (".concat(e26, ")"),
-            add: function(e) {
-                var r = "; ".concat(e.segment).concat(void 0 !== e.version ? " (".concat(e.version, ")") : "");
-                return -1 === t.value.indexOf(r) && (t.value = "".concat(t.value).concat(r)), t;
-            }
-        };
-        return t;
-    }
-    function S(e, t, r) {
-        var n = T(r), o = "".concat(e.protocol, "://").concat(e.url, "/").concat("/" === t.charAt(0) ? t.substr(1) : t);
-        return n.length && (o += "?".concat(n)), o;
-    }
-    function T(e) {
-        return Object.keys(e).map(function(t) {
-            var r;
-            return f1("%s=%s", t, (r = e[t], "[object Object]" === Object.prototype.toString.call(r) || "[object Array]" === Object.prototype.toString.call(r) ? JSON.stringify(e[t]) : e[t]));
-        }).join("&");
-    }
-    function A(e27) {
-        return e27.map(function(e) {
-            return N(e);
-        });
-    }
-    function N(e) {
-        var t = e.request.headers["x-algolia-api-key"] ? {
-            "x-algolia-api-key": "*****"
-        } : {};
-        return r1(r1({}, e), {}, {
-            request: r1(r1({}, e.request), {}, {
-                headers: r1(r1({}, e.request.headers), t)
-            })
-        });
-    }
-    var x = function(e28) {
-        var t16 = e28.appId, n6 = function(e, t, r) {
-            var n = {
-                "x-algolia-api-key": r,
-                "x-algolia-application-id": t
-            };
-            return {
-                headers: function() {
-                    return e === m1.WithinHeaders ? n : {};
-                },
-                queryParameters: function() {
-                    return e === m1.WithinQueryParameters ? n : {};
-                }
-            };
-        }(void 0 !== e28.authMode ? e28.authMode : m1.WithinHeaders, t16, e28.apiKey), a4 = function(e29) {
-            var t17 = e29.hostsCache, r8 = e29.logger, n7 = e29.requester, a5 = e29.requestsCache, u = e29.responsesCache, i = e29.timeouts, s = e29.userAgent, c = e29.hosts, l = e29.queryParameters, f = {
-                hostsCache: t17,
-                logger: r8,
-                requester: n7,
-                requestsCache: a5,
-                responsesCache: u,
-                timeouts: i,
-                userAgent: s,
-                headers: e29.headers,
-                queryParameters: l,
-                hosts: c.map(function(e) {
-                    return b(e);
-                }),
-                read: function(e30, t18) {
-                    var r = h1(t18, f.timeouts.read), n = function() {
-                        return j(f, f.hosts.filter(function(e) {
-                            return 0 != (e.accept & d1.Read);
-                        }), e30, r);
-                    };
-                    if (!0 !== (void 0 !== r.cacheable ? r.cacheable : e30.cacheable)) return n();
-                    var a = {
-                        request: e30,
-                        mappedRequestOptions: r,
-                        transporter: {
-                            queryParameters: f.queryParameters,
-                            headers: f.headers
-                        }
-                    };
-                    return f.responsesCache.get(a, function() {
-                        return f.requestsCache.get(a, function() {
-                            return f.requestsCache.set(a, n()).then(function(e) {
-                                return Promise.all([
-                                    f.requestsCache.delete(a),
-                                    e
-                                ]);
-                            }, function(e) {
-                                return Promise.all([
-                                    f.requestsCache.delete(a),
-                                    Promise.reject(e)
-                                ]);
-                            }).then(function(e) {
-                                var t = o1(e, 2);
-                                t[0];
-                                return t[1];
-                            });
-                        });
-                    }, {
-                        miss: function(e) {
-                            return f.responsesCache.set(a, e);
-                        }
-                    });
-                },
-                write: function(e31, t) {
-                    return j(f, f.hosts.filter(function(e) {
-                        return 0 != (e.accept & d1.Write);
-                    }), e31, h1(t, f.timeouts.write));
-                }
-            };
-            return f;
-        }(r1(r1({
-            hosts: [
-                {
-                    url: "".concat(t16, "-dsn.algolia.net"),
-                    accept: d1.Read
-                },
-                {
-                    url: "".concat(t16, ".algolia.net"),
-                    accept: d1.Write
-                }
-            ].concat(c1([
-                {
-                    url: "".concat(t16, "-1.algolianet.com")
-                },
-                {
-                    url: "".concat(t16, "-2.algolianet.com")
-                },
-                {
-                    url: "".concat(t16, "-3.algolianet.com")
-                }
-            ]))
-        }, e28), {}, {
-            headers: r1(r1(r1({}, n6.headers()), {
-                "content-type": "application/x-www-form-urlencoded"
-            }), e28.headers),
-            queryParameters: r1(r1({}, n6.queryParameters()), e28.queryParameters)
-        }));
-        return l1({
-            transporter: a4,
-            appId: t16,
-            addAlgoliaAgent: function(e, t) {
-                a4.userAgent.add({
-                    segment: e,
-                    version: t
-                });
-            },
-            clearCache: function() {
-                return Promise.all([
-                    a4.requestsCache.clear(),
-                    a4.responsesCache.clear()
-                ]).then(function() {});
-            }
-        }, e28.methods);
-    }, C = function(e) {
-        return function(t, r) {
-            return t.method === O ? e.transporter.read(t, r) : e.transporter.write(t, r);
-        };
-    }, E = function(e) {
-        return function(t) {
-            var r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, n = {
-                transporter: e.transporter,
-                appId: e.appId,
-                indexName: t
-            };
-            return l1(n, r.methods);
-        };
-    }, J = function(e32) {
-        return function(t, n) {
-            var o = t.map(function(e) {
-                return r1(r1({}, e), {}, {
-                    params: T(e.params || {})
-                });
-            });
-            return e32.transporter.read({
-                method: P,
-                path: "1/indexes/*/queries",
-                data: {
-                    requests: o
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, k = function(e) {
-        return function(t19, o) {
-            return Promise.all(t19.map(function(t) {
-                var a = t.params, u = a.facetName, i = a.facetQuery, s = n1(a, [
-                    "facetName",
-                    "facetQuery"
-                ]);
-                return E(e)(t.indexName, {
-                    methods: {
-                        searchForFacetValues: R
-                    }
-                }).searchForFacetValues(u, i, r1(r1({}, o), s));
-            }));
-        };
-    }, I = function(e) {
-        return function(t, r, n) {
-            return e.transporter.read({
-                method: P,
-                path: f1("1/answers/%s/prediction", e.indexName),
-                data: {
-                    query: t,
-                    queryLanguages: r
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, F = function(e) {
-        return function(t, r) {
-            return e.transporter.read({
-                method: P,
-                path: f1("1/indexes/%s/query", e.indexName),
-                data: {
-                    query: t
-                },
-                cacheable: !0
-            }, r);
-        };
-    }, R = function(e) {
-        return function(t, r, n) {
-            return e.transporter.read({
-                method: P,
-                path: f1("1/indexes/%s/facets/%s/query", e.indexName, t),
-                data: {
-                    facetQuery: r
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, D = 1, W = 2, H = 3;
-    function Q(e33, t20, n8) {
-        var o4, a6 = {
-            appId: e33,
-            apiKey: t20,
-            timeouts: {
-                connect: 1,
-                read: 2,
-                write: 30
-            },
-            requester: {
-                send: function(e34) {
-                    return new Promise(function(t21) {
-                        var r = new XMLHttpRequest;
-                        r.open(e34.method, e34.url, !0), Object.keys(e34.headers).forEach(function(t) {
-                            return r.setRequestHeader(t, e34.headers[t]);
-                        });
-                        var n9, o = function(e, n) {
-                            return setTimeout(function() {
-                                r.abort(), t21({
-                                    status: 0,
-                                    content: n,
-                                    isTimedOut: !0
-                                });
-                            }, 1e3 * e);
-                        }, a = o(e34.connectTimeout, "Connection timeout");
-                        r.onreadystatechange = function() {
-                            r.readyState > r.OPENED && void 0 === n9 && (clearTimeout(a), n9 = o(e34.responseTimeout, "Socket timeout"));
-                        }, r.onerror = function() {
-                            0 === r.status && (clearTimeout(a), clearTimeout(n9), t21({
-                                content: r.responseText || "Network request failed",
-                                status: r.status,
-                                isTimedOut: !1
-                            }));
-                        }, r.onload = function() {
-                            clearTimeout(a), clearTimeout(n9), t21({
-                                content: r.responseText,
-                                status: r.status,
-                                isTimedOut: !1
-                            });
-                        }, r.send(e34.data);
-                    });
-                }
-            },
-            logger: (o4 = H, {
-                debug: function(e, t) {
-                    return D >= o4 && console.debug(e, t), Promise.resolve();
-                },
-                info: function(e, t) {
-                    return W >= o4 && console.info(e, t), Promise.resolve();
-                },
-                error: function(e, t) {
-                    return console.error(e, t), Promise.resolve();
-                }
-            }),
-            responsesCache: s1(),
-            requestsCache: s1({
-                serializable: !1
-            }),
-            hostsCache: i1({
-                caches: [
-                    u1({
-                        key: "".concat("4.20.0", "-").concat(e33)
-                    }),
-                    s1()
-                ]
-            }),
-            userAgent: w("4.20.0").add({
-                segment: "Browser",
-                version: "lite"
-            }),
-            authMode: m1.WithinQueryParameters
-        };
-        return x(r1(r1(r1({}, a6), n8), {}, {
-            methods: {
-                search: J,
-                searchForFacetValues: k,
-                multipleQueries: J,
-                multipleSearchForFacetValues: k,
-                customRequest: C,
-                initIndex: function(e) {
-                    return function(t) {
-                        return E(e)(t, {
-                            methods: {
-                                search: F,
-                                searchForFacetValues: R,
-                                findAnswers: I
-                            }
-                        });
-                    };
-                }
-            }
-        }));
-    }
-    return Q.version = "4.20.0", Q;
-});
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./App.css":"6n0o6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","./components/FacetDropdown":"gGCsF","qs":"kW4GH","react-instantsearch":"8zqIR","algoliasearch/lite":"ehDkI"}],"6n0o6":[function() {},{}],"gGCsF":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$481c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$481c.prelude(module);
 
-},{}],"8zqIR":[function(require,module,exports) {
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FacetDropdown", ()=>FacetDropdown
+);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactInstantsearch = require("react-instantsearch");
+var _panel = require("./Panel");
+var _useCloseDropdown = require("../hooks/useCloseDropdown");
+var _useLockedBody = require("../hooks/useLockedBody");
+var _useMediaQuery = require("../hooks/useMediaQuery");
+var _utils = require("../utils");
+var _facetDropdownCss = require("./FacetDropdown.css");
+var _s = $RefreshSig$(), _s1 = $RefreshSig$();
+function getAttributeRefinements(attribute, items) {
+    const item1 = items.find((item)=>item.attribute === attribute
+    );
+    return item1?.refinements || [];
+}
+function DropdownMiddleware({ isOpened , closeOnChange , close  }) {
+    _s();
+    const { addMiddlewares  } = _reactInstantsearch.useInstantSearch();
+    _react.useEffect(()=>addMiddlewares(()=>({
+                onStateChange () {
+                    const shouldCloseOnChange = closeOnChange === true || typeof closeOnChange === 'function' && closeOnChange() === true;
+                    // Close the dropdown if it's opened and `closeOnChange` is true
+                    if (isOpened && shouldCloseOnChange) close();
+                }
+            })
+        )
+    );
+    return null;
+}
+_s(DropdownMiddleware, "iLZNwYKEEtJlb8XeNxWMXB7iAvQ=", false, function() {
+    return [
+        _reactInstantsearch.useInstantSearch
+    ];
+});
+_c = DropdownMiddleware;
+function FacetDropdown({ children , buttonText , closeOnChange , classNames ={}  }) {
+    _s1();
+    const { results , uiState  } = _reactInstantsearch.useInstantSearch();
+    const { items  } = _reactInstantsearch.useCurrentRefinements({}, {
+        $$widgetType: 'cmty.facetDropdown'
+    });
+    const [isOpened, setIsOpened] = _react.useState(false);
+    const panelRef = _react.useRef(null);
+    // Close the dropdown when click outside or press the Escape key
+    const close = _react.useCallback(()=>setIsOpened(false)
+    , []);
+    _useCloseDropdown.useCloseDropdown(panelRef, close, isOpened);
+    // Prevent scrolling on mobile when the dropdown is opened
+    const isMobile = _useMediaQuery.useMediaQuery('(max-width: 375px)');
+    _useLockedBody.useLockedBody(isOpened && isMobile);
+    // Get the attribute(s) of the first child widget
+    const attributeProp = _utils.getFirstChildPropValue(children, (props)=>'attributes' in props ? 'attributes' : 'attribute'
+    );
+    if (!attributeProp) throw new Error('<Dropdown> widget only supports InstantSearch widgets with an `attribute` or `attributes` prop.');
+    // Get the refinements for the attribute
+    const attribute = typeof attributeProp === 'string' ? attributeProp : attributeProp[0];
+    const refinements = getAttributeRefinements(attribute, items);
+    const isRefined = refinements.length > 0;
+    const isDisabled = results.hits.length === 0;
+    // Get the header button text
+    let text;
+    if (typeof buttonText === 'string') text = buttonText;
+    else if (typeof buttonText === 'function') text = buttonText({
+        results,
+        uiState,
+        refinements
+    });
+    else if (typeof attribute === 'string') text = isRefined ? `${_utils.capitalize(attribute)} (${refinements.length})` : _utils.capitalize(attribute);
+    const header = /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+        type: "button",
+        className: _utils.cx('ais-Dropdown-button', classNames.button, isRefined && _utils.cx('ais-Dropdown-button--refined', classNames.buttonRefined), isDisabled && 'ais-Dropdown-button--disabled'),
+        disabled: isDisabled,
+        onClick: ()=>setIsOpened((opened)=>!opened
+            )
+        ,
+        children: text
+    }, void 0, false, {
+        fileName: "src/components/FacetDropdown.tsx",
+        lineNumber: 134,
+        columnNumber: 7
+    }, this);
+    const footer = /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
+        className: _utils.cx('ais-Dropdown-close ais-Dropdown-button', classNames.closeButton),
+        onClick: close,
+        children: "Apply"
+    }, void 0, false, {
+        fileName: "src/components/FacetDropdown.tsx",
+        lineNumber: 151,
+        columnNumber: 7
+    }, this);
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_panel.Panel, {
+        header: header,
+        footer: footer,
+        className: _utils.cx('ais-Dropdown', isOpened && 'ais-Dropdown--opened', classNames.root),
+        ref: panelRef,
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV(DropdownMiddleware, {
+                isOpened: isOpened,
+                closeOnChange: closeOnChange,
+                close: close
+            }, void 0, false, {
+                fileName: "src/components/FacetDropdown.tsx",
+                lineNumber: 173,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h2", {
+                className: _utils.cx('ais-Dropdown-mobileTitle', classNames.mobileTitle),
+                children: text
+            }, void 0, false, {
+                fileName: "src/components/FacetDropdown.tsx",
+                lineNumber: 178,
+                columnNumber: 9
+            }, this),
+            children
+        ]
+    }, void 0, true, {
+        fileName: "src/components/FacetDropdown.tsx",
+        lineNumber: 163,
+        columnNumber: 7
+    }, this);
+}
+_s1(FacetDropdown, "vWmvsOP/M9AuZjMg8tNZL6f1LK4=", false, function() {
+    return [
+        _reactInstantsearch.useInstantSearch,
+        _reactInstantsearch.useCurrentRefinements,
+        _useCloseDropdown.useCloseDropdown,
+        _useMediaQuery.useMediaQuery,
+        _useLockedBody.useLockedBody
+    ];
+});
+_c1 = FacetDropdown;
+var _c, _c1;
+$RefreshReg$(_c, "DropdownMiddleware");
+$RefreshReg$(_c1, "FacetDropdown");
+
+  $parcel$ReactRefreshHelpers$481c.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-instantsearch":"8zqIR","./Panel":"RMtNk","../hooks/useCloseDropdown":"bhfnA","../hooks/useLockedBody":"8YST1","../hooks/useMediaQuery":"9Ucic","../utils":"dsXzW","./FacetDropdown.css":"7aaCW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"8zqIR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _reactInstantsearchCore = require("react-instantsearch-core");
@@ -23342,107 +22883,33 @@ module.exports = require('../cjs/use-sync-external-store-shim.development.js');
  * @license React
  * use-sync-external-store-shim.development.js
  *
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */ 'use strict';
+ */ "use strict";
 (function() {
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
-    var React = require('react');
-    var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function error(format) {
-        for(var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++)args[_key2 - 1] = arguments[_key2];
-        printWarning('error', format, args);
+    function is(x, y) {
+        return x === y && (0 !== x || 1 / x === 1 / y) || x !== x && y !== y;
     }
-    function printWarning(level, format, args) {
-        var ReactDebugCurrentFrame = ReactSharedInternals.ReactDebugCurrentFrame;
-        var stack = ReactDebugCurrentFrame.getStackAddendum();
-        if (stack !== '') {
-            format += '%s';
-            args = args.concat([
-                stack
-            ]);
-        } // eslint-disable-next-line react-internal/safe-string-coercion
-        var argsWithFormat = args.map(function(item) {
-            return String(item);
-        }); // Careful: RN currently depends on this prefix
-        argsWithFormat.unshift('Warning: ' + format); // We intentionally don't use spread (or .apply) directly because it
-        // breaks IE9: https://github.com/facebook/react/issues/13610
-        // eslint-disable-next-line react-internal/no-production-logging
-        Function.prototype.apply.call(console[level], console, argsWithFormat);
-    }
-    /**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */ function is(x, y) {
-        return x === y && (x !== 0 || 1 / x === 1 / y) || x !== x && y !== y // eslint-disable-line no-self-compare
-        ;
-    }
-    var objectIs = typeof Object.is === 'function' ? Object.is : is;
-    // dispatch for CommonJS interop named imports.
-    var useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue;
-    var didWarnOld18Alpha = false;
-    var didWarnUncachedGetSnapshot = false; // Disclaimer: This shim breaks many of the rules of React, and only works
-    // because of a very particular set of implementation details and assumptions
-    // -- change any one of them and it will break. The most important assumption
-    // is that updates are always synchronous, because concurrent rendering is
-    // only available in versions of React that also have a built-in
-    // useSyncExternalStore API. And we only use this shim when the built-in API
-    // does not exist.
-    //
-    // Do not assume that the clever hacks used by this hook also work in general.
-    // The point of this shim is to replace the need for hacks by other libraries.
-    function useSyncExternalStore(subscribe, getSnapshot, // React do not expose a way to check if we're hydrating. So users of the shim
-    // will need to track that themselves and return the correct value
-    // from `getSnapshot`.
-    getServerSnapshot) {
-        if (!didWarnOld18Alpha) {
-            if (React.startTransition !== undefined) {
-                didWarnOld18Alpha = true;
-                error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release.");
-            }
-        }
-        // breaks the rules of React, and only works here because of specific
-        // implementation details, most importantly that updates are
-        // always synchronous.
+    function useSyncExternalStore$2(subscribe, getSnapshot) {
+        didWarnOld18Alpha || void 0 === React.startTransition || (didWarnOld18Alpha = !0, console.error("You are using an outdated, pre-release alpha of React 18 that does not support useSyncExternalStore. The use-sync-external-store shim will not work correctly. Upgrade to a newer pre-release."));
         var value = getSnapshot();
         if (!didWarnUncachedGetSnapshot) {
             var cachedValue = getSnapshot();
-            if (!objectIs(value, cachedValue)) {
-                error('The result of getSnapshot should be cached to avoid an infinite loop');
-                didWarnUncachedGetSnapshot = true;
-            }
+            objectIs(value, cachedValue) || (console.error("The result of getSnapshot should be cached to avoid an infinite loop"), didWarnUncachedGetSnapshot = !0);
         }
-        // re-render whenever the subscribed state changes by updating an some
-        // arbitrary useState hook. Then, during render, we call getSnapshot to read
-        // the current value.
-        //
-        // Because we don't actually use the state returned by the useState hook, we
-        // can save a bit of memory by storing other stuff in that slot.
-        //
-        // To implement the early bailout, we need to track some things on a mutable
-        // object. Usually, we would put that in a useRef hook, but we can stash it in
-        // our useState hook instead.
-        //
-        // To force a re-render, we call forceUpdate({inst}). That works because the
-        // new object always fails an equality check.
-        var _useState = useState({
+        cachedValue = useState({
             inst: {
                 value: value,
                 getSnapshot: getSnapshot
             }
-        }), inst = _useState[0].inst, forceUpdate = _useState[1]; // Track the latest getSnapshot function with a ref. This needs to be updated
-        // in the layout phase so we can access it during the tearing check that
-        // happens on subscribe.
+        });
+        var inst = cachedValue[0].inst, forceUpdate = cachedValue[1];
         useLayoutEffect(function() {
             inst.value = value;
-            inst.getSnapshot = getSnapshot; // Whenever getSnapshot or subscribe changes, we need to check in the
-            // commit phase if there was an interleaved mutation. In concurrent mode
-            // this can happen all the time, but even in synchronous mode, an earlier
-            // effect may have mutated the store.
-            if (checkIfSnapshotChanged(inst)) // Force a re-render.
-            forceUpdate({
+            inst.getSnapshot = getSnapshot;
+            checkIfSnapshotChanged(inst) && forceUpdate({
                 inst: inst
             });
         }, [
@@ -23451,25 +22918,14 @@ module.exports = require('../cjs/use-sync-external-store-shim.development.js');
             getSnapshot
         ]);
         useEffect(function() {
-            // Check for changes right before subscribing. Subsequent changes will be
-            // detected in the subscription handler.
-            if (checkIfSnapshotChanged(inst)) // Force a re-render.
-            forceUpdate({
+            checkIfSnapshotChanged(inst) && forceUpdate({
                 inst: inst
             });
-            var handleStoreChange = function() {
-                // TODO: Because there is no cross-renderer API for batching updates, it's
-                // up to the consumer of this library to wrap their subscription event
-                // with unstable_batchedUpdates. Should we try to detect when this isn't
-                // the case and print a warning in development?
-                // The store changed. Check if the snapshot changed since the last time we
-                // read from the store.
-                if (checkIfSnapshotChanged(inst)) // Force a re-render.
-                forceUpdate({
+            return subscribe(function() {
+                checkIfSnapshotChanged(inst) && forceUpdate({
                     inst: inst
                 });
-            }; // Subscribe to the store and return a clean-up function.
-            return subscribe(handleStoreChange);
+            });
         }, [
             subscribe
         ]);
@@ -23478,27 +22934,21 @@ module.exports = require('../cjs/use-sync-external-store-shim.development.js');
     }
     function checkIfSnapshotChanged(inst) {
         var latestGetSnapshot = inst.getSnapshot;
-        var prevValue = inst.value;
+        inst = inst.value;
         try {
             var nextValue = latestGetSnapshot();
-            return !objectIs(prevValue, nextValue);
+            return !objectIs(inst, nextValue);
         } catch (error) {
-            return true;
+            return !0;
         }
     }
-    function useSyncExternalStore$1(subscribe, getSnapshot, getServerSnapshot) {
-        // Note: The shim does not use getServerSnapshot, because pre-18 versions of
-        // React do not expose a way to check if we're hydrating. So users of the shim
-        // will need to track that themselves and return the correct value
-        // from `getSnapshot`.
+    function useSyncExternalStore$1(subscribe, getSnapshot) {
         return getSnapshot();
     }
-    var canUseDOM = !!(typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.document.createElement !== 'undefined');
-    var isServerEnvironment = !canUseDOM;
-    var shim = isServerEnvironment ? useSyncExternalStore$1 : useSyncExternalStore;
-    var useSyncExternalStore$2 = React.useSyncExternalStore !== undefined ? React.useSyncExternalStore : shim;
-    exports.useSyncExternalStore = useSyncExternalStore$2;
-    /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
+    "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(Error());
+    var React = require("react"), objectIs = "function" === typeof Object.is ? Object.is : is, useState = React.useState, useEffect = React.useEffect, useLayoutEffect = React.useLayoutEffect, useDebugValue = React.useDebugValue, didWarnOld18Alpha = !1, didWarnUncachedGetSnapshot = !1, shim = "undefined" === typeof window || "undefined" === typeof window.document || "undefined" === typeof window.document.createElement ? useSyncExternalStore$1 : useSyncExternalStore$2;
+    exports.useSyncExternalStore = void 0 !== React.useSyncExternalStore ? React.useSyncExternalStore : shim;
+    "undefined" !== typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ && "function" === typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop && __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(Error());
 })();
 
 },{"react":"21dqq"}],"d5jf4":[function(require,module,exports) {
@@ -32754,11 +32204,11 @@ function ToggleRefinement(_ref) {
     }, label)));
 }
 
-},{"react":"21dqq","./lib/cx.js":"834EZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fMhgG":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$a479 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{"react":"21dqq","./lib/cx.js":"834EZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"RMtNk":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4b1c = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$a479.prelude(module);
+$parcel$ReactRefreshHelpers$4b1c.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -32767,50 +32217,3220 @@ parcelHelpers.export(exports, "Panel", ()=>Panel
 );
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-function Panel({ header , children  }) {
+var _utils = require("../utils");
+const Panel = /*#__PURE__*/ _react.forwardRef(_c = ({ children , header , footer , className , classNames ={} , ...props }, ref)=>{
     return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        className: "ais-Panel",
+        ...props,
+        className: _utils.cx('ais-Panel', classNames.root, className),
+        ref: ref,
         children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                className: "ais-Panel-header",
-                children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("span", {
-                    children: header
-                }, void 0, false, {
-                    fileName: "src/Panel.tsx",
-                    lineNumber: 11,
-                    columnNumber: 9
-                }, this)
+            header && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: _utils.cx('ais-Panel-header', classNames.header),
+                children: header
             }, void 0, false, {
-                fileName: "src/Panel.tsx",
-                lineNumber: 10,
-                columnNumber: 7
-            }, this),
+                fileName: "src/components/Panel.tsx",
+                lineNumber: 33,
+                columnNumber: 13
+            }, undefined),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-                className: "ais-Panel-body",
+                className: _utils.cx('ais-Panel-body', classNames.body),
                 children: children
             }, void 0, false, {
-                fileName: "src/Panel.tsx",
-                lineNumber: 13,
-                columnNumber: 7
-            }, this)
+                fileName: "src/components/Panel.tsx",
+                lineNumber: 37,
+                columnNumber: 11
+            }, undefined),
+            footer && /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+                className: _utils.cx('ais-Panel-footer', classNames.footer),
+                children: footer
+            }, void 0, false, {
+                fileName: "src/components/Panel.tsx",
+                lineNumber: 39,
+                columnNumber: 13
+            }, undefined)
         ]
     }, void 0, true, {
-        fileName: "src/Panel.tsx",
-        lineNumber: 9,
-        columnNumber: 5
-    }, this);
-}
-_c = Panel;
-var _c;
-$RefreshReg$(_c, "Panel");
+        fileName: "src/components/Panel.tsx",
+        lineNumber: 27,
+        columnNumber: 9
+    }, undefined);
+});
+_c1 = Panel;
+var _c, _c1;
+$RefreshReg$(_c, "Panel$forwardRef");
+$RefreshReg$(_c1, "Panel");
 
-  $parcel$ReactRefreshHelpers$a479.postlude(module);
+  $parcel$ReactRefreshHelpers$4b1c.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"6n0o6":[function() {},{}],"j6uA9":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../utils":"dsXzW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dsXzW":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$2977 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$2977.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cx", ()=>cx
+);
+parcelHelpers.export(exports, "capitalize", ()=>capitalize
+);
+parcelHelpers.export(exports, "getFirstChildPropValue", ()=>getFirstChildPropValue
+);
+var _react = require("react");
+function cx(...classNames) {
+    return classNames.filter(Boolean).join(' ');
+}
+function capitalize(value) {
+    if (typeof value !== 'string') return '';
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
+function getFirstChildPropValue(children, propNameCb) {
+    let propValue = undefined;
+    _react.Children.forEach(children, (element)=>{
+        if (!_react.isValidElement(element)) return;
+        const propName = propNameCb(element.props);
+        if (propName in element.props) {
+            propValue = element.props[propName];
+            return;
+        }
+    });
+    return propValue;
+}
+
+  $parcel$ReactRefreshHelpers$2977.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"bhfnA":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$94ed = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$94ed.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useCloseDropdown", ()=>useCloseDropdown
+);
+var _react = require("react");
+function useCloseDropdown(ref, handler, enabled = true) {
+    _react.useEffect(()=>{
+        if (!enabled) return;
+        const handleMouseDown = (event)=>{
+            if (!ref.current?.contains(event.target)) handler();
+        };
+        function handleKeyDown(event) {
+            if (event.key === 'Escape') handler();
+        }
+        document.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('keydown', handleKeyDown);
+        return ()=>{
+            document.removeEventListener('mousedown', handleMouseDown);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [
+        ref,
+        handler,
+        enabled
+    ]);
+}
+
+  $parcel$ReactRefreshHelpers$94ed.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"8YST1":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$7492 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$7492.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useLockedBody", ()=>useLockedBody
+);
+var _react = require("react");
+function useLockedBody(locked = false) {
+    _react.useLayoutEffect(()=>{
+        if (!locked) return;
+        const originalOverflow = document.body.style.overflow;
+        const originalPaddingRight = document.body.style.paddingRight;
+        // Lock body scroll
+        document.body.style.overflow = 'hidden';
+        // Get the scrollBar width
+        const root = document.getElementById('root');
+        const scrollBarWidth = root ? root.offsetWidth - root.scrollWidth : 0;
+        // Avoid width reflow
+        if (scrollBarWidth) document.body.style.paddingRight = `${scrollBarWidth}px`;
+        return ()=>{
+            document.body.style.overflow = originalOverflow;
+            if (scrollBarWidth) document.body.style.paddingRight = originalPaddingRight;
+        };
+    }, [
+        locked
+    ]);
+}
+
+  $parcel$ReactRefreshHelpers$7492.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"9Ucic":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$79e5 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$79e5.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useMediaQuery", ()=>useMediaQuery
+);
+var _react = require("react");
+function useMediaQuery(query1) {
+    const getMatches = (query)=>{
+        // Prevents SSR issues
+        if (typeof window !== 'undefined') return window.matchMedia(query).matches;
+        return false;
+    };
+    const [matches, setMatches] = _react.useState(getMatches(query1));
+    function handleChange() {
+        setMatches(getMatches(query1));
+    }
+    _react.useEffect(()=>{
+        const matchMedia = window.matchMedia(query1);
+        // Triggered at the first client-side load and if query changes
+        handleChange();
+        // Listen matchMedia
+        matchMedia.addEventListener('change', handleChange);
+        return ()=>{
+            matchMedia.removeEventListener('change', handleChange);
+        };
+    // eslint-disable-next-line react/exhaustive-deps
+    }, [
+        query1
+    ]);
+    return matches;
+}
+
+  $parcel$ReactRefreshHelpers$79e5.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7aaCW":[function() {},{}],"ehDkI":[function(require,module,exports) {
+/*! algoliasearch-lite.umd.js | 4.24.0 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */ !function(e, t) {
+    module.exports = t();
+}(this, function() {
+    "use strict";
+    function e1(e, t, r) {
+        return t in e ? Object.defineProperty(e, t, {
+            value: r,
+            enumerable: !0,
+            configurable: !0,
+            writable: !0
+        }) : e[t] = r, e;
+    }
+    function t1(e, t2) {
+        var r = Object.keys(e);
+        if (Object.getOwnPropertySymbols) {
+            var n = Object.getOwnPropertySymbols(e);
+            t2 && (n = n.filter(function(t) {
+                return Object.getOwnPropertyDescriptor(e, t).enumerable;
+            })), r.push.apply(r, n);
+        }
+        return r;
+    }
+    function r1(r) {
+        for(var n = 1; n < arguments.length; n++){
+            var o = null != arguments[n] ? arguments[n] : {};
+            n % 2 ? t1(Object(o), !0).forEach(function(t) {
+                e1(r, t, o[t]);
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(o)) : t1(Object(o)).forEach(function(e) {
+                Object.defineProperty(r, e, Object.getOwnPropertyDescriptor(o, e));
+            });
+        }
+        return r;
+    }
+    function n1(e2, t3) {
+        if (null == e2) return {};
+        var r2, n2, o2 = function(e, t) {
+            if (null == e) return {};
+            var r, n, o = {}, a = Object.keys(e);
+            for(n = 0; n < a.length; n++)r = a[n], t.indexOf(r) >= 0 || (o[r] = e[r]);
+            return o;
+        }(e2, t3);
+        if (Object.getOwnPropertySymbols) {
+            var a2 = Object.getOwnPropertySymbols(e2);
+            for(n2 = 0; n2 < a2.length; n2++)r2 = a2[n2], t3.indexOf(r2) >= 0 || Object.prototype.propertyIsEnumerable.call(e2, r2) && (o2[r2] = e2[r2]);
+        }
+        return o2;
+    }
+    function o1(e3, t4) {
+        return function(e) {
+            if (Array.isArray(e)) return e;
+        }(e3) || function(e, t) {
+            if (!(Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e))) return;
+            var r = [], n = !0, o = !1, a = void 0;
+            try {
+                for(var u, i = e[Symbol.iterator](); !(n = (u = i.next()).done) && (r.push(u.value), !t || r.length !== t); n = !0);
+            } catch (e4) {
+                o = !0, a = e4;
+            } finally{
+                try {
+                    n || null == i.return || i.return();
+                } finally{
+                    if (o) throw a;
+                }
+            }
+            return r;
+        }(e3, t4) || function() {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance");
+        }();
+    }
+    function a1(e5) {
+        return function(e) {
+            if (Array.isArray(e)) {
+                for(var t = 0, r = new Array(e.length); t < e.length; t++)r[t] = e[t];
+                return r;
+            }
+        }(e5) || function(e) {
+            if (Symbol.iterator in Object(e) || "[object Arguments]" === Object.prototype.toString.call(e)) return Array.from(e);
+        }(e5) || function() {
+            throw new TypeError("Invalid attempt to spread non-iterable instance");
+        }();
+    }
+    function u1(e6) {
+        var t5, r3 = "algoliasearch-client-js-".concat(e6.key), n3 = function() {
+            return void 0 === t5 && (t5 = e6.localStorage || window.localStorage), t5;
+        }, a3 = function() {
+            return JSON.parse(n3().getItem(r3) || "{}");
+        }, u = function(e) {
+            n3().setItem(r3, JSON.stringify(e));
+        }, i2 = function() {
+            var t = e6.timeToLive ? 1e3 * e6.timeToLive : null, r4 = a3(), n4 = Object.fromEntries(Object.entries(r4).filter(function(e) {
+                return void 0 !== o1(e, 2)[1].timestamp;
+            }));
+            if (u(n4), t) {
+                var i = Object.fromEntries(Object.entries(n4).filter(function(e) {
+                    var r = o1(e, 2)[1], n = (new Date).getTime();
+                    return !(r.timestamp + t < n);
+                }));
+                u(i);
+            }
+        };
+        return {
+            get: function(e7, t6) {
+                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                };
+                return Promise.resolve().then(function() {
+                    i2();
+                    var t = JSON.stringify(e7);
+                    return a3()[t];
+                }).then(function(e) {
+                    return Promise.all([
+                        e ? e.value : t6(),
+                        void 0 !== e
+                    ]);
+                }).then(function(e) {
+                    var t = o1(e, 2), n = t[0], a = t[1];
+                    return Promise.all([
+                        n,
+                        a || r.miss(n)
+                    ]);
+                }).then(function(e) {
+                    return o1(e, 1)[0];
+                });
+            },
+            set: function(e, t) {
+                return Promise.resolve().then(function() {
+                    var o = a3();
+                    return o[JSON.stringify(e)] = {
+                        timestamp: (new Date).getTime(),
+                        value: t
+                    }, n3().setItem(r3, JSON.stringify(o)), t;
+                });
+            },
+            delete: function(e) {
+                return Promise.resolve().then(function() {
+                    var t = a3();
+                    delete t[JSON.stringify(e)], n3().setItem(r3, JSON.stringify(t));
+                });
+            },
+            clear: function() {
+                return Promise.resolve().then(function() {
+                    n3().removeItem(r3);
+                });
+            }
+        };
+    }
+    function i1(e8) {
+        var t7 = a1(e8.caches), r5 = t7.shift();
+        return void 0 === r5 ? {
+            get: function(e9, t) {
+                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                }, n = t();
+                return n.then(function(e) {
+                    return Promise.all([
+                        e,
+                        r.miss(e)
+                    ]);
+                }).then(function(e) {
+                    return o1(e, 1)[0];
+                });
+            },
+            set: function(e, t) {
+                return Promise.resolve(t);
+            },
+            delete: function(e) {
+                return Promise.resolve();
+            },
+            clear: function() {
+                return Promise.resolve();
+            }
+        } : {
+            get: function(e, n) {
+                var o = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                };
+                return r5.get(e, n, o).catch(function() {
+                    return i1({
+                        caches: t7
+                    }).get(e, n, o);
+                });
+            },
+            set: function(e, n) {
+                return r5.set(e, n).catch(function() {
+                    return i1({
+                        caches: t7
+                    }).set(e, n);
+                });
+            },
+            delete: function(e) {
+                return r5.delete(e).catch(function() {
+                    return i1({
+                        caches: t7
+                    }).delete(e);
+                });
+            },
+            clear: function() {
+                return r5.clear().catch(function() {
+                    return i1({
+                        caches: t7
+                    }).clear();
+                });
+            }
+        };
+    }
+    function s1() {
+        var e10 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
+            serializable: !0
+        }, t = {};
+        return {
+            get: function(r, n) {
+                var o = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                }, a = JSON.stringify(r);
+                if (a in t) return Promise.resolve(e10.serializable ? JSON.parse(t[a]) : t[a]);
+                var u = n(), i = o && o.miss || function() {
+                    return Promise.resolve();
+                };
+                return u.then(function(e) {
+                    return i(e);
+                }).then(function() {
+                    return u;
+                });
+            },
+            set: function(r, n) {
+                return t[JSON.stringify(r)] = e10.serializable ? JSON.stringify(n) : n, Promise.resolve(n);
+            },
+            delete: function(e) {
+                return delete t[JSON.stringify(e)], Promise.resolve();
+            },
+            clear: function() {
+                return t = {}, Promise.resolve();
+            }
+        };
+    }
+    function c1(e) {
+        for(var t = e.length - 1; t > 0; t--){
+            var r = Math.floor(Math.random() * (t + 1)), n = e[t];
+            e[t] = e[r], e[r] = n;
+        }
+        return e;
+    }
+    function l1(e, t) {
+        return t ? (Object.keys(t).forEach(function(r) {
+            e[r] = t[r](e);
+        }), e) : e;
+    }
+    function f1(e) {
+        for(var t = arguments.length, r = new Array(t > 1 ? t - 1 : 0), n = 1; n < t; n++)r[n - 1] = arguments[n];
+        var o = 0;
+        return e.replace(/%s/g, function() {
+            return encodeURIComponent(r[o++]);
+        });
+    }
+    var h1 = {
+        WithinQueryParameters: 0,
+        WithinHeaders: 1
+    };
+    function m1(e11, t) {
+        var r = e11 || {}, n = r.data || {};
+        return Object.keys(r).forEach(function(e) {
+            -1 === [
+                "timeout",
+                "headers",
+                "queryParameters",
+                "data",
+                "cacheable"
+            ].indexOf(e) && (n[e] = r[e]);
+        }), {
+            data: Object.entries(n).length > 0 ? n : void 0,
+            timeout: r.timeout || t,
+            headers: r.headers || {},
+            queryParameters: r.queryParameters || {},
+            cacheable: r.cacheable
+        };
+    }
+    var d1 = {
+        Read: 1,
+        Write: 2,
+        Any: 3
+    }, p1 = 1, v = 2, g = 3;
+    function y(e) {
+        var t = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : p1;
+        return r1(r1({}, e), {}, {
+            status: t,
+            lastUpdate: Date.now()
+        });
+    }
+    function b(e) {
+        return "string" == typeof e ? {
+            protocol: "https",
+            url: e,
+            accept: d1.Any
+        } : {
+            protocol: e.protocol || "https",
+            url: e.url,
+            accept: e.accept || d1.Any
+        };
+    }
+    var O = "GET", P = "POST";
+    function q(e12, t8) {
+        return Promise.all(t8.map(function(t) {
+            return e12.get(t, function() {
+                return Promise.resolve(y(t));
+            });
+        })).then(function(e13) {
+            var r = e13.filter(function(e14) {
+                return function(e) {
+                    return e.status === p1 || Date.now() - e.lastUpdate > 12e4;
+                }(e14);
+            }), n = e13.filter(function(e15) {
+                return function(e) {
+                    return e.status === g && Date.now() - e.lastUpdate <= 12e4;
+                }(e15);
+            }), o = [].concat(a1(r), a1(n));
+            return {
+                getTimeout: function(e, t) {
+                    return (0 === n.length && 0 === e ? 1 : n.length + 3 + e) * t;
+                },
+                statelessHosts: o.length > 0 ? o.map(function(e) {
+                    return b(e);
+                }) : t8
+            };
+        });
+    }
+    function j(e16, t9, n5, o3) {
+        var u = [], i = function(e, t) {
+            if (e.method === O || void 0 === e.data && void 0 === t.data) return;
+            var n = Array.isArray(e.data) ? e.data : r1(r1({}, e.data), t.data);
+            return JSON.stringify(n);
+        }(n5, o3), s = function(e17, t10) {
+            var n = r1(r1({}, e17.headers), t10.headers), o = {};
+            return Object.keys(n).forEach(function(e) {
+                var t = n[e];
+                o[e.toLowerCase()] = t;
+            }), o;
+        }(e16, o3), c = n5.method, l2 = n5.method !== O ? {} : r1(r1({}, n5.data), o3.data), f = r1(r1(r1({
+            "x-algolia-agent": e16.userAgent.value
+        }, e16.queryParameters), l2), o3.queryParameters), h = 0, m2 = function t11(r6, a) {
+            var l = r6.pop();
+            if (void 0 === l) throw {
+                name: "RetryError",
+                message: "Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support .",
+                transporterStackTrace: A(u)
+            };
+            var m = {
+                data: i,
+                headers: s,
+                method: c,
+                url: S(l, n5.path, f),
+                connectTimeout: a(h, e16.timeouts.connect),
+                responseTimeout: a(h, o3.timeout)
+            }, d = function(e) {
+                var t = {
+                    request: m,
+                    response: e,
+                    host: l,
+                    triesLeft: r6.length
+                };
+                return u.push(t), t;
+            }, p = {
+                onSuccess: function(e18) {
+                    return function(e19) {
+                        try {
+                            return JSON.parse(e19.content);
+                        } catch (t12) {
+                            throw function(e, t) {
+                                return {
+                                    name: "DeserializationError",
+                                    message: e,
+                                    response: t
+                                };
+                            }(t12.message, e19);
+                        }
+                    }(e18);
+                },
+                onRetry: function(n) {
+                    var o = d(n);
+                    return n.isTimedOut && h++, Promise.all([
+                        e16.logger.info("Retryable failure", x(o)),
+                        e16.hostsCache.set(l, y(l, n.isTimedOut ? g : v))
+                    ]).then(function() {
+                        return t11(r6, a);
+                    });
+                },
+                onFail: function(e20) {
+                    throw d(e20), function(e22, t13) {
+                        var r7 = e22.content, n = e22.status, o = r7;
+                        try {
+                            o = JSON.parse(r7).message;
+                        } catch (e21) {}
+                        return function(e, t, r) {
+                            return {
+                                name: "ApiError",
+                                message: e,
+                                status: t,
+                                transporterStackTrace: r
+                            };
+                        }(o, n, t13);
+                    }(e20, A(u));
+                }
+            };
+            return e16.requester.send(m).then(function(e23) {
+                return function(e24, t14) {
+                    return function(e25) {
+                        var t15 = e25.status;
+                        return e25.isTimedOut || function(e) {
+                            var t = e.isTimedOut, r = e.status;
+                            return !t && 0 == ~~r;
+                        }(e25) || 2 != ~~(t15 / 100) && 4 != ~~(t15 / 100);
+                    }(e24) ? t14.onRetry(e24) : 2 == ~~(e24.status / 100) ? t14.onSuccess(e24) : t14.onFail(e24);
+                }(e23, p);
+            });
+        };
+        return q(e16.hostsCache, t9).then(function(e) {
+            return m2(a1(e.statelessHosts).reverse(), e.getTimeout);
+        });
+    }
+    function w(e26) {
+        var t = {
+            value: "Algolia for JavaScript (".concat(e26, ")"),
+            add: function(e) {
+                var r = "; ".concat(e.segment).concat(void 0 !== e.version ? " (".concat(e.version, ")") : "");
+                return -1 === t.value.indexOf(r) && (t.value = "".concat(t.value).concat(r)), t;
+            }
+        };
+        return t;
+    }
+    function S(e, t, r) {
+        var n = T(r), o = "".concat(e.protocol, "://").concat(e.url, "/").concat("/" === t.charAt(0) ? t.substr(1) : t);
+        return n.length && (o += "?".concat(n)), o;
+    }
+    function T(e) {
+        return Object.keys(e).map(function(t) {
+            var r;
+            return f1("%s=%s", t, (r = e[t], "[object Object]" === Object.prototype.toString.call(r) || "[object Array]" === Object.prototype.toString.call(r) ? JSON.stringify(e[t]) : e[t]));
+        }).join("&");
+    }
+    function A(e27) {
+        return e27.map(function(e) {
+            return x(e);
+        });
+    }
+    function x(e) {
+        var t = e.request.headers["x-algolia-api-key"] ? {
+            "x-algolia-api-key": "*****"
+        } : {};
+        return r1(r1({}, e), {}, {
+            request: r1(r1({}, e.request), {}, {
+                headers: r1(r1({}, e.request.headers), t)
+            })
+        });
+    }
+    var N = function(e28) {
+        var t16 = e28.appId, n6 = function(e, t, r) {
+            var n = {
+                "x-algolia-api-key": r,
+                "x-algolia-application-id": t
+            };
+            return {
+                headers: function() {
+                    return e === h1.WithinHeaders ? n : {};
+                },
+                queryParameters: function() {
+                    return e === h1.WithinQueryParameters ? n : {};
+                }
+            };
+        }(void 0 !== e28.authMode ? e28.authMode : h1.WithinHeaders, t16, e28.apiKey), a4 = function(e29) {
+            var t17 = e29.hostsCache, r8 = e29.logger, n7 = e29.requester, a5 = e29.requestsCache, u = e29.responsesCache, i = e29.timeouts, s = e29.userAgent, c = e29.hosts, l = e29.queryParameters, f = {
+                hostsCache: t17,
+                logger: r8,
+                requester: n7,
+                requestsCache: a5,
+                responsesCache: u,
+                timeouts: i,
+                userAgent: s,
+                headers: e29.headers,
+                queryParameters: l,
+                hosts: c.map(function(e) {
+                    return b(e);
+                }),
+                read: function(e30, t18) {
+                    var r = m1(t18, f.timeouts.read), n = function() {
+                        return j(f, f.hosts.filter(function(e) {
+                            return 0 != (e.accept & d1.Read);
+                        }), e30, r);
+                    };
+                    if (!0 !== (void 0 !== r.cacheable ? r.cacheable : e30.cacheable)) return n();
+                    var a = {
+                        request: e30,
+                        mappedRequestOptions: r,
+                        transporter: {
+                            queryParameters: f.queryParameters,
+                            headers: f.headers
+                        }
+                    };
+                    return f.responsesCache.get(a, function() {
+                        return f.requestsCache.get(a, function() {
+                            return f.requestsCache.set(a, n()).then(function(e) {
+                                return Promise.all([
+                                    f.requestsCache.delete(a),
+                                    e
+                                ]);
+                            }, function(e) {
+                                return Promise.all([
+                                    f.requestsCache.delete(a),
+                                    Promise.reject(e)
+                                ]);
+                            }).then(function(e) {
+                                var t = o1(e, 2);
+                                t[0];
+                                return t[1];
+                            });
+                        });
+                    }, {
+                        miss: function(e) {
+                            return f.responsesCache.set(a, e);
+                        }
+                    });
+                },
+                write: function(e31, t) {
+                    return j(f, f.hosts.filter(function(e) {
+                        return 0 != (e.accept & d1.Write);
+                    }), e31, m1(t, f.timeouts.write));
+                }
+            };
+            return f;
+        }(r1(r1({
+            hosts: [
+                {
+                    url: "".concat(t16, "-dsn.algolia.net"),
+                    accept: d1.Read
+                },
+                {
+                    url: "".concat(t16, ".algolia.net"),
+                    accept: d1.Write
+                }
+            ].concat(c1([
+                {
+                    url: "".concat(t16, "-1.algolianet.com")
+                },
+                {
+                    url: "".concat(t16, "-2.algolianet.com")
+                },
+                {
+                    url: "".concat(t16, "-3.algolianet.com")
+                }
+            ]))
+        }, e28), {}, {
+            headers: r1(r1(r1({}, n6.headers()), {
+                "content-type": "application/x-www-form-urlencoded"
+            }), e28.headers),
+            queryParameters: r1(r1({}, n6.queryParameters()), e28.queryParameters)
+        }));
+        return l1({
+            transporter: a4,
+            appId: t16,
+            addAlgoliaAgent: function(e, t) {
+                a4.userAgent.add({
+                    segment: e,
+                    version: t
+                });
+            },
+            clearCache: function() {
+                return Promise.all([
+                    a4.requestsCache.clear(),
+                    a4.responsesCache.clear()
+                ]).then(function() {});
+            }
+        }, e28.methods);
+    }, C = function(e) {
+        return function(t, r) {
+            return t.method === O ? e.transporter.read(t, r) : e.transporter.write(t, r);
+        };
+    }, E = function(e) {
+        return function(t) {
+            var r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, n = {
+                transporter: e.transporter,
+                appId: e.appId,
+                indexName: t
+            };
+            return l1(n, r.methods);
+        };
+    }, J = function(e32) {
+        return function(t, n) {
+            var o = t.map(function(e) {
+                return r1(r1({}, e), {}, {
+                    params: T(e.params || {})
+                });
+            });
+            return e32.transporter.read({
+                method: P,
+                path: "1/indexes/*/queries",
+                data: {
+                    requests: o
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, k = function(e) {
+        return function(t19, o) {
+            return Promise.all(t19.map(function(t) {
+                var a = t.params, u = a.facetName, i = a.facetQuery, s = n1(a, [
+                    "facetName",
+                    "facetQuery"
+                ]);
+                return E(e)(t.indexName, {
+                    methods: {
+                        searchForFacetValues: F
+                    }
+                }).searchForFacetValues(u, i, r1(r1({}, o), s));
+            }));
+        };
+    }, I = function(e) {
+        return function(t, r, n) {
+            return e.transporter.read({
+                method: P,
+                path: f1("1/answers/%s/prediction", e.indexName),
+                data: {
+                    query: t,
+                    queryLanguages: r
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, R = function(e) {
+        return function(t, r) {
+            return e.transporter.read({
+                method: P,
+                path: f1("1/indexes/%s/query", e.indexName),
+                data: {
+                    query: t
+                },
+                cacheable: !0
+            }, r);
+        };
+    }, F = function(e) {
+        return function(t, r, n) {
+            return e.transporter.read({
+                method: P,
+                path: f1("1/indexes/%s/facets/%s/query", e.indexName, t),
+                data: {
+                    facetQuery: r
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, D = 1, W = 2, H = 3;
+    var Q = function(e33) {
+        return function(t, n) {
+            var o = t.map(function(e) {
+                return r1(r1({}, e), {}, {
+                    threshold: e.threshold || 0
+                });
+            });
+            return e33.transporter.read({
+                method: P,
+                path: "1/indexes/*/recommendations",
+                data: {
+                    requests: o
+                },
+                cacheable: !0
+            }, n);
+        };
+    };
+    function L(e34, t20, n8) {
+        var o4, a6 = {
+            appId: e34,
+            apiKey: t20,
+            timeouts: {
+                connect: 1,
+                read: 2,
+                write: 30
+            },
+            requester: {
+                send: function(e35) {
+                    return new Promise(function(t21) {
+                        var r = new XMLHttpRequest;
+                        r.open(e35.method, e35.url, !0), Object.keys(e35.headers).forEach(function(t) {
+                            return r.setRequestHeader(t, e35.headers[t]);
+                        });
+                        var n9, o = function(e, n) {
+                            return setTimeout(function() {
+                                r.abort(), t21({
+                                    status: 0,
+                                    content: n,
+                                    isTimedOut: !0
+                                });
+                            }, 1e3 * e);
+                        }, a = o(e35.connectTimeout, "Connection timeout");
+                        r.onreadystatechange = function() {
+                            r.readyState > r.OPENED && void 0 === n9 && (clearTimeout(a), n9 = o(e35.responseTimeout, "Socket timeout"));
+                        }, r.onerror = function() {
+                            0 === r.status && (clearTimeout(a), clearTimeout(n9), t21({
+                                content: r.responseText || "Network request failed",
+                                status: r.status,
+                                isTimedOut: !1
+                            }));
+                        }, r.onload = function() {
+                            clearTimeout(a), clearTimeout(n9), t21({
+                                content: r.responseText,
+                                status: r.status,
+                                isTimedOut: !1
+                            });
+                        }, r.send(e35.data);
+                    });
+                }
+            },
+            logger: (o4 = H, {
+                debug: function(e, t) {
+                    return D >= o4 && console.debug(e, t), Promise.resolve();
+                },
+                info: function(e, t) {
+                    return W >= o4 && console.info(e, t), Promise.resolve();
+                },
+                error: function(e, t) {
+                    return console.error(e, t), Promise.resolve();
+                }
+            }),
+            responsesCache: s1(),
+            requestsCache: s1({
+                serializable: !1
+            }),
+            hostsCache: i1({
+                caches: [
+                    u1({
+                        key: "".concat("4.24.0", "-").concat(e34)
+                    }),
+                    s1()
+                ]
+            }),
+            userAgent: w("4.24.0").add({
+                segment: "Browser",
+                version: "lite"
+            }),
+            authMode: h1.WithinQueryParameters
+        };
+        return N(r1(r1(r1({}, a6), n8), {}, {
+            methods: {
+                search: J,
+                searchForFacetValues: k,
+                multipleQueries: J,
+                multipleSearchForFacetValues: k,
+                customRequest: C,
+                initIndex: function(e) {
+                    return function(t) {
+                        return E(e)(t, {
+                            methods: {
+                                search: R,
+                                searchForFacetValues: F,
+                                findAnswers: I
+                            }
+                        });
+                    };
+                },
+                getRecommendations: Q
+            }
+        }));
+    }
+    return L.version = "4.24.0", L;
+});
+
+},{}],"i4Qz8":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$921e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$921e.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _reactRouterDom = require("react-router-dom");
+var _itemDetailsCss = require("./ItemDetails.css");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _algoliasearch = require("algoliasearch");
+var _algoliasearchDefault = parcelHelpers.interopDefault(_algoliasearch);
+var _s = $RefreshSig$();
+const searchClient = _algoliasearchDefault.default('MEUZ4222NX', 'c65210b692a8704af80299c06595d55e');
+// const indexName="master_biblio_join_filter_clean_regex_lastyear"
+const indexName = "prod";
+const fetchHitByObjectID = async (objectID)=>{
+    try {
+        const index = searchClient.initIndex(indexName);
+        // console.log("fetchHitByObjectID", objectID, indexName);
+        // console.log(typeof index);
+        // console.log(index);
+        // console.log(Object.getOwnPropertyNames(index));
+        const response = await index.getObject(objectID);
+        return response;
+    } catch (error) {
+        console.error('Error fetching hit:', error);
+        return null;
+    }
+};
+function ItemDetails() {
+    _s();
+    const copyToClipboard = ()=>{
+        navigator.clipboard.writeText(currentURL).then(()=>{
+            // Successfully copied to clipboard!
+            alert('Link copied to clipboard!');
+        }).catch((err)=>{
+            // Unable to copy to clipboard
+            console.error('Failed to copy:', err);
+        });
+    };
+    const convertCamelCaseToReadable = (str)=>{
+        return str.replace(/([A-Z])/g, ' $1').replace(/I D/g, 'ID') // Exclude space before "ID" at word boundaries
+        .replace(/U R L/g, 'URL') // Exclude space before "URL" at word boundaries
+        .replace(/^./, (s)=>s.toUpperCase()
+        ).replace(/Eebo/g, 'EEBO') // Make EEBO all uppercase
+        .replace(/Estc/g, 'ESTC') // Make ESTC all uppercase
+        .replace(/Ustc/g, 'USTC') // Make USTC all uppercase
+        .replace(/Tcp/g, 'TCP') // Make TCP all uppercase
+        .replace(/Marc/g, 'MARC') // Make MARC all uppercase
+        .replace(/Auto Extracted/g, '(P&P auto extracted)') // Make P&P auto extracted all lowercase
+        .trim();
+    };
+    const { objectID  } = _reactRouterDom.useParams();
+    // console.log("foo")
+    // let hit = await fetchHitByObjectID(objectID); 
+    // console.log("fetched hit from fetchHitByObjectID")
+    // console.log(objectID);
+    // console.log(hit);
+    const location = _reactRouterDom.useLocation();
+    const hit = location.state?.hit;
+    // console.log("ItemDetails");
+    if (!hit) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
+        children: "No hit details found"
+    }, void 0, false, {
+        fileName: "src/ItemDetails.tsx",
+        lineNumber: 75,
+        columnNumber: 16
+    }, this);
+    // Fetch the hit details based on the productID and display them
+    const [currentURL, setCurrentURL] = _react.useState('');
+    _react.useEffect(()=>{
+        // setCurrentURL(window.location.href);
+        window.scrollTo(0, 0); // Scroll to the top of the page when component mounts
+    }, []);
+    // Function to convert newlines to <br> tags
+    const nl2br = (text)=>{
+        // console.log("nl2br", typeof text, text);
+        if (typeof text !== 'string') return text; // Return as is if not a string
+        return text.split('\n').map((line, index)=>{
+            return /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactDefault.default.Fragment, {
+                children: [
+                    line,
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {}, void 0, false, {
+                        fileName: "src/ItemDetails.tsx",
+                        lineNumber: 93,
+                        columnNumber: 50
+                    }, this)
+                ]
+            }, index, true, {
+                fileName: "src/ItemDetails.tsx",
+                lineNumber: 93,
+                columnNumber: 16
+            }, this);
+        });
+    };
+    const renderTableRows = ()=>{
+        const excludedKeys = [
+            'objectID',
+            '_highlightResult',
+            '__position',
+            '__queryID'
+        ];
+        const filteredHit = Object.fromEntries(Object.entries(hit).filter(([key, value])=>!excludedKeys.includes(key) && value !== ''
+        ));
+        const sortedKeys = Object.keys(filteredHit).sort(); // Sort keys alphabetically
+        // Move keys starting with "Holdings" to the end of the sortedKeys array
+        const holdingsKeys = sortedKeys.filter((key)=>key.startsWith('Holdings')
+        );
+        const nonHoldingsKeys = sortedKeys.filter((key)=>!key.startsWith('Holdings')
+        );
+        const finalSortedKeys = [
+            ...nonHoldingsKeys,
+            ...holdingsKeys
+        ];
+        return finalSortedKeys.map((key)=>/*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
+                        children: convertCamelCaseToReadable(key)
+                    }, void 0, false, {
+                        fileName: "src/ItemDetails.tsx",
+                        lineNumber: 112,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
+                        children: typeof filteredHit[key] === 'string' && filteredHit[key].startsWith('http') ? /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
+                            href: filteredHit[key],
+                            target: "_blank",
+                            children: filteredHit[key]
+                        }, void 0, false, {
+                            fileName: "src/ItemDetails.tsx",
+                            lineNumber: 115,
+                            columnNumber: 92
+                        }, this) : nl2br(filteredHit[key])
+                    }, void 0, false, {
+                        fileName: "src/ItemDetails.tsx",
+                        lineNumber: 115,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, key, true, {
+                fileName: "src/ItemDetails.tsx",
+                lineNumber: 111,
+                columnNumber: 7
+            }, this)
+        );
+    };
+    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
+        children: [
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h2", {
+                children: "Record Details  "
+            }, void 0, false, {
+                fileName: "src/ItemDetails.tsx",
+                lineNumber: 123,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("table", {
+                children: [
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("thead", {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
+                            children: [
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                    children: "Attribute"
+                                }, void 0, false, {
+                                    fileName: "src/ItemDetails.tsx",
+                                    lineNumber: 130,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
+                                    children: "Value"
+                                }, void 0, false, {
+                                    fileName: "src/ItemDetails.tsx",
+                                    lineNumber: 131,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "src/ItemDetails.tsx",
+                            lineNumber: 129,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "src/ItemDetails.tsx",
+                        lineNumber: 128,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tbody", {
+                        children: renderTableRows()
+                    }, void 0, false, {
+                        fileName: "src/ItemDetails.tsx",
+                        lineNumber: 134,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "src/ItemDetails.tsx",
+                lineNumber: 127,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "src/ItemDetails.tsx",
+        lineNumber: 122,
+        columnNumber: 7
+    }, this);
+}
+_s(ItemDetails, "Mwr7SFQ/gCD1A3D/ZOQv98SJiWs=", false, function() {
+    return [
+        _reactRouterDom.useParams,
+        _reactRouterDom.useLocation
+    ];
+});
+_c = ItemDetails;
+exports.default = ItemDetails;
+var _c;
+$RefreshReg$(_c, "ItemDetails");
+
+  $parcel$ReactRefreshHelpers$921e.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react-router-dom":"9xmpe","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./ItemDetails.css":"13XY4","react":"21dqq","algoliasearch":"jU9w3"}],"13XY4":[function() {},{}],"jU9w3":[function(require,module,exports) {
+/*! algoliasearch.umd.js | 4.23.3 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */ !function(t, e) {
+    module.exports = e();
+}(this, function() {
+    "use strict";
+    function t1(t, e, r) {
+        return e in t ? Object.defineProperty(t, e, {
+            value: r,
+            enumerable: !0,
+            configurable: !0,
+            writable: !0
+        }) : t[e] = r, t;
+    }
+    function e1(t, e2) {
+        var r = Object.keys(t);
+        if (Object.getOwnPropertySymbols) {
+            var n = Object.getOwnPropertySymbols(t);
+            e2 && (n = n.filter(function(e) {
+                return Object.getOwnPropertyDescriptor(t, e).enumerable;
+            })), r.push.apply(r, n);
+        }
+        return r;
+    }
+    function r1(r) {
+        for(var n = 1; n < arguments.length; n++){
+            var a = null != arguments[n] ? arguments[n] : {};
+            n % 2 ? e1(Object(a), !0).forEach(function(e) {
+                t1(r, e, a[e]);
+            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(a)) : e1(Object(a)).forEach(function(t) {
+                Object.defineProperty(r, t, Object.getOwnPropertyDescriptor(a, t));
+            });
+        }
+        return r;
+    }
+    function n1(t2, e3) {
+        if (null == t2) return {};
+        var r2, n2, a2 = function(t, e) {
+            if (null == t) return {};
+            var r, n, a = {}, o = Object.keys(t);
+            for(n = 0; n < o.length; n++)r = o[n], e.indexOf(r) >= 0 || (a[r] = t[r]);
+            return a;
+        }(t2, e3);
+        if (Object.getOwnPropertySymbols) {
+            var o2 = Object.getOwnPropertySymbols(t2);
+            for(n2 = 0; n2 < o2.length; n2++)r2 = o2[n2], e3.indexOf(r2) >= 0 || Object.prototype.propertyIsEnumerable.call(t2, r2) && (a2[r2] = t2[r2]);
+        }
+        return a2;
+    }
+    function a1(t3, e4) {
+        return function(t) {
+            if (Array.isArray(t)) return t;
+        }(t3) || function(t, e) {
+            if (!(Symbol.iterator in Object(t) || "[object Arguments]" === Object.prototype.toString.call(t))) return;
+            var r = [], n = !0, a = !1, o = void 0;
+            try {
+                for(var i, u = t[Symbol.iterator](); !(n = (i = u.next()).done) && (r.push(i.value), !e || r.length !== e); n = !0);
+            } catch (t4) {
+                a = !0, o = t4;
+            } finally{
+                try {
+                    n || null == u.return || u.return();
+                } finally{
+                    if (a) throw o;
+                }
+            }
+            return r;
+        }(t3, e4) || function() {
+            throw new TypeError("Invalid attempt to destructure non-iterable instance");
+        }();
+    }
+    function o1(t5) {
+        return function(t) {
+            if (Array.isArray(t)) {
+                for(var e = 0, r = new Array(t.length); e < t.length; e++)r[e] = t[e];
+                return r;
+            }
+        }(t5) || function(t) {
+            if (Symbol.iterator in Object(t) || "[object Arguments]" === Object.prototype.toString.call(t)) return Array.from(t);
+        }(t5) || function() {
+            throw new TypeError("Invalid attempt to spread non-iterable instance");
+        }();
+    }
+    function i1(t6) {
+        var e5, r3 = "algoliasearch-client-js-".concat(t6.key), n3 = function() {
+            return void 0 === e5 && (e5 = t6.localStorage || window.localStorage), e5;
+        }, o3 = function() {
+            return JSON.parse(n3().getItem(r3) || "{}");
+        }, i = function(t) {
+            n3().setItem(r3, JSON.stringify(t));
+        }, u2 = function() {
+            var e = t6.timeToLive ? 1e3 * t6.timeToLive : null, r4 = o3(), n4 = Object.fromEntries(Object.entries(r4).filter(function(t) {
+                return void 0 !== a1(t, 2)[1].timestamp;
+            }));
+            if (i(n4), e) {
+                var u = Object.fromEntries(Object.entries(n4).filter(function(t) {
+                    var r = a1(t, 2)[1], n = (new Date).getTime();
+                    return !(r.timestamp + e < n);
+                }));
+                i(u);
+            }
+        };
+        return {
+            get: function(t7, e6) {
+                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                };
+                return Promise.resolve().then(function() {
+                    u2();
+                    var e = JSON.stringify(t7);
+                    return o3()[e];
+                }).then(function(t) {
+                    return Promise.all([
+                        t ? t.value : e6(),
+                        void 0 !== t
+                    ]);
+                }).then(function(t) {
+                    var e = a1(t, 2), n = e[0], o = e[1];
+                    return Promise.all([
+                        n,
+                        o || r.miss(n)
+                    ]);
+                }).then(function(t) {
+                    return a1(t, 1)[0];
+                });
+            },
+            set: function(t, e) {
+                return Promise.resolve().then(function() {
+                    var a = o3();
+                    return a[JSON.stringify(t)] = {
+                        timestamp: (new Date).getTime(),
+                        value: e
+                    }, n3().setItem(r3, JSON.stringify(a)), e;
+                });
+            },
+            delete: function(t) {
+                return Promise.resolve().then(function() {
+                    var e = o3();
+                    delete e[JSON.stringify(t)], n3().setItem(r3, JSON.stringify(e));
+                });
+            },
+            clear: function() {
+                return Promise.resolve().then(function() {
+                    n3().removeItem(r3);
+                });
+            }
+        };
+    }
+    function u1(t8) {
+        var e7 = o1(t8.caches), r5 = e7.shift();
+        return void 0 === r5 ? {
+            get: function(t9, e) {
+                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                }, n = e();
+                return n.then(function(t) {
+                    return Promise.all([
+                        t,
+                        r.miss(t)
+                    ]);
+                }).then(function(t) {
+                    return a1(t, 1)[0];
+                });
+            },
+            set: function(t, e) {
+                return Promise.resolve(e);
+            },
+            delete: function(t) {
+                return Promise.resolve();
+            },
+            clear: function() {
+                return Promise.resolve();
+            }
+        } : {
+            get: function(t, n) {
+                var a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                };
+                return r5.get(t, n, a).catch(function() {
+                    return u1({
+                        caches: e7
+                    }).get(t, n, a);
+                });
+            },
+            set: function(t, n) {
+                return r5.set(t, n).catch(function() {
+                    return u1({
+                        caches: e7
+                    }).set(t, n);
+                });
+            },
+            delete: function(t) {
+                return r5.delete(t).catch(function() {
+                    return u1({
+                        caches: e7
+                    }).delete(t);
+                });
+            },
+            clear: function() {
+                return r5.clear().catch(function() {
+                    return u1({
+                        caches: e7
+                    }).clear();
+                });
+            }
+        };
+    }
+    function s1() {
+        var t10 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
+            serializable: !0
+        }, e = {};
+        return {
+            get: function(r, n) {
+                var a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
+                    miss: function() {
+                        return Promise.resolve();
+                    }
+                }, o = JSON.stringify(r);
+                if (o in e) return Promise.resolve(t10.serializable ? JSON.parse(e[o]) : e[o]);
+                var i = n(), u = a && a.miss || function() {
+                    return Promise.resolve();
+                };
+                return i.then(function(t) {
+                    return u(t);
+                }).then(function() {
+                    return i;
+                });
+            },
+            set: function(r, n) {
+                return e[JSON.stringify(r)] = t10.serializable ? JSON.stringify(n) : n, Promise.resolve(n);
+            },
+            delete: function(t) {
+                return delete e[JSON.stringify(t)], Promise.resolve();
+            },
+            clear: function() {
+                return e = {}, Promise.resolve();
+            }
+        };
+    }
+    function c1(t, e, r) {
+        var n = {
+            "x-algolia-api-key": r,
+            "x-algolia-application-id": e
+        };
+        return {
+            headers: function() {
+                return t === m1.WithinHeaders ? n : {};
+            },
+            queryParameters: function() {
+                return t === m1.WithinQueryParameters ? n : {};
+            }
+        };
+    }
+    function f1(t) {
+        var e = 0;
+        return t(function r() {
+            return e++, new Promise(function(n) {
+                setTimeout(function() {
+                    n(t(r));
+                }, Math.min(100 * e, 1e3));
+            });
+        });
+    }
+    function d1(t11) {
+        var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : function(t, e) {
+            return Promise.resolve();
+        };
+        return Object.assign(t11, {
+            wait: function(r) {
+                return d1(t11.then(function(t) {
+                    return Promise.all([
+                        e(t, r),
+                        t
+                    ]);
+                }).then(function(t) {
+                    return t[1];
+                }));
+            }
+        });
+    }
+    function l1(t) {
+        for(var e = t.length - 1; e > 0; e--){
+            var r = Math.floor(Math.random() * (e + 1)), n = t[e];
+            t[e] = t[r], t[r] = n;
+        }
+        return t;
+    }
+    function h1(t, e) {
+        return e ? (Object.keys(e).forEach(function(r) {
+            t[r] = e[r](t);
+        }), t) : t;
+    }
+    function p1(t) {
+        for(var e = arguments.length, r = new Array(e > 1 ? e - 1 : 0), n = 1; n < e; n++)r[n - 1] = arguments[n];
+        var a = 0;
+        return t.replace(/%s/g, function() {
+            return encodeURIComponent(r[a++]);
+        });
+    }
+    var m1 = {
+        WithinQueryParameters: 0,
+        WithinHeaders: 1
+    };
+    function y1(t12, e) {
+        var r = t12 || {}, n = r.data || {};
+        return Object.keys(r).forEach(function(t) {
+            -1 === [
+                "timeout",
+                "headers",
+                "queryParameters",
+                "data",
+                "cacheable"
+            ].indexOf(t) && (n[t] = r[t]);
+        }), {
+            data: Object.entries(n).length > 0 ? n : void 0,
+            timeout: r.timeout || e,
+            headers: r.headers || {},
+            queryParameters: r.queryParameters || {},
+            cacheable: r.cacheable
+        };
+    }
+    var g1 = {
+        Read: 1,
+        Write: 2,
+        Any: 3
+    }, v1 = 1, b1 = 2, P = 3;
+    function O(t) {
+        var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : v1;
+        return r1(r1({}, t), {}, {
+            status: e,
+            lastUpdate: Date.now()
+        });
+    }
+    function w(t) {
+        return "string" == typeof t ? {
+            protocol: "https",
+            url: t,
+            accept: g1.Any
+        } : {
+            protocol: t.protocol || "https",
+            url: t.url,
+            accept: t.accept || g1.Any
+        };
+    }
+    var I = "DELETE", x = "GET", j = "POST", D = "PUT";
+    function q(t13, e8) {
+        return Promise.all(e8.map(function(e) {
+            return t13.get(e, function() {
+                return Promise.resolve(O(e));
+            });
+        })).then(function(t14) {
+            var r = t14.filter(function(t15) {
+                return function(t) {
+                    return t.status === v1 || Date.now() - t.lastUpdate > 12e4;
+                }(t15);
+            }), n = t14.filter(function(t16) {
+                return function(t) {
+                    return t.status === P && Date.now() - t.lastUpdate <= 12e4;
+                }(t16);
+            }), a = [].concat(o1(r), o1(n));
+            return {
+                getTimeout: function(t, e) {
+                    return (0 === n.length && 0 === t ? 1 : n.length + 3 + t) * e;
+                },
+                statelessHosts: a.length > 0 ? a.map(function(t) {
+                    return w(t);
+                }) : e8
+            };
+        });
+    }
+    function k(t17, e9, n5, a3) {
+        var i = [], u = function(t, e) {
+            if (t.method === x || void 0 === t.data && void 0 === e.data) return;
+            var n = Array.isArray(t.data) ? t.data : r1(r1({}, t.data), e.data);
+            return JSON.stringify(n);
+        }(n5, a3), s = function(t18, e10) {
+            var n = r1(r1({}, t18.headers), e10.headers), a = {};
+            return Object.keys(n).forEach(function(t) {
+                var e = n[t];
+                a[t.toLowerCase()] = e;
+            }), a;
+        }(t17, a3), c = n5.method, f2 = n5.method !== x ? {} : r1(r1({}, n5.data), a3.data), d = r1(r1(r1({
+            "x-algolia-agent": t17.userAgent.value
+        }, t17.queryParameters), f2), a3.queryParameters), l = 0, h2 = function e11(r6, o) {
+            var f = r6.pop();
+            if (void 0 === f) throw {
+                name: "RetryError",
+                message: "Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.",
+                transporterStackTrace: E(i)
+            };
+            var h = {
+                data: u,
+                headers: s,
+                method: c,
+                url: N(f, n5.path, d),
+                connectTimeout: o(l, t17.timeouts.connect),
+                responseTimeout: o(l, a3.timeout)
+            }, p = function(t) {
+                var e = {
+                    request: h,
+                    response: t,
+                    host: f,
+                    triesLeft: r6.length
+                };
+                return i.push(e), e;
+            }, m = {
+                onSuccess: function(t19) {
+                    return function(t20) {
+                        try {
+                            return JSON.parse(t20.content);
+                        } catch (e12) {
+                            throw function(t, e) {
+                                return {
+                                    name: "DeserializationError",
+                                    message: t,
+                                    response: e
+                                };
+                            }(e12.message, t20);
+                        }
+                    }(t19);
+                },
+                onRetry: function(n) {
+                    var a = p(n);
+                    return n.isTimedOut && l++, Promise.all([
+                        t17.logger.info("Retryable failure", A(a)),
+                        t17.hostsCache.set(f, O(f, n.isTimedOut ? P : b1))
+                    ]).then(function() {
+                        return e11(r6, o);
+                    });
+                },
+                onFail: function(t21) {
+                    throw p(t21), function(t23, e13) {
+                        var r7 = t23.content, n = t23.status, a = r7;
+                        try {
+                            a = JSON.parse(r7).message;
+                        } catch (t22) {}
+                        return function(t, e, r) {
+                            return {
+                                name: "ApiError",
+                                message: t,
+                                status: e,
+                                transporterStackTrace: r
+                            };
+                        }(a, n, e13);
+                    }(t21, E(i));
+                }
+            };
+            return t17.requester.send(h).then(function(t24) {
+                return function(t25, e14) {
+                    return function(t26) {
+                        var e15 = t26.status;
+                        return t26.isTimedOut || function(t) {
+                            var e = t.isTimedOut, r = t.status;
+                            return !e && 0 == ~~r;
+                        }(t26) || 2 != ~~(e15 / 100) && 4 != ~~(e15 / 100);
+                    }(t25) ? e14.onRetry(t25) : 2 == ~~(t25.status / 100) ? e14.onSuccess(t25) : e14.onFail(t25);
+                }(t24, m);
+            });
+        };
+        return q(t17.hostsCache, e9).then(function(t) {
+            return h2(o1(t.statelessHosts).reverse(), t.getTimeout);
+        });
+    }
+    function S(t27) {
+        var e16 = t27.hostsCache, r8 = t27.logger, n6 = t27.requester, o4 = t27.requestsCache, i = t27.responsesCache, u = t27.timeouts, s = t27.userAgent, c = t27.hosts, f = t27.queryParameters, d = {
+            hostsCache: e16,
+            logger: r8,
+            requester: n6,
+            requestsCache: o4,
+            responsesCache: i,
+            timeouts: u,
+            userAgent: s,
+            headers: t27.headers,
+            queryParameters: f,
+            hosts: c.map(function(t) {
+                return w(t);
+            }),
+            read: function(t28, e17) {
+                var r = y1(e17, d.timeouts.read), n = function() {
+                    return k(d, d.hosts.filter(function(t) {
+                        return 0 != (t.accept & g1.Read);
+                    }), t28, r);
+                };
+                if (!0 !== (void 0 !== r.cacheable ? r.cacheable : t28.cacheable)) return n();
+                var o = {
+                    request: t28,
+                    mappedRequestOptions: r,
+                    transporter: {
+                        queryParameters: d.queryParameters,
+                        headers: d.headers
+                    }
+                };
+                return d.responsesCache.get(o, function() {
+                    return d.requestsCache.get(o, function() {
+                        return d.requestsCache.set(o, n()).then(function(t) {
+                            return Promise.all([
+                                d.requestsCache.delete(o),
+                                t
+                            ]);
+                        }, function(t) {
+                            return Promise.all([
+                                d.requestsCache.delete(o),
+                                Promise.reject(t)
+                            ]);
+                        }).then(function(t) {
+                            var e = a1(t, 2);
+                            e[0];
+                            return e[1];
+                        });
+                    });
+                }, {
+                    miss: function(t) {
+                        return d.responsesCache.set(o, t);
+                    }
+                });
+            },
+            write: function(t29, e) {
+                return k(d, d.hosts.filter(function(t) {
+                    return 0 != (t.accept & g1.Write);
+                }), t29, y1(e, d.timeouts.write));
+            }
+        };
+        return d;
+    }
+    function T(t30) {
+        var e = {
+            value: "Algolia for JavaScript (".concat(t30, ")"),
+            add: function(t) {
+                var r = "; ".concat(t.segment).concat(void 0 !== t.version ? " (".concat(t.version, ")") : "");
+                return -1 === e.value.indexOf(r) && (e.value = "".concat(e.value).concat(r)), e;
+            }
+        };
+        return e;
+    }
+    function N(t, e, r) {
+        var n = R(r), a = "".concat(t.protocol, "://").concat(t.url, "/").concat("/" === e.charAt(0) ? e.substr(1) : e);
+        return n.length && (a += "?".concat(n)), a;
+    }
+    function R(t) {
+        return Object.keys(t).map(function(e) {
+            var r;
+            return p1("%s=%s", e, (r = t[e], "[object Object]" === Object.prototype.toString.call(r) || "[object Array]" === Object.prototype.toString.call(r) ? JSON.stringify(t[e]) : t[e]));
+        }).join("&");
+    }
+    function E(t31) {
+        return t31.map(function(t) {
+            return A(t);
+        });
+    }
+    function A(t) {
+        var e = t.request.headers["x-algolia-api-key"] ? {
+            "x-algolia-api-key": "*****"
+        } : {};
+        return r1(r1({}, t), {}, {
+            request: r1(r1({}, t.request), {}, {
+                headers: r1(r1({}, t.request.headers), e)
+            })
+        });
+    }
+    var C = function(t) {
+        return function(e, r) {
+            return t.transporter.write({
+                method: j,
+                path: "2/abtests",
+                data: e
+            }, r);
+        };
+    }, U = function(t) {
+        return function(e, r) {
+            return t.transporter.write({
+                method: I,
+                path: p1("2/abtests/%s", e)
+            }, r);
+        };
+    }, z = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("2/abtests/%s", e)
+            }, r);
+        };
+    }, J = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "2/abtests"
+            }, e);
+        };
+    }, F = function(t) {
+        return function(e, r) {
+            return t.transporter.write({
+                method: j,
+                path: p1("2/abtests/%s/stop", e)
+            }, r);
+        };
+    }, H = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/strategies/personalization"
+            }, e);
+        };
+    }, M = function(t) {
+        return function(e, r) {
+            return t.transporter.write({
+                method: j,
+                path: "1/strategies/personalization",
+                data: e
+            }, r);
+        };
+    };
+    function B(t) {
+        return function e(r) {
+            return t.request(r).then(function(n) {
+                if (void 0 !== t.batch && t.batch(n.hits), !t.shouldStop(n)) return n.cursor ? e({
+                    cursor: n.cursor
+                }) : e({
+                    page: (r.page || 0) + 1
+                });
+            });
+        }({});
+    }
+    var K = function(t32) {
+        return function(e18, a) {
+            var o = a || {}, i = o.queryParameters, u = n1(o, [
+                "queryParameters"
+            ]), s = r1({
+                acl: e18
+            }, void 0 !== i ? {
+                queryParameters: i
+            } : {});
+            return d1(t32.transporter.write({
+                method: j,
+                path: "1/keys",
+                data: s
+            }, u), function(e, r) {
+                return f1(function(n) {
+                    return tt(t32)(e.key, r).catch(function(t) {
+                        if (404 !== t.status) throw t;
+                        return n();
+                    });
+                });
+            });
+        };
+    }, W = function(t) {
+        return function(e, r, n) {
+            var a = y1(n);
+            return a.queryParameters["X-Algolia-User-ID"] = e, t.transporter.write({
+                method: j,
+                path: "1/clusters/mapping",
+                data: {
+                    cluster: r
+                }
+            }, a);
+        };
+    }, L = function(t) {
+        return function(e, r, n) {
+            return t.transporter.write({
+                method: j,
+                path: "1/clusters/mapping/batch",
+                data: {
+                    users: e,
+                    cluster: r
+                }
+            }, n);
+        };
+    }, Q = function(t) {
+        return function(e19, r9) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("/1/dictionaries/%s/batch", e19),
+                data: {
+                    clearExistingDictionaryEntries: !0,
+                    requests: {
+                        action: "addEntry",
+                        body: []
+                    }
+                }
+            }, r9), function(e, r) {
+                return jt(t)(e.taskID, r);
+            });
+        };
+    }, G = function(t) {
+        return function(e, r10, n7) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/operation", e),
+                data: {
+                    operation: "copy",
+                    destination: r10
+                }
+            }, n7), function(r, n) {
+                return ut(t)(e, {
+                    methods: {
+                        waitTask: de
+                    }
+                }).waitTask(r.taskID, n);
+            });
+        };
+    }, V = function(t) {
+        return function(e, n, a) {
+            return G(t)(e, n, r1(r1({}, a), {}, {
+                scope: [
+                    he.Rules
+                ]
+            }));
+        };
+    }, _ = function(t) {
+        return function(e, n, a) {
+            return G(t)(e, n, r1(r1({}, a), {}, {
+                scope: [
+                    he.Settings
+                ]
+            }));
+        };
+    }, X = function(t) {
+        return function(e, n, a) {
+            return G(t)(e, n, r1(r1({}, a), {}, {
+                scope: [
+                    he.Synonyms
+                ]
+            }));
+        };
+    }, Y = function(t) {
+        return function(e, r) {
+            return e.method === x ? t.transporter.read(e, r) : t.transporter.write(e, r);
+        };
+    }, Z = function(t33) {
+        return function(e, r11) {
+            return d1(t33.transporter.write({
+                method: I,
+                path: p1("1/keys/%s", e)
+            }, r11), function(r12, n) {
+                return f1(function(r) {
+                    return tt(t33)(e, n).then(r).catch(function(t) {
+                        if (404 !== t.status) throw t;
+                    });
+                });
+            });
+        };
+    }, $ = function(t34) {
+        return function(e20, r13, n) {
+            var a = r13.map(function(t) {
+                return {
+                    action: "deleteEntry",
+                    body: {
+                        objectID: t
+                    }
+                };
+            });
+            return d1(t34.transporter.write({
+                method: j,
+                path: p1("/1/dictionaries/%s/batch", e20),
+                data: {
+                    clearExistingDictionaryEntries: !1,
+                    requests: a
+                }
+            }, n), function(e, r) {
+                return jt(t34)(e.taskID, r);
+            });
+        };
+    }, tt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/keys/%s", e)
+            }, r);
+        };
+    }, et = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/task/%s", e.toString())
+            }, r);
+        };
+    }, rt = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "/1/dictionaries/*/settings"
+            }, e);
+        };
+    }, nt = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/logs"
+            }, e);
+        };
+    }, at = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/clusters/mapping/top"
+            }, e);
+        };
+    }, ot = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/clusters/mapping/%s", e)
+            }, r);
+        };
+    }, it = function(t) {
+        return function(e) {
+            var r = e || {}, a = r.retrieveMappings, o = n1(r, [
+                "retrieveMappings"
+            ]);
+            return !0 === a && (o.getClusters = !0), t.transporter.read({
+                method: x,
+                path: "1/clusters/mapping/pending"
+            }, o);
+        };
+    }, ut = function(t) {
+        return function(e) {
+            var r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, n = {
+                transporter: t.transporter,
+                appId: t.appId,
+                indexName: e
+            };
+            return h1(n, r.methods);
+        };
+    }, st = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/keys"
+            }, e);
+        };
+    }, ct = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/clusters"
+            }, e);
+        };
+    }, ft = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/indexes"
+            }, e);
+        };
+    }, dt = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: "1/clusters/mapping"
+            }, e);
+        };
+    }, lt = function(t) {
+        return function(e, r14, n8) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/operation", e),
+                data: {
+                    operation: "move",
+                    destination: r14
+                }
+            }, n8), function(r, n) {
+                return ut(t)(e, {
+                    methods: {
+                        waitTask: de
+                    }
+                }).waitTask(r.taskID, n);
+            });
+        };
+    }, ht = function(t) {
+        return function(e21, r15) {
+            return d1(t.transporter.write({
+                method: j,
+                path: "1/indexes/*/batch",
+                data: {
+                    requests: e21
+                }
+            }, r15), function(e, r) {
+                return Promise.all(Object.keys(e.taskID).map(function(n) {
+                    return ut(t)(n, {
+                        methods: {
+                            waitTask: de
+                        }
+                    }).waitTask(e.taskID[n], r);
+                }));
+            });
+        };
+    }, pt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: j,
+                path: "1/indexes/*/objects",
+                data: {
+                    requests: e
+                }
+            }, r);
+        };
+    }, mt = function(t35) {
+        return function(e, n) {
+            var a = e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    params: R(t.params || {})
+                });
+            });
+            return t35.transporter.read({
+                method: j,
+                path: "1/indexes/*/queries",
+                data: {
+                    requests: a
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, yt = function(t) {
+        return function(e22, a) {
+            return Promise.all(e22.map(function(e) {
+                var o = e.params, i = o.facetName, u = o.facetQuery, s = n1(o, [
+                    "facetName",
+                    "facetQuery"
+                ]);
+                return ut(t)(e.indexName, {
+                    methods: {
+                        searchForFacetValues: ue
+                    }
+                }).searchForFacetValues(i, u, r1(r1({}, a), s));
+            }));
+        };
+    }, gt = function(t) {
+        return function(e, r) {
+            var n = y1(r);
+            return n.queryParameters["X-Algolia-User-ID"] = e, t.transporter.write({
+                method: I,
+                path: "1/clusters/mapping"
+            }, n);
+        };
+    }, vt = function(t36) {
+        return function(e23, r16, n) {
+            var a = r16.map(function(t) {
+                return {
+                    action: "addEntry",
+                    body: t
+                };
+            });
+            return d1(t36.transporter.write({
+                method: j,
+                path: p1("/1/dictionaries/%s/batch", e23),
+                data: {
+                    clearExistingDictionaryEntries: !0,
+                    requests: a
+                }
+            }, n), function(e, r) {
+                return jt(t36)(e.taskID, r);
+            });
+        };
+    }, bt = function(t37) {
+        return function(e, r17) {
+            return d1(t37.transporter.write({
+                method: j,
+                path: p1("1/keys/%s/restore", e)
+            }, r17), function(r18, n) {
+                return f1(function(r) {
+                    return tt(t37)(e, n).catch(function(t) {
+                        if (404 !== t.status) throw t;
+                        return r();
+                    });
+                });
+            });
+        };
+    }, Pt = function(t38) {
+        return function(e24, r19, n) {
+            var a = r19.map(function(t) {
+                return {
+                    action: "addEntry",
+                    body: t
+                };
+            });
+            return d1(t38.transporter.write({
+                method: j,
+                path: p1("/1/dictionaries/%s/batch", e24),
+                data: {
+                    clearExistingDictionaryEntries: !1,
+                    requests: a
+                }
+            }, n), function(e, r) {
+                return jt(t38)(e.taskID, r);
+            });
+        };
+    }, Ot = function(t) {
+        return function(e, r, n) {
+            return t.transporter.read({
+                method: j,
+                path: p1("/1/dictionaries/%s/search", e),
+                data: {
+                    query: r
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, wt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: j,
+                path: "1/clusters/mapping/search",
+                data: {
+                    query: e
+                }
+            }, r);
+        };
+    }, It = function(t) {
+        return function(e25, r20) {
+            return d1(t.transporter.write({
+                method: D,
+                path: "/1/dictionaries/*/settings",
+                data: e25
+            }, r20), function(e, r) {
+                return jt(t)(e.taskID, r);
+            });
+        };
+    }, xt = function(t39) {
+        return function(e26, r21) {
+            var a = Object.assign({}, r21), o = r21 || {}, i = o.queryParameters, u = n1(o, [
+                "queryParameters"
+            ]), s = i ? {
+                queryParameters: i
+            } : {}, c = [
+                "acl",
+                "indexes",
+                "referers",
+                "restrictSources",
+                "queryParameters",
+                "description",
+                "maxQueriesPerIPPerHour",
+                "maxHitsPerQuery"
+            ];
+            return d1(t39.transporter.write({
+                method: D,
+                path: p1("1/keys/%s", e26),
+                data: s
+            }, u), function(r22, n) {
+                return f1(function(r23) {
+                    return tt(t39)(e26, n).then(function(t40) {
+                        return function(t41) {
+                            return Object.keys(a).filter(function(t) {
+                                return -1 !== c.indexOf(t);
+                            }).every(function(e) {
+                                if (Array.isArray(t41[e]) && Array.isArray(a[e])) {
+                                    var r24 = t41[e];
+                                    return r24.length === a[e].length && r24.every(function(t, r) {
+                                        return t === a[e][r];
+                                    });
+                                }
+                                return t41[e] === a[e];
+                            });
+                        }(t40) ? Promise.resolve() : r23();
+                    });
+                });
+            });
+        };
+    }, jt = function(t42) {
+        return function(e, r) {
+            return f1(function(n) {
+                return et(t42)(e, r).then(function(t) {
+                    return "published" !== t.status ? n() : void 0;
+                });
+            });
+        };
+    }, Dt = function(t) {
+        return function(e27, r26) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/batch", t.indexName),
+                data: {
+                    requests: e27
+                }
+            }, r26), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, qt = function(t43) {
+        return function(e) {
+            return B(r1(r1({
+                shouldStop: function(t) {
+                    return void 0 === t.cursor;
+                }
+            }, e), {}, {
+                request: function(r) {
+                    return t43.transporter.read({
+                        method: j,
+                        path: p1("1/indexes/%s/browse", t43.indexName),
+                        data: r
+                    }, e);
+                }
+            }));
+        };
+    }, kt = function(t44) {
+        return function(e28) {
+            var n = r1({
+                hitsPerPage: 1e3
+            }, e28);
+            return B(r1(r1({
+                shouldStop: function(t) {
+                    return t.hits.length < n.hitsPerPage;
+                }
+            }, n), {}, {
+                request: function(e) {
+                    return se(t44)("", r1(r1({}, n), e)).then(function(t45) {
+                        return r1(r1({}, t45), {}, {
+                            hits: t45.hits.map(function(t) {
+                                return delete t._highlightResult, t;
+                            })
+                        });
+                    });
+                }
+            }));
+        };
+    }, St = function(t46) {
+        return function(e29) {
+            var n = r1({
+                hitsPerPage: 1e3
+            }, e29);
+            return B(r1(r1({
+                shouldStop: function(t) {
+                    return t.hits.length < n.hitsPerPage;
+                }
+            }, n), {}, {
+                request: function(e) {
+                    return ce(t46)("", r1(r1({}, n), e)).then(function(t47) {
+                        return r1(r1({}, t47), {}, {
+                            hits: t47.hits.map(function(t) {
+                                return delete t._highlightResult, t;
+                            })
+                        });
+                    });
+                }
+            }));
+        };
+    }, Tt = function(t48) {
+        return function(e30, r27, a4) {
+            var o5 = a4 || {}, i = o5.batchSize, u = n1(o5, [
+                "batchSize"
+            ]), s = {
+                taskIDs: [],
+                objectIDs: []
+            };
+            return d1(function n() {
+                var a, o = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0, c = [];
+                for(a = o; a < e30.length && (c.push(e30[a]), c.length !== (i || 1e3)); a++);
+                return 0 === c.length ? Promise.resolve(s) : Dt(t48)(c.map(function(t) {
+                    return {
+                        action: r27,
+                        body: t
+                    };
+                }), u).then(function(t) {
+                    return s.objectIDs = s.objectIDs.concat(t.objectIDs), s.taskIDs.push(t.taskID), a++, n(a);
+                });
+            }(), function(e31, r) {
+                return Promise.all(e31.taskIDs.map(function(e) {
+                    return de(t48)(e, r);
+                }));
+            });
+        };
+    }, Nt = function(t) {
+        return function(e32) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/clear", t.indexName)
+            }, e32), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Rt = function(t) {
+        return function(e33) {
+            var r28 = e33 || {}, a = r28.forwardToReplicas, o = y1(n1(r28, [
+                "forwardToReplicas"
+            ]));
+            return a && (o.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/rules/clear", t.indexName)
+            }, o), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Et = function(t) {
+        return function(e34) {
+            var r29 = e34 || {}, a = r29.forwardToReplicas, o = y1(n1(r29, [
+                "forwardToReplicas"
+            ]));
+            return a && (o.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/synonyms/clear", t.indexName)
+            }, o), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, At = function(t) {
+        return function(e35, r30) {
+            return d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/deleteByQuery", t.indexName),
+                data: e35
+            }, r30), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Ct = function(t) {
+        return function(e36) {
+            return d1(t.transporter.write({
+                method: I,
+                path: p1("1/indexes/%s", t.indexName)
+            }, e36), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Ut = function(t49) {
+        return function(e37, r31) {
+            return d1(zt(t49)([
+                e37
+            ], r31).then(function(t) {
+                return {
+                    taskID: t.taskIDs[0]
+                };
+            }), function(e, r) {
+                return de(t49)(e.taskID, r);
+            });
+        };
+    }, zt = function(t50) {
+        return function(e, r) {
+            var n = e.map(function(t) {
+                return {
+                    objectID: t
+                };
+            });
+            return Tt(t50)(n, le.DeleteObject, r);
+        };
+    }, Jt = function(t) {
+        return function(e38, r32) {
+            var a = r32 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
+                "forwardToReplicas"
+            ]));
+            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
+                method: I,
+                path: p1("1/indexes/%s/rules/%s", t.indexName, e38)
+            }, i), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Ft = function(t) {
+        return function(e39, r33) {
+            var a = r33 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
+                "forwardToReplicas"
+            ]));
+            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
+                method: I,
+                path: p1("1/indexes/%s/synonyms/%s", t.indexName, e39)
+            }, i), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, Ht = function(t51) {
+        return function(e) {
+            return Gt(t51)(e).then(function() {
+                return !0;
+            }).catch(function(t) {
+                if (404 !== t.status) throw t;
+                return !1;
+            });
+        };
+    }, Mt = function(t) {
+        return function(e, r, n) {
+            return t.transporter.read({
+                method: j,
+                path: p1("1/answers/%s/prediction", t.indexName),
+                data: {
+                    query: e,
+                    queryLanguages: r
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, Bt = function(t52) {
+        return function(e, o6) {
+            var i2 = o6 || {}, u3 = i2.query, s = i2.paginate, c2 = n1(i2, [
+                "query",
+                "paginate"
+            ]), f = 0;
+            return function n() {
+                return ie(t52)(u3 || "", r1(r1({}, c2), {}, {
+                    page: f
+                })).then(function(t) {
+                    for(var r = 0, o = Object.entries(t.hits); r < o.length; r++){
+                        var i = a1(o[r], 2), u = i[0], c = i[1];
+                        if (e(c)) return {
+                            object: c,
+                            position: parseInt(u, 10),
+                            page: f
+                        };
+                    }
+                    if (f++, !1 === s || f >= t.nbPages) throw {
+                        name: "ObjectNotFoundError",
+                        message: "Object not found."
+                    };
+                    return n();
+                });
+            }();
+        };
+    }, Kt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/indexes/%s/%s", t.indexName, e)
+            }, r);
+        };
+    }, Wt = function() {
+        return function(t, e) {
+            for(var r = 0, n = Object.entries(t.hits); r < n.length; r++){
+                var o = a1(n[r], 2), i = o[0];
+                if (o[1].objectID === e) return parseInt(i, 10);
+            }
+            return -1;
+        };
+    }, Lt = function(t) {
+        return function(e40, a) {
+            var o = a || {}, i = o.attributesToRetrieve, u = n1(o, [
+                "attributesToRetrieve"
+            ]), s = e40.map(function(e) {
+                return r1({
+                    indexName: t.indexName,
+                    objectID: e
+                }, i ? {
+                    attributesToRetrieve: i
+                } : {});
+            });
+            return t.transporter.read({
+                method: j,
+                path: "1/indexes/*/objects",
+                data: {
+                    requests: s
+                }
+            }, u);
+        };
+    }, Qt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/indexes/%s/rules/%s", t.indexName, e)
+            }, r);
+        };
+    }, Gt = function(t) {
+        return function(e) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/indexes/%s/settings", t.indexName),
+                data: {
+                    getVersion: 2
+                }
+            }, e);
+        };
+    }, Vt = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: x,
+                path: p1("1/indexes/%s/synonyms/%s", t.indexName, e)
+            }, r);
+        };
+    }, _t = function(t53) {
+        return function(e41, r34) {
+            return d1(Xt(t53)([
+                e41
+            ], r34).then(function(t) {
+                return {
+                    objectID: t.objectIDs[0],
+                    taskID: t.taskIDs[0]
+                };
+            }), function(e, r) {
+                return de(t53)(e.taskID, r);
+            });
+        };
+    }, Xt = function(t) {
+        return function(e, r) {
+            var a = r || {}, o = a.createIfNotExists, i = n1(a, [
+                "createIfNotExists"
+            ]), u = o ? le.PartialUpdateObject : le.PartialUpdateObjectNoCreate;
+            return Tt(t)(e, u, i);
+        };
+    }, Yt = function(t54) {
+        return function(e42, i3) {
+            var u = i3 || {}, s = u.safe, c = u.autoGenerateObjectIDIfNotExist, f = u.batchSize, l = n1(u, [
+                "safe",
+                "autoGenerateObjectIDIfNotExist",
+                "batchSize"
+            ]), h = function(e43, r35, n, a) {
+                return d1(t54.transporter.write({
+                    method: j,
+                    path: p1("1/indexes/%s/operation", e43),
+                    data: {
+                        operation: n,
+                        destination: r35
+                    }
+                }, a), function(e, r) {
+                    return de(t54)(e.taskID, r);
+                });
+            }, m = Math.random().toString(36).substring(7), y = "".concat(t54.indexName, "_tmp_").concat(m), g = ee({
+                appId: t54.appId,
+                transporter: t54.transporter,
+                indexName: y
+            }), v = [], b = h(t54.indexName, y, "copy", r1(r1({}, l), {}, {
+                scope: [
+                    "settings",
+                    "synonyms",
+                    "rules"
+                ]
+            }));
+            return v.push(b), d1((s ? b.wait(l) : b).then(function() {
+                var t = g(e42, r1(r1({}, l), {}, {
+                    autoGenerateObjectIDIfNotExist: c,
+                    batchSize: f
+                }));
+                return v.push(t), s ? t.wait(l) : t;
+            }).then(function() {
+                var e = h(y, t54.indexName, "move", l);
+                return v.push(e), s ? e.wait(l) : e;
+            }).then(function() {
+                return Promise.all(v);
+            }).then(function(t) {
+                var e = a1(t, 3), r = e[0], n = e[1], i = e[2];
+                return {
+                    objectIDs: n.objectIDs,
+                    taskIDs: [
+                        r.taskID
+                    ].concat(o1(n.taskIDs), [
+                        i.taskID
+                    ])
+                };
+            }), function(t55, e) {
+                return Promise.all(v.map(function(t) {
+                    return t.wait(e);
+                }));
+            });
+        };
+    }, Zt = function(t) {
+        return function(e, n) {
+            return ne(t)(e, r1(r1({}, n), {}, {
+                clearExistingRules: !0
+            }));
+        };
+    }, $t = function(t) {
+        return function(e, n) {
+            return oe(t)(e, r1(r1({}, n), {}, {
+                clearExistingSynonyms: !0
+            }));
+        };
+    }, te = function(t56) {
+        return function(e44, r36) {
+            return d1(ee(t56)([
+                e44
+            ], r36).then(function(t) {
+                return {
+                    objectID: t.objectIDs[0],
+                    taskID: t.taskIDs[0]
+                };
+            }), function(e, r) {
+                return de(t56)(e.taskID, r);
+            });
+        };
+    }, ee = function(t57) {
+        return function(e, r) {
+            var a = r || {}, o = a.autoGenerateObjectIDIfNotExist, i = n1(a, [
+                "autoGenerateObjectIDIfNotExist"
+            ]), u = o ? le.AddObject : le.UpdateObject;
+            if (u === le.UpdateObject) {
+                var s = !0, c = !1, f = void 0;
+                try {
+                    for(var l, h = e[Symbol.iterator](); !(s = (l = h.next()).done); s = !0){
+                        if (void 0 === l.value.objectID) return d1(Promise.reject({
+                            name: "MissingObjectIDError",
+                            message: "All objects must have an unique objectID (like a primary key) to be valid. Algolia is also able to generate objectIDs automatically but *it's not recommended*. To do it, use the `{'autoGenerateObjectIDIfNotExist': true}` option."
+                        }));
+                    }
+                } catch (t) {
+                    c = !0, f = t;
+                } finally{
+                    try {
+                        s || null == h.return || h.return();
+                    } finally{
+                        if (c) throw f;
+                    }
+                }
+            }
+            return Tt(t57)(e, u, i);
+        };
+    }, re = function(t) {
+        return function(e, r) {
+            return ne(t)([
+                e
+            ], r);
+        };
+    }, ne = function(t) {
+        return function(e45, r37) {
+            var a = r37 || {}, o = a.forwardToReplicas, i = a.clearExistingRules, u = y1(n1(a, [
+                "forwardToReplicas",
+                "clearExistingRules"
+            ]));
+            return o && (u.queryParameters.forwardToReplicas = 1), i && (u.queryParameters.clearExistingRules = 1), d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/rules/batch", t.indexName),
+                data: e45
+            }, u), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, ae = function(t) {
+        return function(e, r) {
+            return oe(t)([
+                e
+            ], r);
+        };
+    }, oe = function(t) {
+        return function(e46, r38) {
+            var a = r38 || {}, o = a.forwardToReplicas, i = a.clearExistingSynonyms, u = a.replaceExistingSynonyms, s = y1(n1(a, [
+                "forwardToReplicas",
+                "clearExistingSynonyms",
+                "replaceExistingSynonyms"
+            ]));
+            return o && (s.queryParameters.forwardToReplicas = 1), (u || i) && (s.queryParameters.replaceExistingSynonyms = 1), d1(t.transporter.write({
+                method: j,
+                path: p1("1/indexes/%s/synonyms/batch", t.indexName),
+                data: e46
+            }, s), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, ie = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: j,
+                path: p1("1/indexes/%s/query", t.indexName),
+                data: {
+                    query: e
+                },
+                cacheable: !0
+            }, r);
+        };
+    }, ue = function(t) {
+        return function(e, r, n) {
+            return t.transporter.read({
+                method: j,
+                path: p1("1/indexes/%s/facets/%s/query", t.indexName, e),
+                data: {
+                    facetQuery: r
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, se = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: j,
+                path: p1("1/indexes/%s/rules/search", t.indexName),
+                data: {
+                    query: e
+                }
+            }, r);
+        };
+    }, ce = function(t) {
+        return function(e, r) {
+            return t.transporter.read({
+                method: j,
+                path: p1("1/indexes/%s/synonyms/search", t.indexName),
+                data: {
+                    query: e
+                }
+            }, r);
+        };
+    }, fe = function(t) {
+        return function(e47, r39) {
+            var a = r39 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
+                "forwardToReplicas"
+            ]));
+            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
+                method: D,
+                path: p1("1/indexes/%s/settings", t.indexName),
+                data: e47
+            }, i), function(e, r) {
+                return de(t)(e.taskID, r);
+            });
+        };
+    }, de = function(t58) {
+        return function(e48, r40) {
+            return f1(function(n) {
+                return (function(t) {
+                    return function(e, r) {
+                        return t.transporter.read({
+                            method: x,
+                            path: p1("1/indexes/%s/task/%s", t.indexName, e.toString())
+                        }, r);
+                    };
+                })(t58)(e48, r40).then(function(t) {
+                    return "published" !== t.status ? n() : void 0;
+                });
+            });
+        };
+    }, le = {
+        AddObject: "addObject",
+        UpdateObject: "updateObject",
+        PartialUpdateObject: "partialUpdateObject",
+        PartialUpdateObjectNoCreate: "partialUpdateObjectNoCreate",
+        DeleteObject: "deleteObject",
+        DeleteIndex: "delete",
+        ClearIndex: "clear"
+    }, he = {
+        Settings: "settings",
+        Synonyms: "synonyms",
+        Rules: "rules"
+    }, pe = 1, me = 2, ye = 3;
+    var ge = function(t59) {
+        return function(e, n) {
+            var a = e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    threshold: t.threshold || 0
+                });
+            });
+            return t59.transporter.read({
+                method: j,
+                path: "1/indexes/*/recommendations",
+                data: {
+                    requests: a
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, ve = function(t60) {
+        return function(e, n) {
+            return ge(t60)(e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    fallbackParameters: {},
+                    model: "bought-together"
+                });
+            }), n);
+        };
+    }, be = function(t61) {
+        return function(e, n) {
+            return ge(t61)(e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    model: "related-products"
+                });
+            }), n);
+        };
+    }, Pe = function(t62) {
+        return function(e, n) {
+            var a = e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    model: "trending-facets",
+                    threshold: t.threshold || 0
+                });
+            });
+            return t62.transporter.read({
+                method: j,
+                path: "1/indexes/*/recommendations",
+                data: {
+                    requests: a
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, Oe = function(t63) {
+        return function(e, n) {
+            var a = e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    model: "trending-items",
+                    threshold: t.threshold || 0
+                });
+            });
+            return t63.transporter.read({
+                method: j,
+                path: "1/indexes/*/recommendations",
+                data: {
+                    requests: a
+                },
+                cacheable: !0
+            }, n);
+        };
+    }, we = function(t64) {
+        return function(e, n) {
+            return ge(t64)(e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    model: "looking-similar"
+                });
+            }), n);
+        };
+    }, Ie = function(t65) {
+        return function(e, n) {
+            var a = e.map(function(t) {
+                return r1(r1({}, t), {}, {
+                    model: "recommended-for-you",
+                    threshold: t.threshold || 0
+                });
+            });
+            return t65.transporter.read({
+                method: j,
+                path: "1/indexes/*/recommendations",
+                data: {
+                    requests: a
+                },
+                cacheable: !0
+            }, n);
+        };
+    };
+    function xe(t66, e49, n9) {
+        var a5, o7 = {
+            appId: t66,
+            apiKey: e49,
+            timeouts: {
+                connect: 1,
+                read: 2,
+                write: 30
+            },
+            requester: {
+                send: function(t67) {
+                    return new Promise(function(e50) {
+                        var r = new XMLHttpRequest;
+                        r.open(t67.method, t67.url, !0), Object.keys(t67.headers).forEach(function(e) {
+                            return r.setRequestHeader(e, t67.headers[e]);
+                        });
+                        var n10, a = function(t, n) {
+                            return setTimeout(function() {
+                                r.abort(), e50({
+                                    status: 0,
+                                    content: n,
+                                    isTimedOut: !0
+                                });
+                            }, 1e3 * t);
+                        }, o = a(t67.connectTimeout, "Connection timeout");
+                        r.onreadystatechange = function() {
+                            r.readyState > r.OPENED && void 0 === n10 && (clearTimeout(o), n10 = a(t67.responseTimeout, "Socket timeout"));
+                        }, r.onerror = function() {
+                            0 === r.status && (clearTimeout(o), clearTimeout(n10), e50({
+                                content: r.responseText || "Network request failed",
+                                status: r.status,
+                                isTimedOut: !1
+                            }));
+                        }, r.onload = function() {
+                            clearTimeout(o), clearTimeout(n10), e50({
+                                content: r.responseText,
+                                status: r.status,
+                                isTimedOut: !1
+                            });
+                        }, r.send(t67.data);
+                    });
+                }
+            },
+            logger: (a5 = ye, {
+                debug: function(t, e) {
+                    return pe >= a5 && console.debug(t, e), Promise.resolve();
+                },
+                info: function(t, e) {
+                    return me >= a5 && console.info(t, e), Promise.resolve();
+                },
+                error: function(t, e) {
+                    return console.error(t, e), Promise.resolve();
+                }
+            }),
+            responsesCache: s1(),
+            requestsCache: s1({
+                serializable: !1
+            }),
+            hostsCache: u1({
+                caches: [
+                    i1({
+                        key: "".concat("4.23.3", "-").concat(t66)
+                    }),
+                    s1()
+                ]
+            }),
+            userAgent: T("4.23.3").add({
+                segment: "Browser"
+            })
+        }, f = r1(r1({}, o7), n9), d = function() {
+            return function(t68) {
+                return function(t) {
+                    var e = t.region || "us", n = c1(m1.WithinHeaders, t.appId, t.apiKey), a = S(r1(r1({
+                        hosts: [
+                            {
+                                url: "personalization.".concat(e, ".algolia.com")
+                            }
+                        ]
+                    }, t), {}, {
+                        headers: r1(r1(r1({}, n.headers()), {
+                            "content-type": "application/json"
+                        }), t.headers),
+                        queryParameters: r1(r1({}, n.queryParameters()), t.queryParameters)
+                    }));
+                    return h1({
+                        appId: t.appId,
+                        transporter: a
+                    }, t.methods);
+                }(r1(r1(r1({}, o7), t68), {}, {
+                    methods: {
+                        getPersonalizationStrategy: H,
+                        setPersonalizationStrategy: M
+                    }
+                }));
+            };
+        };
+        return function(t69) {
+            var e51 = t69.appId, n = c1(void 0 !== t69.authMode ? t69.authMode : m1.WithinHeaders, e51, t69.apiKey), a = S(r1(r1({
+                hosts: [
+                    {
+                        url: "".concat(e51, "-dsn.algolia.net"),
+                        accept: g1.Read
+                    },
+                    {
+                        url: "".concat(e51, ".algolia.net"),
+                        accept: g1.Write
+                    }
+                ].concat(l1([
+                    {
+                        url: "".concat(e51, "-1.algolianet.com")
+                    },
+                    {
+                        url: "".concat(e51, "-2.algolianet.com")
+                    },
+                    {
+                        url: "".concat(e51, "-3.algolianet.com")
+                    }
+                ]))
+            }, t69), {}, {
+                headers: r1(r1(r1({}, n.headers()), {
+                    "content-type": "application/x-www-form-urlencoded"
+                }), t69.headers),
+                queryParameters: r1(r1({}, n.queryParameters()), t69.queryParameters)
+            }));
+            return h1({
+                transporter: a,
+                appId: e51,
+                addAlgoliaAgent: function(t, e) {
+                    a.userAgent.add({
+                        segment: t,
+                        version: e
+                    });
+                },
+                clearCache: function() {
+                    return Promise.all([
+                        a.requestsCache.clear(),
+                        a.responsesCache.clear()
+                    ]).then(function() {});
+                }
+            }, t69.methods);
+        }(r1(r1({}, f), {}, {
+            methods: {
+                search: mt,
+                searchForFacetValues: yt,
+                multipleBatch: ht,
+                multipleGetObjects: pt,
+                multipleQueries: mt,
+                copyIndex: G,
+                copySettings: _,
+                copySynonyms: X,
+                copyRules: V,
+                moveIndex: lt,
+                listIndices: ft,
+                getLogs: nt,
+                listClusters: ct,
+                multipleSearchForFacetValues: yt,
+                getApiKey: tt,
+                addApiKey: K,
+                listApiKeys: st,
+                updateApiKey: xt,
+                deleteApiKey: Z,
+                restoreApiKey: bt,
+                assignUserID: W,
+                assignUserIDs: L,
+                getUserID: ot,
+                searchUserIDs: wt,
+                listUserIDs: dt,
+                getTopUserIDs: at,
+                removeUserID: gt,
+                hasPendingMappings: it,
+                clearDictionaryEntries: Q,
+                deleteDictionaryEntries: $,
+                getDictionarySettings: rt,
+                getAppTask: et,
+                replaceDictionaryEntries: vt,
+                saveDictionaryEntries: Pt,
+                searchDictionaryEntries: Ot,
+                setDictionarySettings: It,
+                waitAppTask: jt,
+                customRequest: Y,
+                initIndex: function(t) {
+                    return function(e) {
+                        return ut(t)(e, {
+                            methods: {
+                                batch: Dt,
+                                delete: Ct,
+                                findAnswers: Mt,
+                                getObject: Kt,
+                                getObjects: Lt,
+                                saveObject: te,
+                                saveObjects: ee,
+                                search: ie,
+                                searchForFacetValues: ue,
+                                waitTask: de,
+                                setSettings: fe,
+                                getSettings: Gt,
+                                partialUpdateObject: _t,
+                                partialUpdateObjects: Xt,
+                                deleteObject: Ut,
+                                deleteObjects: zt,
+                                deleteBy: At,
+                                clearObjects: Nt,
+                                browseObjects: qt,
+                                getObjectPosition: Wt,
+                                findObject: Bt,
+                                exists: Ht,
+                                saveSynonym: ae,
+                                saveSynonyms: oe,
+                                getSynonym: Vt,
+                                searchSynonyms: ce,
+                                browseSynonyms: St,
+                                deleteSynonym: Ft,
+                                clearSynonyms: Et,
+                                replaceAllObjects: Yt,
+                                replaceAllSynonyms: $t,
+                                searchRules: se,
+                                getRule: Qt,
+                                deleteRule: Jt,
+                                saveRule: re,
+                                saveRules: ne,
+                                replaceAllRules: Zt,
+                                browseRules: kt,
+                                clearRules: Rt
+                            }
+                        });
+                    };
+                },
+                initAnalytics: function() {
+                    return function(t70) {
+                        return function(t) {
+                            var e = t.region || "us", n = c1(m1.WithinHeaders, t.appId, t.apiKey), a = S(r1(r1({
+                                hosts: [
+                                    {
+                                        url: "analytics.".concat(e, ".algolia.com")
+                                    }
+                                ]
+                            }, t), {}, {
+                                headers: r1(r1(r1({}, n.headers()), {
+                                    "content-type": "application/json"
+                                }), t.headers),
+                                queryParameters: r1(r1({}, n.queryParameters()), t.queryParameters)
+                            }));
+                            return h1({
+                                appId: t.appId,
+                                transporter: a
+                            }, t.methods);
+                        }(r1(r1(r1({}, o7), t70), {}, {
+                            methods: {
+                                addABTest: C,
+                                getABTest: z,
+                                getABTests: J,
+                                stopABTest: F,
+                                deleteABTest: U
+                            }
+                        }));
+                    };
+                },
+                initPersonalization: d,
+                initRecommendation: function() {
+                    return function(t) {
+                        return f.logger.info("The `initRecommendation` method is deprecated. Use `initPersonalization` instead."), d()(t);
+                    };
+                },
+                getRecommendations: ge,
+                getFrequentlyBoughtTogether: ve,
+                getLookingSimilar: we,
+                getRecommendedForYou: Ie,
+                getRelatedProducts: be,
+                getTrendingFacets: Pe,
+                getTrendingItems: Oe
+            }
+        }));
+    }
+    return xe.version = "4.23.3", xe;
+});
+
+},{}],"lOjBx":[function(require,module,exports) {
+'use strict';
+var m = require('react-dom');
+var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+exports.createRoot = function(c, o) {
+    i.usingClientEntryPoint = true;
+    try {
+        return m.createRoot(c, o);
+    } finally{
+        i.usingClientEntryPoint = false;
+    }
+};
+exports.hydrateRoot = function(c, h, o) {
+    i.usingClientEntryPoint = true;
+    try {
+        return m.hydrateRoot(c, h, o);
+    } finally{
+        i.usingClientEntryPoint = false;
+    }
+};
+
+},{"react-dom":"j6uA9"}],"j6uA9":[function(require,module,exports) {
 'use strict';
 function checkDCE() {
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined' || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== 'function') return;
@@ -54162,2079 +56782,6 @@ module.exports = require('./cjs/scheduler.development.js');
     /* global __REACT_DEVTOOLS_GLOBAL_HOOK__ */ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop === 'function') __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStop(new Error());
 })();
 
-},{}],"i4Qz8":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$921e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$921e.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _reactRouterDom = require("react-router-dom");
-var _itemDetailsCss = require("./ItemDetails.css");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _algoliasearch = require("algoliasearch");
-var _algoliasearchDefault = parcelHelpers.interopDefault(_algoliasearch);
-var _s = $RefreshSig$();
-const searchClient = _algoliasearchDefault.default('MEUZ4222NX', 'c65210b692a8704af80299c06595d55e');
-// const indexName="master_biblio_join_filter_clean_regex_lastyear"
-const indexName = "master_biblio_join_filter_clean_regex_lastyear";
-const fetchHitByObjectID = async (objectID)=>{
-    try {
-        const index = searchClient.initIndex(indexName);
-        // console.log("fetchHitByObjectID", objectID, indexName);
-        // console.log(typeof index);
-        // console.log(index);
-        // console.log(Object.getOwnPropertyNames(index));
-        const response = await index.getObject(objectID);
-        return response;
-    } catch (error) {
-        console.error('Error fetching hit:', error);
-        return null;
-    }
-};
-function ItemDetails() {
-    _s();
-    const copyToClipboard = ()=>{
-        navigator.clipboard.writeText(currentURL).then(()=>{
-            // Successfully copied to clipboard!
-            alert('Link copied to clipboard!');
-        }).catch((err)=>{
-            // Unable to copy to clipboard
-            console.error('Failed to copy:', err);
-        });
-    };
-    const convertCamelCaseToReadable = (str)=>{
-        return str.replace(/([A-Z])/g, ' $1').replace(/I D/g, 'ID') // Exclude space before "ID" at word boundaries
-        .replace(/U R L/g, 'URL') // Exclude space before "URL" at word boundaries
-        .replace(/^./, (s)=>s.toUpperCase()
-        ).replace(/Eebo/g, 'EEBO') // Make EEBO all uppercase
-        .replace(/Estc/g, 'ESTC') // Make ESTC all uppercase
-        .replace(/Ustc/g, 'USTC') // Make USTC all uppercase
-        .replace(/Tcp/g, 'TCP') // Make TCP all uppercase
-        .replace(/Marc/g, 'MARC') // Make MARC all uppercase
-        .replace(/Auto Extracted/g, '(P&P auto extracted)') // Make P&P auto extracted all lowercase
-        .trim();
-    };
-    const { objectID  } = _reactRouterDom.useParams();
-    // console.log("foo")
-    // let hit = await fetchHitByObjectID(objectID); 
-    // console.log("fetched hit from fetchHitByObjectID")
-    // console.log(objectID);
-    // console.log(hit);
-    const location = _reactRouterDom.useLocation();
-    const hit = location.state?.hit;
-    // console.log("ItemDetails");
-    if (!hit) return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
-        children: "No hit details found"
-    }, void 0, false, {
-        fileName: "src/ItemDetails.tsx",
-        lineNumber: 75,
-        columnNumber: 16
-    }, this);
-    // Fetch the hit details based on the productID and display them
-    const [currentURL, setCurrentURL] = _react.useState('');
-    _react.useEffect(()=>{
-        setCurrentURL(window.location.href);
-    }, []);
-    const renderTableRows = ()=>{
-        const excludedKeys = [
-            'objectID',
-            '_highlightResult',
-            '__position',
-            '__queryID'
-        ];
-        const filteredHit = Object.fromEntries(Object.entries(hit).filter(([key])=>!excludedKeys.includes(key)
-        ));
-        const sortedKeys = Object.keys(filteredHit).sort(); // Sort keys alphabetically
-        return sortedKeys.map((key)=>/*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
-                        children: convertCamelCaseToReadable(key)
-                    }, void 0, false, {
-                        fileName: "src/ItemDetails.tsx",
-                        lineNumber: 95,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("td", {
-                        children: filteredHit[key]
-                    }, void 0, false, {
-                        fileName: "src/ItemDetails.tsx",
-                        lineNumber: 96,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, key, true, {
-                fileName: "src/ItemDetails.tsx",
-                lineNumber: 94,
-                columnNumber: 9
-            }, this)
-        );
-    };
-    return /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
-        children: [
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h2", {
-                children: "Record Details  "
-            }, void 0, false, {
-                fileName: "src/ItemDetails.tsx",
-                lineNumber: 104,
-                columnNumber: 9
-            }, this),
-            /*#__PURE__*/ _jsxDevRuntime.jsxDEV("table", {
-                children: [
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("thead", {
-                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tr", {
-                            children: [
-                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                    children: "Attribute"
-                                }, void 0, false, {
-                                    fileName: "src/ItemDetails.tsx",
-                                    lineNumber: 111,
-                                    columnNumber: 15
-                                }, this),
-                                /*#__PURE__*/ _jsxDevRuntime.jsxDEV("th", {
-                                    children: "Value"
-                                }, void 0, false, {
-                                    fileName: "src/ItemDetails.tsx",
-                                    lineNumber: 112,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "src/ItemDetails.tsx",
-                            lineNumber: 110,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "src/ItemDetails.tsx",
-                        lineNumber: 109,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("tbody", {
-                        children: renderTableRows()
-                    }, void 0, false, {
-                        fileName: "src/ItemDetails.tsx",
-                        lineNumber: 115,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "src/ItemDetails.tsx",
-                lineNumber: 108,
-                columnNumber: 9
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "src/ItemDetails.tsx",
-        lineNumber: 103,
-        columnNumber: 7
-    }, this);
-}
-_s(ItemDetails, "Mwr7SFQ/gCD1A3D/ZOQv98SJiWs=", false, function() {
-    return [
-        _reactRouterDom.useParams,
-        _reactRouterDom.useLocation
-    ];
-});
-_c = ItemDetails;
-exports.default = ItemDetails;
-var _c;
-$RefreshReg$(_c, "ItemDetails");
-
-  $parcel$ReactRefreshHelpers$921e.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react-router-dom":"9xmpe","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./ItemDetails.css":"13XY4","react":"21dqq","algoliasearch":"jU9w3"}],"13XY4":[function() {},{}],"jU9w3":[function(require,module,exports) {
-/*! algoliasearch.umd.js | 4.20.0 | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */ !function(t, e) {
-    module.exports = e();
-}(this, function() {
-    "use strict";
-    function t1(t, e, r) {
-        return e in t ? Object.defineProperty(t, e, {
-            value: r,
-            enumerable: !0,
-            configurable: !0,
-            writable: !0
-        }) : t[e] = r, t;
-    }
-    function e1(t, e2) {
-        var r = Object.keys(t);
-        if (Object.getOwnPropertySymbols) {
-            var n = Object.getOwnPropertySymbols(t);
-            e2 && (n = n.filter(function(e) {
-                return Object.getOwnPropertyDescriptor(t, e).enumerable;
-            })), r.push.apply(r, n);
-        }
-        return r;
-    }
-    function r1(r) {
-        for(var n = 1; n < arguments.length; n++){
-            var a = null != arguments[n] ? arguments[n] : {};
-            n % 2 ? e1(Object(a), !0).forEach(function(e) {
-                t1(r, e, a[e]);
-            }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(r, Object.getOwnPropertyDescriptors(a)) : e1(Object(a)).forEach(function(t) {
-                Object.defineProperty(r, t, Object.getOwnPropertyDescriptor(a, t));
-            });
-        }
-        return r;
-    }
-    function n1(t2, e3) {
-        if (null == t2) return {};
-        var r2, n2, a2 = function(t, e) {
-            if (null == t) return {};
-            var r, n, a = {}, o = Object.keys(t);
-            for(n = 0; n < o.length; n++)r = o[n], e.indexOf(r) >= 0 || (a[r] = t[r]);
-            return a;
-        }(t2, e3);
-        if (Object.getOwnPropertySymbols) {
-            var o2 = Object.getOwnPropertySymbols(t2);
-            for(n2 = 0; n2 < o2.length; n2++)r2 = o2[n2], e3.indexOf(r2) >= 0 || Object.prototype.propertyIsEnumerable.call(t2, r2) && (a2[r2] = t2[r2]);
-        }
-        return a2;
-    }
-    function a1(t3, e4) {
-        return function(t) {
-            if (Array.isArray(t)) return t;
-        }(t3) || function(t, e) {
-            if (!(Symbol.iterator in Object(t) || "[object Arguments]" === Object.prototype.toString.call(t))) return;
-            var r = [], n = !0, a = !1, o = void 0;
-            try {
-                for(var i, u = t[Symbol.iterator](); !(n = (i = u.next()).done) && (r.push(i.value), !e || r.length !== e); n = !0);
-            } catch (t4) {
-                a = !0, o = t4;
-            } finally{
-                try {
-                    n || null == u.return || u.return();
-                } finally{
-                    if (a) throw o;
-                }
-            }
-            return r;
-        }(t3, e4) || function() {
-            throw new TypeError("Invalid attempt to destructure non-iterable instance");
-        }();
-    }
-    function o1(t5) {
-        return function(t) {
-            if (Array.isArray(t)) {
-                for(var e = 0, r = new Array(t.length); e < t.length; e++)r[e] = t[e];
-                return r;
-            }
-        }(t5) || function(t) {
-            if (Symbol.iterator in Object(t) || "[object Arguments]" === Object.prototype.toString.call(t)) return Array.from(t);
-        }(t5) || function() {
-            throw new TypeError("Invalid attempt to spread non-iterable instance");
-        }();
-    }
-    function i1(t6) {
-        var e5, r3 = "algoliasearch-client-js-".concat(t6.key), n3 = function() {
-            return void 0 === e5 && (e5 = t6.localStorage || window.localStorage), e5;
-        }, o3 = function() {
-            return JSON.parse(n3().getItem(r3) || "{}");
-        }, i = function(t) {
-            n3().setItem(r3, JSON.stringify(t));
-        }, u2 = function() {
-            var e = t6.timeToLive ? 1e3 * t6.timeToLive : null, r4 = o3(), n4 = Object.fromEntries(Object.entries(r4).filter(function(t) {
-                return void 0 !== a1(t, 2)[1].timestamp;
-            }));
-            if (i(n4), e) {
-                var u = Object.fromEntries(Object.entries(n4).filter(function(t) {
-                    var r = a1(t, 2)[1], n = (new Date).getTime();
-                    return !(r.timestamp + e < n);
-                }));
-                i(u);
-            }
-        };
-        return {
-            get: function(t7, e6) {
-                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                };
-                return Promise.resolve().then(function() {
-                    u2();
-                    var e = JSON.stringify(t7);
-                    return o3()[e];
-                }).then(function(t) {
-                    return Promise.all([
-                        t ? t.value : e6(),
-                        void 0 !== t
-                    ]);
-                }).then(function(t) {
-                    var e = a1(t, 2), n = e[0], o = e[1];
-                    return Promise.all([
-                        n,
-                        o || r.miss(n)
-                    ]);
-                }).then(function(t) {
-                    return a1(t, 1)[0];
-                });
-            },
-            set: function(t, e) {
-                return Promise.resolve().then(function() {
-                    var a = o3();
-                    return a[JSON.stringify(t)] = {
-                        timestamp: (new Date).getTime(),
-                        value: e
-                    }, n3().setItem(r3, JSON.stringify(a)), e;
-                });
-            },
-            delete: function(t) {
-                return Promise.resolve().then(function() {
-                    var e = o3();
-                    delete e[JSON.stringify(t)], n3().setItem(r3, JSON.stringify(e));
-                });
-            },
-            clear: function() {
-                return Promise.resolve().then(function() {
-                    n3().removeItem(r3);
-                });
-            }
-        };
-    }
-    function u1(t8) {
-        var e7 = o1(t8.caches), r5 = e7.shift();
-        return void 0 === r5 ? {
-            get: function(t9, e) {
-                var r = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                }, n = e();
-                return n.then(function(t) {
-                    return Promise.all([
-                        t,
-                        r.miss(t)
-                    ]);
-                }).then(function(t) {
-                    return a1(t, 1)[0];
-                });
-            },
-            set: function(t, e) {
-                return Promise.resolve(e);
-            },
-            delete: function(t) {
-                return Promise.resolve();
-            },
-            clear: function() {
-                return Promise.resolve();
-            }
-        } : {
-            get: function(t, n) {
-                var a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                };
-                return r5.get(t, n, a).catch(function() {
-                    return u1({
-                        caches: e7
-                    }).get(t, n, a);
-                });
-            },
-            set: function(t, n) {
-                return r5.set(t, n).catch(function() {
-                    return u1({
-                        caches: e7
-                    }).set(t, n);
-                });
-            },
-            delete: function(t) {
-                return r5.delete(t).catch(function() {
-                    return u1({
-                        caches: e7
-                    }).delete(t);
-                });
-            },
-            clear: function() {
-                return r5.clear().catch(function() {
-                    return u1({
-                        caches: e7
-                    }).clear();
-                });
-            }
-        };
-    }
-    function s1() {
-        var t10 = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
-            serializable: !0
-        }, e = {};
-        return {
-            get: function(r, n) {
-                var a = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : {
-                    miss: function() {
-                        return Promise.resolve();
-                    }
-                }, o = JSON.stringify(r);
-                if (o in e) return Promise.resolve(t10.serializable ? JSON.parse(e[o]) : e[o]);
-                var i = n(), u = a && a.miss || function() {
-                    return Promise.resolve();
-                };
-                return i.then(function(t) {
-                    return u(t);
-                }).then(function() {
-                    return i;
-                });
-            },
-            set: function(r, n) {
-                return e[JSON.stringify(r)] = t10.serializable ? JSON.stringify(n) : n, Promise.resolve(n);
-            },
-            delete: function(t) {
-                return delete e[JSON.stringify(t)], Promise.resolve();
-            },
-            clear: function() {
-                return e = {}, Promise.resolve();
-            }
-        };
-    }
-    function c1(t, e, r) {
-        var n = {
-            "x-algolia-api-key": r,
-            "x-algolia-application-id": e
-        };
-        return {
-            headers: function() {
-                return t === m1.WithinHeaders ? n : {};
-            },
-            queryParameters: function() {
-                return t === m1.WithinQueryParameters ? n : {};
-            }
-        };
-    }
-    function f1(t) {
-        var e = 0;
-        return t(function r() {
-            return e++, new Promise(function(n) {
-                setTimeout(function() {
-                    n(t(r));
-                }, Math.min(100 * e, 1e3));
-            });
-        });
-    }
-    function d1(t11) {
-        var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : function(t, e) {
-            return Promise.resolve();
-        };
-        return Object.assign(t11, {
-            wait: function(r) {
-                return d1(t11.then(function(t) {
-                    return Promise.all([
-                        e(t, r),
-                        t
-                    ]);
-                }).then(function(t) {
-                    return t[1];
-                }));
-            }
-        });
-    }
-    function l1(t) {
-        for(var e = t.length - 1; e > 0; e--){
-            var r = Math.floor(Math.random() * (e + 1)), n = t[e];
-            t[e] = t[r], t[r] = n;
-        }
-        return t;
-    }
-    function p1(t, e) {
-        return e ? (Object.keys(e).forEach(function(r) {
-            t[r] = e[r](t);
-        }), t) : t;
-    }
-    function h1(t) {
-        for(var e = arguments.length, r = new Array(e > 1 ? e - 1 : 0), n = 1; n < e; n++)r[n - 1] = arguments[n];
-        var a = 0;
-        return t.replace(/%s/g, function() {
-            return encodeURIComponent(r[a++]);
-        });
-    }
-    var m1 = {
-        WithinQueryParameters: 0,
-        WithinHeaders: 1
-    };
-    function y1(t12, e) {
-        var r = t12 || {}, n = r.data || {};
-        return Object.keys(r).forEach(function(t) {
-            -1 === [
-                "timeout",
-                "headers",
-                "queryParameters",
-                "data",
-                "cacheable"
-            ].indexOf(t) && (n[t] = r[t]);
-        }), {
-            data: Object.entries(n).length > 0 ? n : void 0,
-            timeout: r.timeout || e,
-            headers: r.headers || {},
-            queryParameters: r.queryParameters || {},
-            cacheable: r.cacheable
-        };
-    }
-    var g1 = {
-        Read: 1,
-        Write: 2,
-        Any: 3
-    }, v1 = 1, b1 = 2, O = 3;
-    function P(t) {
-        var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : v1;
-        return r1(r1({}, t), {}, {
-            status: e,
-            lastUpdate: Date.now()
-        });
-    }
-    function w(t) {
-        return "string" == typeof t ? {
-            protocol: "https",
-            url: t,
-            accept: g1.Any
-        } : {
-            protocol: t.protocol || "https",
-            url: t.url,
-            accept: t.accept || g1.Any
-        };
-    }
-    var I = "DELETE", j = "GET", x = "POST", D = "PUT";
-    function q(t13, e8) {
-        return Promise.all(e8.map(function(e) {
-            return t13.get(e, function() {
-                return Promise.resolve(P(e));
-            });
-        })).then(function(t14) {
-            var r = t14.filter(function(t15) {
-                return function(t) {
-                    return t.status === v1 || Date.now() - t.lastUpdate > 12e4;
-                }(t15);
-            }), n = t14.filter(function(t16) {
-                return function(t) {
-                    return t.status === O && Date.now() - t.lastUpdate <= 12e4;
-                }(t16);
-            }), a = [].concat(o1(r), o1(n));
-            return {
-                getTimeout: function(t, e) {
-                    return (0 === n.length && 0 === t ? 1 : n.length + 3 + t) * e;
-                },
-                statelessHosts: a.length > 0 ? a.map(function(t) {
-                    return w(t);
-                }) : e8
-            };
-        });
-    }
-    function S(t17, e9, n5, a3) {
-        var i = [], u = function(t, e) {
-            if (t.method === j || void 0 === t.data && void 0 === e.data) return;
-            var n = Array.isArray(t.data) ? t.data : r1(r1({}, t.data), e.data);
-            return JSON.stringify(n);
-        }(n5, a3), s = function(t18, e10) {
-            var n = r1(r1({}, t18.headers), e10.headers), a = {};
-            return Object.keys(n).forEach(function(t) {
-                var e = n[t];
-                a[t.toLowerCase()] = e;
-            }), a;
-        }(t17, a3), c = n5.method, f2 = n5.method !== j ? {} : r1(r1({}, n5.data), a3.data), d = r1(r1(r1({
-            "x-algolia-agent": t17.userAgent.value
-        }, t17.queryParameters), f2), a3.queryParameters), l = 0, p2 = function e11(r6, o) {
-            var f = r6.pop();
-            if (void 0 === f) throw {
-                name: "RetryError",
-                message: "Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.",
-                transporterStackTrace: R(i)
-            };
-            var p = {
-                data: u,
-                headers: s,
-                method: c,
-                url: N(f, n5.path, d),
-                connectTimeout: o(l, t17.timeouts.connect),
-                responseTimeout: o(l, a3.timeout)
-            }, h = function(t) {
-                var e = {
-                    request: p,
-                    response: t,
-                    host: f,
-                    triesLeft: r6.length
-                };
-                return i.push(e), e;
-            }, m = {
-                onSuccess: function(t19) {
-                    return function(t20) {
-                        try {
-                            return JSON.parse(t20.content);
-                        } catch (e12) {
-                            throw function(t, e) {
-                                return {
-                                    name: "DeserializationError",
-                                    message: t,
-                                    response: e
-                                };
-                            }(e12.message, t20);
-                        }
-                    }(t19);
-                },
-                onRetry: function(n) {
-                    var a = h(n);
-                    return n.isTimedOut && l++, Promise.all([
-                        t17.logger.info("Retryable failure", A(a)),
-                        t17.hostsCache.set(f, P(f, n.isTimedOut ? O : b1))
-                    ]).then(function() {
-                        return e11(r6, o);
-                    });
-                },
-                onFail: function(t21) {
-                    throw h(t21), function(t23, e13) {
-                        var r7 = t23.content, n = t23.status, a = r7;
-                        try {
-                            a = JSON.parse(r7).message;
-                        } catch (t22) {}
-                        return function(t, e, r) {
-                            return {
-                                name: "ApiError",
-                                message: t,
-                                status: e,
-                                transporterStackTrace: r
-                            };
-                        }(a, n, e13);
-                    }(t21, R(i));
-                }
-            };
-            return t17.requester.send(p).then(function(t24) {
-                return function(t25, e14) {
-                    return function(t26) {
-                        var e15 = t26.status;
-                        return t26.isTimedOut || function(t) {
-                            var e = t.isTimedOut, r = t.status;
-                            return !e && 0 == ~~r;
-                        }(t26) || 2 != ~~(e15 / 100) && 4 != ~~(e15 / 100);
-                    }(t25) ? e14.onRetry(t25) : 2 == ~~(t25.status / 100) ? e14.onSuccess(t25) : e14.onFail(t25);
-                }(t24, m);
-            });
-        };
-        return q(t17.hostsCache, e9).then(function(t) {
-            return p2(o1(t.statelessHosts).reverse(), t.getTimeout);
-        });
-    }
-    function k(t27) {
-        var e16 = t27.hostsCache, r8 = t27.logger, n6 = t27.requester, o4 = t27.requestsCache, i = t27.responsesCache, u = t27.timeouts, s = t27.userAgent, c = t27.hosts, f = t27.queryParameters, d = {
-            hostsCache: e16,
-            logger: r8,
-            requester: n6,
-            requestsCache: o4,
-            responsesCache: i,
-            timeouts: u,
-            userAgent: s,
-            headers: t27.headers,
-            queryParameters: f,
-            hosts: c.map(function(t) {
-                return w(t);
-            }),
-            read: function(t28, e17) {
-                var r = y1(e17, d.timeouts.read), n = function() {
-                    return S(d, d.hosts.filter(function(t) {
-                        return 0 != (t.accept & g1.Read);
-                    }), t28, r);
-                };
-                if (!0 !== (void 0 !== r.cacheable ? r.cacheable : t28.cacheable)) return n();
-                var o = {
-                    request: t28,
-                    mappedRequestOptions: r,
-                    transporter: {
-                        queryParameters: d.queryParameters,
-                        headers: d.headers
-                    }
-                };
-                return d.responsesCache.get(o, function() {
-                    return d.requestsCache.get(o, function() {
-                        return d.requestsCache.set(o, n()).then(function(t) {
-                            return Promise.all([
-                                d.requestsCache.delete(o),
-                                t
-                            ]);
-                        }, function(t) {
-                            return Promise.all([
-                                d.requestsCache.delete(o),
-                                Promise.reject(t)
-                            ]);
-                        }).then(function(t) {
-                            var e = a1(t, 2);
-                            e[0];
-                            return e[1];
-                        });
-                    });
-                }, {
-                    miss: function(t) {
-                        return d.responsesCache.set(o, t);
-                    }
-                });
-            },
-            write: function(t29, e) {
-                return S(d, d.hosts.filter(function(t) {
-                    return 0 != (t.accept & g1.Write);
-                }), t29, y1(e, d.timeouts.write));
-            }
-        };
-        return d;
-    }
-    function T(t30) {
-        var e = {
-            value: "Algolia for JavaScript (".concat(t30, ")"),
-            add: function(t) {
-                var r = "; ".concat(t.segment).concat(void 0 !== t.version ? " (".concat(t.version, ")") : "");
-                return -1 === e.value.indexOf(r) && (e.value = "".concat(e.value).concat(r)), e;
-            }
-        };
-        return e;
-    }
-    function N(t, e, r) {
-        var n = E(r), a = "".concat(t.protocol, "://").concat(t.url, "/").concat("/" === e.charAt(0) ? e.substr(1) : e);
-        return n.length && (a += "?".concat(n)), a;
-    }
-    function E(t) {
-        return Object.keys(t).map(function(e) {
-            var r;
-            return h1("%s=%s", e, (r = t[e], "[object Object]" === Object.prototype.toString.call(r) || "[object Array]" === Object.prototype.toString.call(r) ? JSON.stringify(t[e]) : t[e]));
-        }).join("&");
-    }
-    function R(t31) {
-        return t31.map(function(t) {
-            return A(t);
-        });
-    }
-    function A(t) {
-        var e = t.request.headers["x-algolia-api-key"] ? {
-            "x-algolia-api-key": "*****"
-        } : {};
-        return r1(r1({}, t), {}, {
-            request: r1(r1({}, t.request), {}, {
-                headers: r1(r1({}, t.request.headers), e)
-            })
-        });
-    }
-    var C = function(t) {
-        return function(e, r) {
-            return t.transporter.write({
-                method: x,
-                path: "2/abtests",
-                data: e
-            }, r);
-        };
-    }, U = function(t) {
-        return function(e, r) {
-            return t.transporter.write({
-                method: I,
-                path: h1("2/abtests/%s", e)
-            }, r);
-        };
-    }, z = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("2/abtests/%s", e)
-            }, r);
-        };
-    }, J = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "2/abtests"
-            }, e);
-        };
-    }, F = function(t) {
-        return function(e, r) {
-            return t.transporter.write({
-                method: x,
-                path: h1("2/abtests/%s/stop", e)
-            }, r);
-        };
-    }, H = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/strategies/personalization"
-            }, e);
-        };
-    }, M = function(t) {
-        return function(e, r) {
-            return t.transporter.write({
-                method: x,
-                path: "1/strategies/personalization",
-                data: e
-            }, r);
-        };
-    };
-    function K(t) {
-        return function e(r) {
-            return t.request(r).then(function(n) {
-                if (void 0 !== t.batch && t.batch(n.hits), !t.shouldStop(n)) return n.cursor ? e({
-                    cursor: n.cursor
-                }) : e({
-                    page: (r.page || 0) + 1
-                });
-            });
-        }({});
-    }
-    var W = function(t32) {
-        return function(e18, a) {
-            var o = a || {}, i = o.queryParameters, u = n1(o, [
-                "queryParameters"
-            ]), s = r1({
-                acl: e18
-            }, void 0 !== i ? {
-                queryParameters: i
-            } : {});
-            return d1(t32.transporter.write({
-                method: x,
-                path: "1/keys",
-                data: s
-            }, u), function(e, r) {
-                return f1(function(n) {
-                    return tt(t32)(e.key, r).catch(function(t) {
-                        if (404 !== t.status) throw t;
-                        return n();
-                    });
-                });
-            });
-        };
-    }, B = function(t) {
-        return function(e, r, n) {
-            var a = y1(n);
-            return a.queryParameters["X-Algolia-User-ID"] = e, t.transporter.write({
-                method: x,
-                path: "1/clusters/mapping",
-                data: {
-                    cluster: r
-                }
-            }, a);
-        };
-    }, Q = function(t) {
-        return function(e, r, n) {
-            return t.transporter.write({
-                method: x,
-                path: "1/clusters/mapping/batch",
-                data: {
-                    users: e,
-                    cluster: r
-                }
-            }, n);
-        };
-    }, G = function(t) {
-        return function(e19, r9) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("/1/dictionaries/%s/batch", e19),
-                data: {
-                    clearExistingDictionaryEntries: !0,
-                    requests: {
-                        action: "addEntry",
-                        body: []
-                    }
-                }
-            }, r9), function(e, r) {
-                return xt(t)(e.taskID, r);
-            });
-        };
-    }, L = function(t) {
-        return function(e, r10, n7) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/operation", e),
-                data: {
-                    operation: "copy",
-                    destination: r10
-                }
-            }, n7), function(r, n) {
-                return ut(t)(e, {
-                    methods: {
-                        waitTask: de
-                    }
-                }).waitTask(r.taskID, n);
-            });
-        };
-    }, V = function(t) {
-        return function(e, n, a) {
-            return L(t)(e, n, r1(r1({}, a), {}, {
-                scope: [
-                    pe.Rules
-                ]
-            }));
-        };
-    }, _ = function(t) {
-        return function(e, n, a) {
-            return L(t)(e, n, r1(r1({}, a), {}, {
-                scope: [
-                    pe.Settings
-                ]
-            }));
-        };
-    }, X = function(t) {
-        return function(e, n, a) {
-            return L(t)(e, n, r1(r1({}, a), {}, {
-                scope: [
-                    pe.Synonyms
-                ]
-            }));
-        };
-    }, Y = function(t) {
-        return function(e, r) {
-            return e.method === j ? t.transporter.read(e, r) : t.transporter.write(e, r);
-        };
-    }, Z = function(t33) {
-        return function(e, r11) {
-            return d1(t33.transporter.write({
-                method: I,
-                path: h1("1/keys/%s", e)
-            }, r11), function(r12, n) {
-                return f1(function(r) {
-                    return tt(t33)(e, n).then(r).catch(function(t) {
-                        if (404 !== t.status) throw t;
-                    });
-                });
-            });
-        };
-    }, $ = function(t34) {
-        return function(e20, r13, n) {
-            var a = r13.map(function(t) {
-                return {
-                    action: "deleteEntry",
-                    body: {
-                        objectID: t
-                    }
-                };
-            });
-            return d1(t34.transporter.write({
-                method: x,
-                path: h1("/1/dictionaries/%s/batch", e20),
-                data: {
-                    clearExistingDictionaryEntries: !1,
-                    requests: a
-                }
-            }, n), function(e, r) {
-                return xt(t34)(e.taskID, r);
-            });
-        };
-    }, tt = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/keys/%s", e)
-            }, r);
-        };
-    }, et = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/task/%s", e.toString())
-            }, r);
-        };
-    }, rt = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "/1/dictionaries/*/settings"
-            }, e);
-        };
-    }, nt = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/logs"
-            }, e);
-        };
-    }, at = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/clusters/mapping/top"
-            }, e);
-        };
-    }, ot = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/clusters/mapping/%s", e)
-            }, r);
-        };
-    }, it = function(t) {
-        return function(e) {
-            var r = e || {}, a = r.retrieveMappings, o = n1(r, [
-                "retrieveMappings"
-            ]);
-            return !0 === a && (o.getClusters = !0), t.transporter.read({
-                method: j,
-                path: "1/clusters/mapping/pending"
-            }, o);
-        };
-    }, ut = function(t) {
-        return function(e) {
-            var r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {}, n = {
-                transporter: t.transporter,
-                appId: t.appId,
-                indexName: e
-            };
-            return p1(n, r.methods);
-        };
-    }, st = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/keys"
-            }, e);
-        };
-    }, ct = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/clusters"
-            }, e);
-        };
-    }, ft = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/indexes"
-            }, e);
-        };
-    }, dt = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: "1/clusters/mapping"
-            }, e);
-        };
-    }, lt = function(t) {
-        return function(e, r14, n8) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/operation", e),
-                data: {
-                    operation: "move",
-                    destination: r14
-                }
-            }, n8), function(r, n) {
-                return ut(t)(e, {
-                    methods: {
-                        waitTask: de
-                    }
-                }).waitTask(r.taskID, n);
-            });
-        };
-    }, pt = function(t) {
-        return function(e21, r15) {
-            return d1(t.transporter.write({
-                method: x,
-                path: "1/indexes/*/batch",
-                data: {
-                    requests: e21
-                }
-            }, r15), function(e, r) {
-                return Promise.all(Object.keys(e.taskID).map(function(n) {
-                    return ut(t)(n, {
-                        methods: {
-                            waitTask: de
-                        }
-                    }).waitTask(e.taskID[n], r);
-                }));
-            });
-        };
-    }, ht = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: x,
-                path: "1/indexes/*/objects",
-                data: {
-                    requests: e
-                }
-            }, r);
-        };
-    }, mt = function(t35) {
-        return function(e, n) {
-            var a = e.map(function(t) {
-                return r1(r1({}, t), {}, {
-                    params: E(t.params || {})
-                });
-            });
-            return t35.transporter.read({
-                method: x,
-                path: "1/indexes/*/queries",
-                data: {
-                    requests: a
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, yt = function(t) {
-        return function(e22, a) {
-            return Promise.all(e22.map(function(e) {
-                var o = e.params, i = o.facetName, u = o.facetQuery, s = n1(o, [
-                    "facetName",
-                    "facetQuery"
-                ]);
-                return ut(t)(e.indexName, {
-                    methods: {
-                        searchForFacetValues: ue
-                    }
-                }).searchForFacetValues(i, u, r1(r1({}, a), s));
-            }));
-        };
-    }, gt = function(t) {
-        return function(e, r) {
-            var n = y1(r);
-            return n.queryParameters["X-Algolia-User-ID"] = e, t.transporter.write({
-                method: I,
-                path: "1/clusters/mapping"
-            }, n);
-        };
-    }, vt = function(t36) {
-        return function(e23, r16, n) {
-            var a = r16.map(function(t) {
-                return {
-                    action: "addEntry",
-                    body: t
-                };
-            });
-            return d1(t36.transporter.write({
-                method: x,
-                path: h1("/1/dictionaries/%s/batch", e23),
-                data: {
-                    clearExistingDictionaryEntries: !0,
-                    requests: a
-                }
-            }, n), function(e, r) {
-                return xt(t36)(e.taskID, r);
-            });
-        };
-    }, bt = function(t37) {
-        return function(e, r17) {
-            return d1(t37.transporter.write({
-                method: x,
-                path: h1("1/keys/%s/restore", e)
-            }, r17), function(r18, n) {
-                return f1(function(r) {
-                    return tt(t37)(e, n).catch(function(t) {
-                        if (404 !== t.status) throw t;
-                        return r();
-                    });
-                });
-            });
-        };
-    }, Ot = function(t38) {
-        return function(e24, r19, n) {
-            var a = r19.map(function(t) {
-                return {
-                    action: "addEntry",
-                    body: t
-                };
-            });
-            return d1(t38.transporter.write({
-                method: x,
-                path: h1("/1/dictionaries/%s/batch", e24),
-                data: {
-                    clearExistingDictionaryEntries: !1,
-                    requests: a
-                }
-            }, n), function(e, r) {
-                return xt(t38)(e.taskID, r);
-            });
-        };
-    }, Pt = function(t) {
-        return function(e, r, n) {
-            return t.transporter.read({
-                method: x,
-                path: h1("/1/dictionaries/%s/search", e),
-                data: {
-                    query: r
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, wt = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: x,
-                path: "1/clusters/mapping/search",
-                data: {
-                    query: e
-                }
-            }, r);
-        };
-    }, It = function(t) {
-        return function(e25, r20) {
-            return d1(t.transporter.write({
-                method: D,
-                path: "/1/dictionaries/*/settings",
-                data: e25
-            }, r20), function(e, r) {
-                return xt(t)(e.taskID, r);
-            });
-        };
-    }, jt = function(t39) {
-        return function(e26, r21) {
-            var a = Object.assign({}, r21), o = r21 || {}, i = o.queryParameters, u = n1(o, [
-                "queryParameters"
-            ]), s = i ? {
-                queryParameters: i
-            } : {}, c = [
-                "acl",
-                "indexes",
-                "referers",
-                "restrictSources",
-                "queryParameters",
-                "description",
-                "maxQueriesPerIPPerHour",
-                "maxHitsPerQuery"
-            ];
-            return d1(t39.transporter.write({
-                method: D,
-                path: h1("1/keys/%s", e26),
-                data: s
-            }, u), function(r22, n) {
-                return f1(function(r23) {
-                    return tt(t39)(e26, n).then(function(t40) {
-                        return function(t41) {
-                            return Object.keys(a).filter(function(t) {
-                                return -1 !== c.indexOf(t);
-                            }).every(function(e) {
-                                if (Array.isArray(t41[e]) && Array.isArray(a[e])) {
-                                    var r24 = t41[e];
-                                    return r24.length === a[e].length && r24.every(function(t, r) {
-                                        return t === a[e][r];
-                                    });
-                                }
-                                return t41[e] === a[e];
-                            });
-                        }(t40) ? Promise.resolve() : r23();
-                    });
-                });
-            });
-        };
-    }, xt = function(t42) {
-        return function(e, r) {
-            return f1(function(n) {
-                return et(t42)(e, r).then(function(t) {
-                    return "published" !== t.status ? n() : void 0;
-                });
-            });
-        };
-    }, Dt = function(t) {
-        return function(e27, r26) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/batch", t.indexName),
-                data: {
-                    requests: e27
-                }
-            }, r26), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, qt = function(t43) {
-        return function(e) {
-            return K(r1(r1({
-                shouldStop: function(t) {
-                    return void 0 === t.cursor;
-                }
-            }, e), {}, {
-                request: function(r) {
-                    return t43.transporter.read({
-                        method: x,
-                        path: h1("1/indexes/%s/browse", t43.indexName),
-                        data: r
-                    }, e);
-                }
-            }));
-        };
-    }, St = function(t44) {
-        return function(e28) {
-            var n = r1({
-                hitsPerPage: 1e3
-            }, e28);
-            return K(r1(r1({
-                shouldStop: function(t) {
-                    return t.hits.length < n.hitsPerPage;
-                }
-            }, n), {}, {
-                request: function(e) {
-                    return se(t44)("", r1(r1({}, n), e)).then(function(t45) {
-                        return r1(r1({}, t45), {}, {
-                            hits: t45.hits.map(function(t) {
-                                return delete t._highlightResult, t;
-                            })
-                        });
-                    });
-                }
-            }));
-        };
-    }, kt = function(t46) {
-        return function(e29) {
-            var n = r1({
-                hitsPerPage: 1e3
-            }, e29);
-            return K(r1(r1({
-                shouldStop: function(t) {
-                    return t.hits.length < n.hitsPerPage;
-                }
-            }, n), {}, {
-                request: function(e) {
-                    return ce(t46)("", r1(r1({}, n), e)).then(function(t47) {
-                        return r1(r1({}, t47), {}, {
-                            hits: t47.hits.map(function(t) {
-                                return delete t._highlightResult, t;
-                            })
-                        });
-                    });
-                }
-            }));
-        };
-    }, Tt = function(t48) {
-        return function(e30, r27, a4) {
-            var o5 = a4 || {}, i = o5.batchSize, u = n1(o5, [
-                "batchSize"
-            ]), s = {
-                taskIDs: [],
-                objectIDs: []
-            };
-            return d1(function n() {
-                var a, o = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : 0, c = [];
-                for(a = o; a < e30.length && (c.push(e30[a]), c.length !== (i || 1e3)); a++);
-                return 0 === c.length ? Promise.resolve(s) : Dt(t48)(c.map(function(t) {
-                    return {
-                        action: r27,
-                        body: t
-                    };
-                }), u).then(function(t) {
-                    return s.objectIDs = s.objectIDs.concat(t.objectIDs), s.taskIDs.push(t.taskID), a++, n(a);
-                });
-            }(), function(e31, r) {
-                return Promise.all(e31.taskIDs.map(function(e) {
-                    return de(t48)(e, r);
-                }));
-            });
-        };
-    }, Nt = function(t) {
-        return function(e32) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/clear", t.indexName)
-            }, e32), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Et = function(t) {
-        return function(e33) {
-            var r28 = e33 || {}, a = r28.forwardToReplicas, o = y1(n1(r28, [
-                "forwardToReplicas"
-            ]));
-            return a && (o.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/rules/clear", t.indexName)
-            }, o), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Rt = function(t) {
-        return function(e34) {
-            var r29 = e34 || {}, a = r29.forwardToReplicas, o = y1(n1(r29, [
-                "forwardToReplicas"
-            ]));
-            return a && (o.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/synonyms/clear", t.indexName)
-            }, o), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, At = function(t) {
-        return function(e35, r30) {
-            return d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/deleteByQuery", t.indexName),
-                data: e35
-            }, r30), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Ct = function(t) {
-        return function(e36) {
-            return d1(t.transporter.write({
-                method: I,
-                path: h1("1/indexes/%s", t.indexName)
-            }, e36), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Ut = function(t49) {
-        return function(e37, r31) {
-            return d1(zt(t49)([
-                e37
-            ], r31).then(function(t) {
-                return {
-                    taskID: t.taskIDs[0]
-                };
-            }), function(e, r) {
-                return de(t49)(e.taskID, r);
-            });
-        };
-    }, zt = function(t50) {
-        return function(e, r) {
-            var n = e.map(function(t) {
-                return {
-                    objectID: t
-                };
-            });
-            return Tt(t50)(n, le.DeleteObject, r);
-        };
-    }, Jt = function(t) {
-        return function(e38, r32) {
-            var a = r32 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
-                "forwardToReplicas"
-            ]));
-            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
-                method: I,
-                path: h1("1/indexes/%s/rules/%s", t.indexName, e38)
-            }, i), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Ft = function(t) {
-        return function(e39, r33) {
-            var a = r33 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
-                "forwardToReplicas"
-            ]));
-            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
-                method: I,
-                path: h1("1/indexes/%s/synonyms/%s", t.indexName, e39)
-            }, i), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, Ht = function(t51) {
-        return function(e) {
-            return Lt(t51)(e).then(function() {
-                return !0;
-            }).catch(function(t) {
-                if (404 !== t.status) throw t;
-                return !1;
-            });
-        };
-    }, Mt = function(t) {
-        return function(e, r, n) {
-            return t.transporter.read({
-                method: x,
-                path: h1("1/answers/%s/prediction", t.indexName),
-                data: {
-                    query: e,
-                    queryLanguages: r
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, Kt = function(t52) {
-        return function(e, o6) {
-            var i2 = o6 || {}, u3 = i2.query, s = i2.paginate, c2 = n1(i2, [
-                "query",
-                "paginate"
-            ]), f = 0;
-            return function n() {
-                return ie(t52)(u3 || "", r1(r1({}, c2), {}, {
-                    page: f
-                })).then(function(t) {
-                    for(var r = 0, o = Object.entries(t.hits); r < o.length; r++){
-                        var i = a1(o[r], 2), u = i[0], c = i[1];
-                        if (e(c)) return {
-                            object: c,
-                            position: parseInt(u, 10),
-                            page: f
-                        };
-                    }
-                    if (f++, !1 === s || f >= t.nbPages) throw {
-                        name: "ObjectNotFoundError",
-                        message: "Object not found."
-                    };
-                    return n();
-                });
-            }();
-        };
-    }, Wt = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/indexes/%s/%s", t.indexName, e)
-            }, r);
-        };
-    }, Bt = function() {
-        return function(t, e) {
-            for(var r = 0, n = Object.entries(t.hits); r < n.length; r++){
-                var o = a1(n[r], 2), i = o[0];
-                if (o[1].objectID === e) return parseInt(i, 10);
-            }
-            return -1;
-        };
-    }, Qt = function(t) {
-        return function(e40, a) {
-            var o = a || {}, i = o.attributesToRetrieve, u = n1(o, [
-                "attributesToRetrieve"
-            ]), s = e40.map(function(e) {
-                return r1({
-                    indexName: t.indexName,
-                    objectID: e
-                }, i ? {
-                    attributesToRetrieve: i
-                } : {});
-            });
-            return t.transporter.read({
-                method: x,
-                path: "1/indexes/*/objects",
-                data: {
-                    requests: s
-                }
-            }, u);
-        };
-    }, Gt = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/indexes/%s/rules/%s", t.indexName, e)
-            }, r);
-        };
-    }, Lt = function(t) {
-        return function(e) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/indexes/%s/settings", t.indexName),
-                data: {
-                    getVersion: 2
-                }
-            }, e);
-        };
-    }, Vt = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: j,
-                path: h1("1/indexes/%s/synonyms/%s", t.indexName, e)
-            }, r);
-        };
-    }, _t = function(t53) {
-        return function(e41, r34) {
-            return d1(Xt(t53)([
-                e41
-            ], r34).then(function(t) {
-                return {
-                    objectID: t.objectIDs[0],
-                    taskID: t.taskIDs[0]
-                };
-            }), function(e, r) {
-                return de(t53)(e.taskID, r);
-            });
-        };
-    }, Xt = function(t) {
-        return function(e, r) {
-            var a = r || {}, o = a.createIfNotExists, i = n1(a, [
-                "createIfNotExists"
-            ]), u = o ? le.PartialUpdateObject : le.PartialUpdateObjectNoCreate;
-            return Tt(t)(e, u, i);
-        };
-    }, Yt = function(t54) {
-        return function(e42, i3) {
-            var u = i3 || {}, s = u.safe, c = u.autoGenerateObjectIDIfNotExist, f = u.batchSize, l = n1(u, [
-                "safe",
-                "autoGenerateObjectIDIfNotExist",
-                "batchSize"
-            ]), p = function(e43, r35, n, a) {
-                return d1(t54.transporter.write({
-                    method: x,
-                    path: h1("1/indexes/%s/operation", e43),
-                    data: {
-                        operation: n,
-                        destination: r35
-                    }
-                }, a), function(e, r) {
-                    return de(t54)(e.taskID, r);
-                });
-            }, m = Math.random().toString(36).substring(7), y = "".concat(t54.indexName, "_tmp_").concat(m), g = ee({
-                appId: t54.appId,
-                transporter: t54.transporter,
-                indexName: y
-            }), v = [], b = p(t54.indexName, y, "copy", r1(r1({}, l), {}, {
-                scope: [
-                    "settings",
-                    "synonyms",
-                    "rules"
-                ]
-            }));
-            return v.push(b), d1((s ? b.wait(l) : b).then(function() {
-                var t = g(e42, r1(r1({}, l), {}, {
-                    autoGenerateObjectIDIfNotExist: c,
-                    batchSize: f
-                }));
-                return v.push(t), s ? t.wait(l) : t;
-            }).then(function() {
-                var e = p(y, t54.indexName, "move", l);
-                return v.push(e), s ? e.wait(l) : e;
-            }).then(function() {
-                return Promise.all(v);
-            }).then(function(t) {
-                var e = a1(t, 3), r = e[0], n = e[1], i = e[2];
-                return {
-                    objectIDs: n.objectIDs,
-                    taskIDs: [
-                        r.taskID
-                    ].concat(o1(n.taskIDs), [
-                        i.taskID
-                    ])
-                };
-            }), function(t55, e) {
-                return Promise.all(v.map(function(t) {
-                    return t.wait(e);
-                }));
-            });
-        };
-    }, Zt = function(t) {
-        return function(e, n) {
-            return ne(t)(e, r1(r1({}, n), {}, {
-                clearExistingRules: !0
-            }));
-        };
-    }, $t = function(t) {
-        return function(e, n) {
-            return oe(t)(e, r1(r1({}, n), {}, {
-                clearExistingSynonyms: !0
-            }));
-        };
-    }, te = function(t56) {
-        return function(e44, r36) {
-            return d1(ee(t56)([
-                e44
-            ], r36).then(function(t) {
-                return {
-                    objectID: t.objectIDs[0],
-                    taskID: t.taskIDs[0]
-                };
-            }), function(e, r) {
-                return de(t56)(e.taskID, r);
-            });
-        };
-    }, ee = function(t57) {
-        return function(e, r) {
-            var a = r || {}, o = a.autoGenerateObjectIDIfNotExist, i = n1(a, [
-                "autoGenerateObjectIDIfNotExist"
-            ]), u = o ? le.AddObject : le.UpdateObject;
-            if (u === le.UpdateObject) {
-                var s = !0, c = !1, f = void 0;
-                try {
-                    for(var l, p = e[Symbol.iterator](); !(s = (l = p.next()).done); s = !0){
-                        if (void 0 === l.value.objectID) return d1(Promise.reject({
-                            name: "MissingObjectIDError",
-                            message: "All objects must have an unique objectID (like a primary key) to be valid. Algolia is also able to generate objectIDs automatically but *it's not recommended*. To do it, use the `{'autoGenerateObjectIDIfNotExist': true}` option."
-                        }));
-                    }
-                } catch (t) {
-                    c = !0, f = t;
-                } finally{
-                    try {
-                        s || null == p.return || p.return();
-                    } finally{
-                        if (c) throw f;
-                    }
-                }
-            }
-            return Tt(t57)(e, u, i);
-        };
-    }, re = function(t) {
-        return function(e, r) {
-            return ne(t)([
-                e
-            ], r);
-        };
-    }, ne = function(t) {
-        return function(e45, r37) {
-            var a = r37 || {}, o = a.forwardToReplicas, i = a.clearExistingRules, u = y1(n1(a, [
-                "forwardToReplicas",
-                "clearExistingRules"
-            ]));
-            return o && (u.queryParameters.forwardToReplicas = 1), i && (u.queryParameters.clearExistingRules = 1), d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/rules/batch", t.indexName),
-                data: e45
-            }, u), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, ae = function(t) {
-        return function(e, r) {
-            return oe(t)([
-                e
-            ], r);
-        };
-    }, oe = function(t) {
-        return function(e46, r38) {
-            var a = r38 || {}, o = a.forwardToReplicas, i = a.clearExistingSynonyms, u = a.replaceExistingSynonyms, s = y1(n1(a, [
-                "forwardToReplicas",
-                "clearExistingSynonyms",
-                "replaceExistingSynonyms"
-            ]));
-            return o && (s.queryParameters.forwardToReplicas = 1), (u || i) && (s.queryParameters.replaceExistingSynonyms = 1), d1(t.transporter.write({
-                method: x,
-                path: h1("1/indexes/%s/synonyms/batch", t.indexName),
-                data: e46
-            }, s), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, ie = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: x,
-                path: h1("1/indexes/%s/query", t.indexName),
-                data: {
-                    query: e
-                },
-                cacheable: !0
-            }, r);
-        };
-    }, ue = function(t) {
-        return function(e, r, n) {
-            return t.transporter.read({
-                method: x,
-                path: h1("1/indexes/%s/facets/%s/query", t.indexName, e),
-                data: {
-                    facetQuery: r
-                },
-                cacheable: !0
-            }, n);
-        };
-    }, se = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: x,
-                path: h1("1/indexes/%s/rules/search", t.indexName),
-                data: {
-                    query: e
-                }
-            }, r);
-        };
-    }, ce = function(t) {
-        return function(e, r) {
-            return t.transporter.read({
-                method: x,
-                path: h1("1/indexes/%s/synonyms/search", t.indexName),
-                data: {
-                    query: e
-                }
-            }, r);
-        };
-    }, fe = function(t) {
-        return function(e47, r39) {
-            var a = r39 || {}, o = a.forwardToReplicas, i = y1(n1(a, [
-                "forwardToReplicas"
-            ]));
-            return o && (i.queryParameters.forwardToReplicas = 1), d1(t.transporter.write({
-                method: D,
-                path: h1("1/indexes/%s/settings", t.indexName),
-                data: e47
-            }, i), function(e, r) {
-                return de(t)(e.taskID, r);
-            });
-        };
-    }, de = function(t58) {
-        return function(e48, r40) {
-            return f1(function(n) {
-                return (function(t) {
-                    return function(e, r) {
-                        return t.transporter.read({
-                            method: j,
-                            path: h1("1/indexes/%s/task/%s", t.indexName, e.toString())
-                        }, r);
-                    };
-                })(t58)(e48, r40).then(function(t) {
-                    return "published" !== t.status ? n() : void 0;
-                });
-            });
-        };
-    }, le = {
-        AddObject: "addObject",
-        UpdateObject: "updateObject",
-        PartialUpdateObject: "partialUpdateObject",
-        PartialUpdateObjectNoCreate: "partialUpdateObjectNoCreate",
-        DeleteObject: "deleteObject",
-        DeleteIndex: "delete",
-        ClearIndex: "clear"
-    }, pe = {
-        Settings: "settings",
-        Synonyms: "synonyms",
-        Rules: "rules"
-    }, he = 1, me = 2, ye = 3;
-    function ge(t59, e49, n9) {
-        var a5, o7 = {
-            appId: t59,
-            apiKey: e49,
-            timeouts: {
-                connect: 1,
-                read: 2,
-                write: 30
-            },
-            requester: {
-                send: function(t60) {
-                    return new Promise(function(e50) {
-                        var r = new XMLHttpRequest;
-                        r.open(t60.method, t60.url, !0), Object.keys(t60.headers).forEach(function(e) {
-                            return r.setRequestHeader(e, t60.headers[e]);
-                        });
-                        var n10, a = function(t, n) {
-                            return setTimeout(function() {
-                                r.abort(), e50({
-                                    status: 0,
-                                    content: n,
-                                    isTimedOut: !0
-                                });
-                            }, 1e3 * t);
-                        }, o = a(t60.connectTimeout, "Connection timeout");
-                        r.onreadystatechange = function() {
-                            r.readyState > r.OPENED && void 0 === n10 && (clearTimeout(o), n10 = a(t60.responseTimeout, "Socket timeout"));
-                        }, r.onerror = function() {
-                            0 === r.status && (clearTimeout(o), clearTimeout(n10), e50({
-                                content: r.responseText || "Network request failed",
-                                status: r.status,
-                                isTimedOut: !1
-                            }));
-                        }, r.onload = function() {
-                            clearTimeout(o), clearTimeout(n10), e50({
-                                content: r.responseText,
-                                status: r.status,
-                                isTimedOut: !1
-                            });
-                        }, r.send(t60.data);
-                    });
-                }
-            },
-            logger: (a5 = ye, {
-                debug: function(t, e) {
-                    return he >= a5 && console.debug(t, e), Promise.resolve();
-                },
-                info: function(t, e) {
-                    return me >= a5 && console.info(t, e), Promise.resolve();
-                },
-                error: function(t, e) {
-                    return console.error(t, e), Promise.resolve();
-                }
-            }),
-            responsesCache: s1(),
-            requestsCache: s1({
-                serializable: !1
-            }),
-            hostsCache: u1({
-                caches: [
-                    i1({
-                        key: "".concat("4.20.0", "-").concat(t59)
-                    }),
-                    s1()
-                ]
-            }),
-            userAgent: T("4.20.0").add({
-                segment: "Browser"
-            })
-        }, f = r1(r1({}, o7), n9), d = function() {
-            return function(t61) {
-                return function(t) {
-                    var e = t.region || "us", n = c1(m1.WithinHeaders, t.appId, t.apiKey), a = k(r1(r1({
-                        hosts: [
-                            {
-                                url: "personalization.".concat(e, ".algolia.com")
-                            }
-                        ]
-                    }, t), {}, {
-                        headers: r1(r1(r1({}, n.headers()), {
-                            "content-type": "application/json"
-                        }), t.headers),
-                        queryParameters: r1(r1({}, n.queryParameters()), t.queryParameters)
-                    }));
-                    return p1({
-                        appId: t.appId,
-                        transporter: a
-                    }, t.methods);
-                }(r1(r1(r1({}, o7), t61), {}, {
-                    methods: {
-                        getPersonalizationStrategy: H,
-                        setPersonalizationStrategy: M
-                    }
-                }));
-            };
-        };
-        return function(t62) {
-            var e51 = t62.appId, n = c1(void 0 !== t62.authMode ? t62.authMode : m1.WithinHeaders, e51, t62.apiKey), a = k(r1(r1({
-                hosts: [
-                    {
-                        url: "".concat(e51, "-dsn.algolia.net"),
-                        accept: g1.Read
-                    },
-                    {
-                        url: "".concat(e51, ".algolia.net"),
-                        accept: g1.Write
-                    }
-                ].concat(l1([
-                    {
-                        url: "".concat(e51, "-1.algolianet.com")
-                    },
-                    {
-                        url: "".concat(e51, "-2.algolianet.com")
-                    },
-                    {
-                        url: "".concat(e51, "-3.algolianet.com")
-                    }
-                ]))
-            }, t62), {}, {
-                headers: r1(r1(r1({}, n.headers()), {
-                    "content-type": "application/x-www-form-urlencoded"
-                }), t62.headers),
-                queryParameters: r1(r1({}, n.queryParameters()), t62.queryParameters)
-            }));
-            return p1({
-                transporter: a,
-                appId: e51,
-                addAlgoliaAgent: function(t, e) {
-                    a.userAgent.add({
-                        segment: t,
-                        version: e
-                    });
-                },
-                clearCache: function() {
-                    return Promise.all([
-                        a.requestsCache.clear(),
-                        a.responsesCache.clear()
-                    ]).then(function() {});
-                }
-            }, t62.methods);
-        }(r1(r1({}, f), {}, {
-            methods: {
-                search: mt,
-                searchForFacetValues: yt,
-                multipleBatch: pt,
-                multipleGetObjects: ht,
-                multipleQueries: mt,
-                copyIndex: L,
-                copySettings: _,
-                copySynonyms: X,
-                copyRules: V,
-                moveIndex: lt,
-                listIndices: ft,
-                getLogs: nt,
-                listClusters: ct,
-                multipleSearchForFacetValues: yt,
-                getApiKey: tt,
-                addApiKey: W,
-                listApiKeys: st,
-                updateApiKey: jt,
-                deleteApiKey: Z,
-                restoreApiKey: bt,
-                assignUserID: B,
-                assignUserIDs: Q,
-                getUserID: ot,
-                searchUserIDs: wt,
-                listUserIDs: dt,
-                getTopUserIDs: at,
-                removeUserID: gt,
-                hasPendingMappings: it,
-                clearDictionaryEntries: G,
-                deleteDictionaryEntries: $,
-                getDictionarySettings: rt,
-                getAppTask: et,
-                replaceDictionaryEntries: vt,
-                saveDictionaryEntries: Ot,
-                searchDictionaryEntries: Pt,
-                setDictionarySettings: It,
-                waitAppTask: xt,
-                customRequest: Y,
-                initIndex: function(t) {
-                    return function(e) {
-                        return ut(t)(e, {
-                            methods: {
-                                batch: Dt,
-                                delete: Ct,
-                                findAnswers: Mt,
-                                getObject: Wt,
-                                getObjects: Qt,
-                                saveObject: te,
-                                saveObjects: ee,
-                                search: ie,
-                                searchForFacetValues: ue,
-                                waitTask: de,
-                                setSettings: fe,
-                                getSettings: Lt,
-                                partialUpdateObject: _t,
-                                partialUpdateObjects: Xt,
-                                deleteObject: Ut,
-                                deleteObjects: zt,
-                                deleteBy: At,
-                                clearObjects: Nt,
-                                browseObjects: qt,
-                                getObjectPosition: Bt,
-                                findObject: Kt,
-                                exists: Ht,
-                                saveSynonym: ae,
-                                saveSynonyms: oe,
-                                getSynonym: Vt,
-                                searchSynonyms: ce,
-                                browseSynonyms: kt,
-                                deleteSynonym: Ft,
-                                clearSynonyms: Rt,
-                                replaceAllObjects: Yt,
-                                replaceAllSynonyms: $t,
-                                searchRules: se,
-                                getRule: Gt,
-                                deleteRule: Jt,
-                                saveRule: re,
-                                saveRules: ne,
-                                replaceAllRules: Zt,
-                                browseRules: St,
-                                clearRules: Et
-                            }
-                        });
-                    };
-                },
-                initAnalytics: function() {
-                    return function(t63) {
-                        return function(t) {
-                            var e = t.region || "us", n = c1(m1.WithinHeaders, t.appId, t.apiKey), a = k(r1(r1({
-                                hosts: [
-                                    {
-                                        url: "analytics.".concat(e, ".algolia.com")
-                                    }
-                                ]
-                            }, t), {}, {
-                                headers: r1(r1(r1({}, n.headers()), {
-                                    "content-type": "application/json"
-                                }), t.headers),
-                                queryParameters: r1(r1({}, n.queryParameters()), t.queryParameters)
-                            }));
-                            return p1({
-                                appId: t.appId,
-                                transporter: a
-                            }, t.methods);
-                        }(r1(r1(r1({}, o7), t63), {}, {
-                            methods: {
-                                addABTest: C,
-                                getABTest: z,
-                                getABTests: J,
-                                stopABTest: F,
-                                deleteABTest: U
-                            }
-                        }));
-                    };
-                },
-                initPersonalization: d,
-                initRecommendation: function() {
-                    return function(t) {
-                        return f.logger.info("The `initRecommendation` method is deprecated. Use `initPersonalization` instead."), d()(t);
-                    };
-                }
-            }
-        }));
-    }
-    return ge.version = "4.20.0", ge;
-});
-
-},{}]},["kn9T2","hOxwo","4aBH6"], "4aBH6", "parcelRequire2324")
+},{}]},["kn9T2","hOxwo","4aBH6"], "4aBH6", "parcelRequirec5a6")
 
 //# sourceMappingURL=index.2d3ace14.js.map
