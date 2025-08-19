@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>English Short Title Catalogue — Redirect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Prevent indexing of the interim page -->
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- Fallback redirect if JS is disabled -->
+  <meta http-equiv="refresh" content="15; url=https://datb.cerl.org/estc/" />
+  <!-- Help search engines understand the destination -->
+  <link rel="canonical" href="https://datb.cerl.org/estc/" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1f2937; /* gray-800 */
+      --muted: #6b7280; /* gray-500 */
+      --accent: #1d4ed8; /* blue-700 */
+      --border: #e5e7eb; /* gray-200 */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f19;
+        --fg: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #60a5fa;
+        --border: #111827;
+      }
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      display: grid;
+      place-items: center;
+    }
+    main {
+      max-width: 720px;
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    }
+    h1 { font-size: 1.75rem; margin: 0 0 .5rem; }
+    p { margin: .5rem 0; }
+    .muted { color: var(--muted); }
+    .notice {
+      background: rgba(29,78,216,.06);
+      border: 1px solid rgba(29,78,216,.2);
+      padding: .75rem 1rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .actions { margin-top: 1.25rem; display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block;
+      padding: .65rem 1rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--fg);
+      color: var(--bg);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn:hover { filter: brightness(1.05); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .95em; }
+    .countdown { font-variant-numeric: tabular-nums; }
+    footer { margin-top: 1rem; font-size: .875rem; }
+  </style>
+  <script>
+    (function() {
+      const TARGET = "https://datb.cerl.org/estc/";
+      const secondsInitial = 15;
+      let seconds = secondsInitial;
+
+      function updateCountdown() {
+        const el = document.getElementById('count');
+        if (!el) return;
+        el.textContent = String(seconds);
+      }
+
+      function tick() {
+        seconds -= 1;
+        updateCountdown();
+        if (seconds <= 0) {
+          // Use replace() to avoid keeping this interim page in the history stack
+          window.location.replace(TARGET);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        // Ensure visible link text mirrors the destination
+        const link = document.getElementById('dest');
+        const linkText = document.getElementById('destText');
+        if (link) link.href = TARGET;
+        if (linkText) linkText.textContent = TARGET;
+        updateCountdown();
+        setInterval(tick, 1000);
+      });
+    })();
+  </script>
+</head>
+<body>
+  <main role="main" aria-labelledby="title">
+    <h1 id="title">Our revels now are ended.</h1>
+    <p class="muted">This stopgap version of the English Short Title Catalogue (ESTC) is being retired  by request of the ESTC-NA team.</p>
+
+    <div class="notice" role="status" aria-live="polite">
+      <strong>Update (May 2025):</strong>
+      The new ESTC search site can be found at
+      <a id="dest" href="https://datb.cerl.org/estc/" rel="noopener">https://datb.cerl.org/estc/</a>.
+    </div>
+
+    <p>You’ll be redirected in <span class="countdown" id="count" aria-live="polite">5</span> seconds.</p>
+
+    <div class="actions">
+      <a class="btn" id="now" href="https://datb.cerl.org/estc/" rel="noopener">Go to the new ESTC now</a>
+      <span class="muted">or copy the URL: <code id="destText">https://datb.cerl.org/estc/</code></span>
+    </div>
+
+    <noscript>
+      <p class="muted">JavaScript is disabled. Please use the button above or visit <a href="https://datb.cerl.org/estc/">https://datb.cerl.org/estc/</a>.</p>
+    </noscript>
+
+    <footer class="muted">
+      <p>This interim page should not be indexed by search engines. If possible, also configure a server‑side HTTP 301 redirect to <code>https://datb.cerl.org/estc/</code> for best results.</p>
+    </footer>
+  </main>
+</body>
+</html>
