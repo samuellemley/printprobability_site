@@ -74,8 +74,9 @@
   <script>
     (function() {
       const TARGET = "https://datb.cerl.org/estc/";
-      const secondsInitial = 15;
+      const secondsInitial = 15; // Changed back to 15 to match display
       let seconds = secondsInitial;
+      let timer; // Store timer reference
 
       function updateCountdown() {
         const el = document.getElementById('count');
@@ -86,9 +87,18 @@
       function tick() {
         seconds -= 1;
         updateCountdown();
+        console.log('Countdown:', seconds); // Debug log
         if (seconds <= 0) {
-          // Use replace() to avoid keeping this interim page in the history stack
-          window.location.replace(TARGET);
+          console.log('Redirecting to:', TARGET); // Debug log
+          // Clear the interval to prevent multiple redirects
+          clearInterval(timer);
+          // Try multiple redirect methods for better compatibility
+          try {
+            window.location.replace(TARGET);
+          } catch (e) {
+            console.log('Replace failed, trying assign:', e);
+            window.location.assign(TARGET);
+          }
         }
       }
 
@@ -99,7 +109,8 @@
         if (link) link.href = TARGET;
         if (linkText) linkText.textContent = TARGET;
         updateCountdown();
-        setInterval(tick, 1000);
+        // Store timer reference so we can clear it
+        timer = setInterval(tick, 1000);
       });
     })();
   </script>
@@ -107,7 +118,7 @@
 <body>
   <main role="main" aria-labelledby="title">
     <h1 id="title">Our revels now are ended.</h1>
-    <p class="muted">This stopgap version of the English Short Title Catalogue (ESTC) is being retired  by request of the ESTC-NA team.</p>
+    <p class="muted">This stopgap version of the English Short Title Catalogue (ESTC) is being retired by request of the ESTC-NA team.</p>
     <p>For more information, visit <a href="https://printprobability.org">https://printprobability.org</a>.</p>
 
     <div class="notice" role="status" aria-live="polite">
@@ -116,7 +127,7 @@
       <a id="dest" href="https://datb.cerl.org/estc/" rel="noopener">https://datb.cerl.org/estc/</a>.
     </div>
 
-    <p>You’ll be redirected in <span class="countdown" id="count" aria-live="polite">5</span> seconds.</p>
+    <p>You'll be redirected in <span class="countdown" id="count" aria-live="polite">15</span> seconds.</p>
 
     <div class="actions">
       <a class="btn" id="now" href="https://datb.cerl.org/estc/" rel="noopener">Go to the new ESTC now</a>
